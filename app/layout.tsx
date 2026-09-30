@@ -1,13 +1,14 @@
 import "./globals.css";
 
-import type { Metadata } from "next";
+import type { Viewport } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { getRootMetadata } from "@/queries/site";
 import { themeBootScript } from "@/lib/theme-script";
-import { getSiteName, getDocumentTitle } from "@/queries/site";
 
 import { SiteShell } from "@/components/site-shell";
+import { SiteJsonLd } from "@/components/site-json-ld";
 import { RootProviders } from "@/components/root-providers";
 
 const geist = Geist({
@@ -22,12 +23,14 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: getDocumentTitle(),
-    template: `%s — ${getSiteName()}`,
-  },
-  icons: { icon: "/favicon.svg" },
+export const metadata = getRootMetadata();
+
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f6fa" },
+    { media: "(prefers-color-scheme: dark)", color: "#07080d" },
+  ],
 };
 
 export default function RootLayout({
@@ -45,6 +48,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body className="antialiased">
+        <SiteJsonLd />
         <RootProviders>
           <SiteShell>{children}</SiteShell>
         </RootProviders>
