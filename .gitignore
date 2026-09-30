@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+dist
+.DS_Store
+*.local
+.husky/_
+.cursor
+*.tsbuildinfo
+
