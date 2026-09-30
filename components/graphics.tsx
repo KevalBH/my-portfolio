@@ -209,7 +209,7 @@ export function WorkMark({ index }: { index: WorkIndex }) {
   return (
     <svg
       viewBox="0 0 640 220"
-      className="h-full w-full origin-center object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+      className="pointer-events-none absolute inset-0 h-full w-full"
       aria-hidden="true"
       preserveAspectRatio="xMidYMid slice"
       fill="none"
@@ -221,51 +221,43 @@ export function WorkMark({ index }: { index: WorkIndex }) {
 
 const skillMarks: Record<SkillGroupTitle, ReactNode> = {
   "Architecture & performance": (
-    <path d="M12 20V8l8-4 8 4v12l-8 4-8-4Z" className="stroke-accent" strokeWidth="1.6" />
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
   ),
   "UI & design systems": (
-    <g className="stroke-accent" strokeWidth="1.6">
-      <rect x="7" y="7" width="10" height="10" rx="2" />
-      <rect x="19" y="7" width="10" height="10" rx="2" />
-      <rect x="7" y="19" width="22" height="8" rx="2" />
+    <g>
+      <rect x="3" y="3" width="8" height="8" rx="1.5" />
+      <rect x="13" y="3" width="8" height="8" rx="1.5" />
+      <rect x="3" y="13" width="18" height="8" rx="1.5" />
     </g>
   ),
-  "State & data": (
-    <path
-      d="M8 16h20M16 8v16"
-      className="stroke-accent"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-    />
-  ),
-  Testing: (
-    <path
-      d="M10 18l5 5 13-13"
-      className="stroke-accent"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    />
-  ),
-  "Cloud & delivery": (
-    <path
-      d="M10 20h16a6 6 0 0 0-1-12 8 8 0 0 0-15 3 5 5 0 0 0 0 9Z"
-      className="stroke-accent"
-      strokeWidth="1.6"
-    />
-  ),
+  "State & data": <path d="M12 5v14M5 12h14" />,
+  Testing: <path d="M20 6 9 17l-5-5" />,
+  "Cloud & delivery": <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />,
   Leadership: (
-    <g className="stroke-accent" strokeWidth="1.6">
-      <circle cx="18" cy="12" r="4" />
-      <path d="M8 26c2-6 6-8 10-8s8 2 10 8" />
+    <g>
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 19c1.4-3.5 4-5 7-5s5.6 1.5 7 5" />
     </g>
   ),
 };
 
 export function SkillMark({ title }: { title: SkillGroupTitle }) {
   return (
-    <svg viewBox="0 0 36 36" className="size-9" aria-hidden="true" fill="none">
-      <rect width="36" height="36" rx="10" className="fill-accent/10" />
-      {skillMarks[title]}
-    </svg>
+    <span
+      className="bg-accent/10 flex size-9 shrink-0 items-center justify-center rounded-[10px]"
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        className="text-accent size-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {skillMarks[title]}
+      </svg>
+    </span>
   );
 }

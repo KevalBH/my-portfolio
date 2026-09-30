@@ -19,9 +19,9 @@ export function StackSection({ skillGroups }: StackSectionProps) {
         {skillGroups.map((group, index) => (
           <Reveal key={group.title} delay={index * 60}>
             <LiftCard className="rounded-3xl p-4 sm:p-5">
-              <h3 className="text-ink flex items-center gap-3 text-sm font-semibold">
+              <h3 className="text-ink flex items-center gap-3 text-sm leading-none font-semibold">
                 <SkillMark title={group.title} />
-                {group.title}
+                <span className="min-w-0 leading-snug">{group.title}</span>
               </h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {group.items.map((item) => (

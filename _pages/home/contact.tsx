@@ -74,34 +74,32 @@ export function ContactSection({ profile }: ContactSectionProps) {
             : item.name;
 
           return (
-            <Reveal key={item.href} delay={index * 70}>
-              <li>
-                <Button
-                  variant="outline"
-                  asChild
-                  className="lift group h-auto w-full justify-between"
+            <Reveal key={item.href} as="li" delay={index * 70}>
+              <Button
+                variant="outline"
+                asChild
+                className="lift group h-auto w-full justify-between"
+              >
+                <a
+                  href={item.href}
+                  aria-label={openLabel}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
                 >
-                  <a
-                    href={item.href}
-                    aria-label={openLabel}
-                    target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noopener noreferrer" : undefined}
+                  <span className="flex min-w-0 items-center gap-3">
+                    <span className="bg-accent/15 text-accent flex size-9 shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-110">
+                      <Icon className="size-4" aria-hidden="true" />
+                    </span>
+                    <span className="break-all sm:break-normal">{item.label}</span>
+                  </span>
+                  <span
+                    className="text-faint shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
                   >
-                    <span className="flex min-w-0 items-center gap-3">
-                      <span className="bg-accent/15 text-accent flex size-9 shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-110">
-                        <Icon className="size-4" aria-hidden="true" />
-                      </span>
-                      <span className="break-all sm:break-normal">{item.label}</span>
-                    </span>
-                    <span
-                      className="text-faint shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                      aria-hidden="true"
-                    >
-                      ↗
-                    </span>
-                  </a>
-                </Button>
-              </li>
+                    ↗
+                  </span>
+                </a>
+              </Button>
             </Reveal>
           );
         })}

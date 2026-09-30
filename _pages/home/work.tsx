@@ -23,15 +23,12 @@ export function WorkSection({ work }: WorkSectionProps) {
         {work.map((item, index) => (
           <Reveal key={item.title} delay={index * 70}>
             <LiftCard className="group overflow-hidden rounded-3xl">
-              <figure className="border-line relative aspect-[16/6] min-h-[140px] overflow-hidden border-b">
+              <figure className="border-line relative isolate aspect-[16/6] min-h-[140px] overflow-hidden border-b">
                 <WorkMark index={item.index} />
-                <figcaption className="bg-bg/80 text-accent absolute top-3 left-3 rounded-full px-2.5 py-1 font-mono text-[11px] backdrop-blur-md">
-                  {item.index}
-                </figcaption>
               </figure>
               <div className="min-w-0 p-5 sm:p-7">
-                <p className="text-faint text-xs font-medium tracking-[0.16em] uppercase">
-                  {item.domain}
+                <p className="text-accent text-[11px] font-medium tracking-[0.18em] uppercase">
+                  {item.index} / {item.domain}
                 </p>
                 <h3 className="text-ink mt-2 text-xl leading-snug font-semibold tracking-tight sm:text-2xl">
                   {item.title}

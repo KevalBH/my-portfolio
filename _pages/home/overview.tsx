@@ -30,7 +30,7 @@ export function OverviewSection({ profile, stats }: OverviewSectionProps) {
       </div>
       <dl className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-4">
         {stats.map((stat, index) => (
-          <Reveal key={stat.label} delay={index * 80}>
+          <Reveal key={stat.label} as="div" delay={index * 80}>
             <LiftCard as="div" className="rounded-2xl px-4 py-4 sm:py-5">
               <dt className="text-faint text-[11px] leading-4 sm:text-xs">
                 {stat.label}
