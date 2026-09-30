@@ -13,7 +13,7 @@ export function PageSection({ id, first = false, children }: PageSectionProps) {
   return (
     <section
       id={id}
-      className={cn("scroll-mt-36 md:scroll-mt-8", !first && "mt-16 sm:mt-24")}
+      className={cn("scroll-mt-48 md:scroll-mt-8", !first && "mt-16 sm:mt-24")}
     >
       {children}
     </section>

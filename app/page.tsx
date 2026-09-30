@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
 
-import { getDocumentTitle, getSiteContent } from "@/queries/site";
+import { getDocumentTitle, getDocumentDescription } from "@/queries/site";
 
 import { HomePage } from "@/_pages/home";
 
-const { profile } = getSiteContent();
 const title = getDocumentTitle();
+const description = getDocumentDescription();
 
 export const metadata: Metadata = {
-  title,
-  description: profile.summary,
+  title: {
+    absolute: title,
+  },
+  description,
   openGraph: {
     title,
-    description: profile.summary,
+    description,
     type: "website",
   },
 };

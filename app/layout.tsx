@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { getDocumentTitle } from "@/queries/site";
 import { themeBootScript } from "@/lib/theme-script";
+import { getSiteName, getDocumentTitle } from "@/queries/site";
 
 import { SiteShell } from "@/components/site-shell";
 import { RootProviders } from "@/components/root-providers";
@@ -23,7 +23,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: getDocumentTitle(),
+  title: {
+    default: getDocumentTitle(),
+    template: `%s — ${getSiteName()}`,
+  },
   icons: { icon: "/favicon.svg" },
 };
 

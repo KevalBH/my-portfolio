@@ -22,6 +22,14 @@ export function getSiteContent() {
 
 export type SiteContent = ReturnType<typeof getSiteContent>;
 
+export function getSiteName() {
+  return profile.name;
+}
+
 export function getDocumentTitle() {
-  return `${profile.name} — ${profile.title}`;
+  return `${profile.name} — Portfolio`;
+}
+
+export function getDocumentDescription() {
+  return `${profile.title} in ${profile.location}. React, Next.js, and TypeScript — work from the current resume.`;
 }
