@@ -72,37 +72,6 @@ export function HeroSystem() {
 const workArt: Record<WorkIndex, ReactNode> = {
   "01": (
     <g>
-      <rect width="640" height="220" className="fill-accent/10" />
-      <rect
-        x="36"
-        y="36"
-        width="200"
-        height="148"
-        rx="18"
-        className="fill-bg-2 stroke-line"
-      />
-      <circle cx="92" cy="88" r="18" className="fill-accent/30 stroke-accent" />
-      <circle cx="148" cy="88" r="18" className="fill-bg-3 stroke-accent/60" />
-      <circle cx="176" cy="88" r="18" className="fill-bg-3 stroke-accent/40" />
-      <rect x="72" y="128" width="128" height="10" rx="5" className="fill-line" />
-      <rect x="88" y="146" width="96" height="8" rx="4" className="fill-line" />
-      <rect
-        x="268"
-        y="48"
-        width="336"
-        height="124"
-        rx="20"
-        className="fill-bg-2 stroke-accent/35"
-      />
-      <rect x="292" y="72" width="180" height="76" rx="12" className="fill-accent/20" />
-      <path
-        d="M500 86h72v48h-20l-12 16-12-16h-28V86Z"
-        className="fill-accent/40 stroke-accent"
-      />
-    </g>
-  ),
-  "02": (
-    <g>
       <rect width="640" height="220" className="fill-accent/8" />
       <rect
         x="32"
@@ -140,7 +109,7 @@ const workArt: Record<WorkIndex, ReactNode> = {
       <rect x="448" y="80" width="112" height="8" rx="4" className="fill-line" />
     </g>
   ),
-  "03": (
+  "02": (
     <g>
       <rect width="640" height="220" className="fill-accent/8" />
       <circle cx="210" cy="110" r="86" className="fill-bg-2 stroke-line" />
@@ -174,7 +143,7 @@ const workArt: Record<WorkIndex, ReactNode> = {
       <rect x="450" y="158" width="78" height="8" rx="4" className="fill-line" />
     </g>
   ),
-  "04": (
+  "03": (
     <g>
       <rect width="640" height="220" className="fill-accent/8" />
       <rect
@@ -201,6 +170,42 @@ const workArt: Record<WorkIndex, ReactNode> = {
       <rect x="352" y="100" width="164" height="8" rx="4" className="fill-line" />
       <rect x="352" y="118" width="188" height="8" rx="4" className="fill-line" />
       <rect x="352" y="136" width="120" height="8" rx="4" className="fill-line" />
+    </g>
+  ),
+  "04": (
+    <g>
+      <rect width="640" height="220" className="fill-accent/8" />
+      <rect
+        x="36"
+        y="32"
+        width="250"
+        height="156"
+        rx="18"
+        className="fill-bg-2 stroke-line"
+      />
+      <circle cx="112" cy="104" r="34" className="fill-accent/15 stroke-accent/50" />
+      <circle cx="112" cy="104" r="14" className="fill-accent/40" />
+      <rect x="166" y="78" width="92" height="8" rx="4" className="fill-line" />
+      <rect x="166" y="96" width="74" height="8" rx="4" className="fill-line" />
+      <rect x="166" y="114" width="86" height="8" rx="4" className="fill-accent/45" />
+      <rect x="56" y="150" width="210" height="18" rx="9" className="fill-accent/20" />
+      <rect
+        x="310"
+        y="32"
+        width="294"
+        height="156"
+        rx="18"
+        className="fill-bg-2 stroke-accent/35"
+      />
+      <rect x="334" y="52" width="128" height="10" rx="5" className="fill-accent/50" />
+      <g className="fill-accent/70">
+        <rect x="350" y="128" width="22" height="34" rx="4" />
+        <rect x="386" y="108" width="22" height="54" rx="4" />
+        <rect x="422" y="90" width="22" height="72" rx="4" />
+        <rect x="458" y="116" width="22" height="46" rx="4" />
+        <rect x="494" y="98" width="22" height="64" rx="4" />
+        <rect x="530" y="76" width="22" height="86" rx="4" />
+      </g>
     </g>
   ),
 };

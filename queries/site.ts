@@ -77,6 +77,7 @@ export function getSiteJsonLd() {
     address: {
       "@type": "PostalAddress",
       addressLocality: "Mahuva",
+      postalCode: "364290",
       addressRegion: "Gujarat",
       addressCountry: "IN",
     },

@@ -11,14 +11,14 @@ import type {
 export const profile = {
   name: "Keval Bhatt",
   title: "Lead Frontend Engineer",
-  location: "Mahuva, Gujarat, India",
+  location: "Mahuva 364290, Gujarat, India",
   email: "keval.bhatt.777@gmail.com",
   phone: "+91 97766-91766",
   phoneHref: "tel:+919776691766",
   linkedin: "https://www.linkedin.com/in/keval-dev",
   github: "https://github.com/KevalBH",
   summary:
-    "Results-driven Lead Frontend Engineer with 5+ years of experience architecting and scaling high-performance web applications using React.js, Next.js, TypeScript, and Cursor. Proven track record of leading cross-functional teams to deliver over 25 production-grade releases across fintech, e-commerce, and real-time collaboration domains. Expert in building centralized UI design systems, optimizing client-side performance (Core Web Vitals), and establishing robust engineering standards that accelerate development velocity.",
+    "Results-driven Lead Frontend Engineer with 5+ years of experience architecting and scaling high-performance web applications using React.js, Next.js, TypeScript and Cursor. Proven track record of leading cross-functional teams to deliver over 25 production-grade releases across fintech, e-commerce, and real-time collaboration domains. Expert in building centralized UI design systems, optimizing client-side performance (Core Web Vitals), and establishing robust engineering standards that accelerate development velocity.",
 } satisfies Profile;
 
 export const stats = [
@@ -35,7 +35,6 @@ export const skillGroups = [
       "React.js",
       "Next.js",
       "TypeScript",
-      "Cursor",
       "JavaScript (ES6+)",
       "Core Web Vitals",
       "SSR / SSG",
@@ -57,19 +56,20 @@ export const skillGroups = [
   },
   {
     title: "Testing",
-    items: ["Jest", "React Testing Library", "Enzyme"],
+    items: ["Jest", "React Testing Library (RTL)", "Enzyme"],
   },
   {
     title: "Cloud & delivery",
-    items: ["AWS", "Google Cloud", "Firebase", "GitHub Actions", "CI/CD"],
+    items: ["AWS", "Google Cloud", "Firebase", "GitHub Actions", "CI/CD pipelines"],
   },
   {
     title: "Leadership",
     items: [
-      "Git / GitHub",
+      "Cursor",
+      "GitHub",
       "PR reviews",
       "Team management",
-      "Project estimation",
+      "Estimations",
       "Task distribution",
       "Execution planning",
     ],
@@ -104,7 +104,7 @@ export const experience = [
         period: "Jan 2022 — Dec 2022",
         points: [
           "Translated complex UI/UX designs into responsive, clean, and reusable React components using modern JavaScript.",
-          "Streamlined client-side data fetching, caching, and state hydration by implementing structured state management via the Context API.",
+          "Streamlined client-side data fetching, caching, and state hydration by implementing structured state management via the Context API and other tools.",
         ],
       },
     ],
@@ -130,52 +130,52 @@ export const experience = [
 export const work = [
   {
     index: "01",
-    title: "Virtual meeting and collaboration platform",
-    domain: "Real-time collaboration",
-    stack: ["React.js", "TypeScript", "Jitsi Meet", "Konva.js"],
-    points: [
-      "Architected a real-time, multi-tenant video conferencing platform on a scalable React.js and TypeScript infrastructure, embedding the Jitsi Meet framework for signaling and media streams.",
-      "Engineered an interactive, synchronized collaboration stage using Konva.js with drag-and-drop avatars and multi-user canvas interactions without sacrificing rendering performance.",
-      "Designed a proximity-based spatial audio feature by calculating coordinate vectors between avatars to scale audio volume with closeness.",
-      "Built a virtual projector subsystem for synchronized screen sharing, with REST APIs for secure session allocation and authentication.",
-    ],
-  },
-  {
-    index: "02",
     title: "Enterprise trading & portfolio analytics platform",
     domain: "Fintech",
     stack: ["React.js", "Next.js", "TypeScript", "Redux Toolkit", "WebSockets"],
     points: [
       "Architected a high-frequency trading platform and administration dashboard with React.js, Next.js, and TypeScript for desktop and mobile web.",
-      "Integrated Alpaca APIs and WebSocket pipelines to ingest and render real-time market data, order books, and live trade executions with minimal client-side latency.",
-      "Embedded MetaMap APIs for KYC/AML onboarding, biometric verification, and identity document processing.",
-      "Implemented RBAC and data-masking in the admin platform for profiles, audit logs, and transaction monitoring.",
-      "Optimized state with Redux Toolkit and caching layers so rapid financial streams did not drop frames or trigger redundant re-renders.",
+      "Integrated Alpaca APIs and WebSocket pipelines to ingest, map, and render real-time market data, order books, and live trade executions with minimal client-side latency.",
+      "Built secure onboarding and automated verification with MetaMap APIs for KYC/AML, biometric checks, and identity document processing.",
+      "Implemented role-based access and data-masking in the admin platform for profiles, audit logs, and transaction monitoring.",
+      "Optimized client-side state with Redux Toolkit and caching layers so rapid financial streams did not drop frames or trigger redundant re-renders.",
     ],
   },
   {
-    index: "03",
+    index: "02",
     title: "Geospatial dating & real-time messaging platform",
     domain: "Consumer",
     stack: ["Mapbox", "Google Maps", "Firebase", "REST"],
     points: [
-      "Translated complex UI/UX wireframes into a pixel-perfect, component-driven frontend with micro-interactions.",
+      "Architected a visual, cross-platform dating application, translating complex UI/UX wireframes into a pixel-perfect, component-driven frontend with micro-interactions.",
       "Built a dual-provider geospatial engine with Mapbox and Google Maps for location tracking, proximity matchmaking, and heatmaps.",
-      "Implemented low-latency chat and notifications on Firebase (Firestore / Realtime Database), with careful listener design for battery and data cost.",
+      "Implemented low-latency chat and notifications on Firebase (Firestore / Realtime Database), with listener design that keeps battery and data use low.",
       "Optimized asset loading, image caching, and lazy-loading for media-heavy profiles and discovery decks.",
-      "Integrated REST APIs for profile verification, matchmaking, MFA, and premium subscription payments.",
+      "Integrated REST APIs for profile verification, matchmaking, multi-factor authentication, and premium subscription payments.",
     ],
   },
   {
-    index: "04",
+    index: "03",
     title: "High-performance web properties & design-to-code",
     domain: "Marketing / product sites",
     stack: ["Next.js", "SSG", "Tailwind CSS", "Styled Components"],
     points: [
-      "Engineered responsive, SEO-optimized static properties with Next.js SSG and semantic HTML5 from visual UI/UX designs.",
-      "Built atomic component structures with Tailwind CSS, Styled Components, and CSS3 to keep styling tight to the design system.",
-      "Optimized production builds with compression, image work, and code-splitting for cross-device rendering and fast first load.",
-      "Delivered modular frontend codebases intended for clean backend handoff.",
+      "Engineered responsive, SEO-optimized static properties with Next.js static generation and semantic HTML5 from visual UI/UX designs.",
+      "Built atomic component structures with Tailwind CSS, Styled Components, and CSS3 so styling stayed tight to the design guidelines.",
+      "Optimized production builds with compression, image work, and code-splitting for cross-device rendering and a fast first load.",
+      "Delivered modular frontend codebases structured for maintainability and a clean backend handoff.",
+    ],
+  },
+  {
+    index: "04",
+    title: "Restaurant booking, ordering & management system",
+    domain: "Hospitality",
+    stack: ["React.js", "REST APIs", "Admin dashboards", "Charts"],
+    points: [
+      "Architected a scalable React.js frontend for restaurant discovery, table reservations, and food ordering across dine-in, pickup, and delivery, using reusable components and client-side state.",
+      "Owned discovery and customer workflows, including live location filtering, voice search, search and sort, nearby and trending restaurants, hotspots, menus, booking, and reviews.",
+      "Designed role-based Restaurant Admin and Super Admin dashboards with API integrations for menus, orders, tables, employees, inventory, restaurants, reviews, and Excel import and export.",
+      "Built reporting dashboards with chart visualizations for revenue, order trends, restaurant activity, and performance, plus form validation and a responsive, data-driven UI.",
     ],
   },
 ] satisfies readonly WorkItem[];

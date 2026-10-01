@@ -16,7 +16,7 @@ export function WorkSection({ work }: WorkSectionProps) {
     <PageSection id="work">
       <SectionHeading
         eyebrow="03 / Selected work"
-        title="Systems shipped in fintech, collaboration, and consumer product."
+        title="Systems shipped in fintech, consumer product, and hospitality."
         description="From the current resume — product work, not a gallery of throwaway demos."
       />
       <div className="mt-8 grid gap-4 sm:mt-10">
