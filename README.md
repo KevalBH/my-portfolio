@@ -16,12 +16,14 @@ Personal site for [Keval Bhatt](https://github.com/KevalBH), Lead Frontend Engin
 
 ## Layout
 
-- `app/` — thin routes (`metadata` + page render)
-- `_pages/` — page views
-- `components/` — reusable UI (`components/ui` for Shadcn)
-- `lib/` — resume data and theme
-- `utils/` — helpers
-- `queries/` — data accessors
+Application code lives in `src/`. The project root keeps configuration, `public/`, and this readme.
+
+- `src/app/` — thin routes (`metadata` + page render)
+- `src/_pages/` — page views
+- `src/components/` — reusable UI (`src/components/ui` for Shadcn)
+- `src/lib/` — resume data and theme
+- `src/utils/` — helpers
+- `src/queries/` — data accessors
 
 ## Local
 

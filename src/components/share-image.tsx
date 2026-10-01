@@ -10,7 +10,7 @@ export const alt = getShareImageAlt();
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function OpenGraphImage() {
+export default async function ShareImage() {
   const fonts = await loadShareFonts();
 
   return new ImageResponse(
