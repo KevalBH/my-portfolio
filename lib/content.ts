@@ -46,6 +46,7 @@ export type Role = {
 
 export type Company = {
   company: string;
+  href: string;
   place: string;
   roles: readonly Role[];
 };
@@ -55,6 +56,7 @@ export type WorkIndex = "01" | "02" | "03" | "04";
 export type WorkItem = {
   index: WorkIndex;
   title: string;
+  href: string;
   domain: string;
   stack: readonly string[];
   points: readonly string[];

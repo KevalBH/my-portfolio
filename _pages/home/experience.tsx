@@ -3,6 +3,7 @@ import type { Company } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
 import { LiftCard } from "@/components/lift-card";
 import { PageSection } from "@/_pages/home/page-section";
+import { ExternalLink } from "@/components/external-link";
 import { SectionHeading } from "@/_pages/home/section-heading";
 
 type ExperienceSectionProps = {
@@ -19,9 +20,9 @@ export function ExperienceSection({ experience }: ExperienceSectionProps) {
             <LiftCard className="rounded-3xl p-5 sm:p-7">
               <div>
                 <h3 className="text-ink text-base font-semibold sm:text-lg">
-                  {company.company}
+                  <ExternalLink href={company.href}>{company.company}</ExternalLink>
                 </h3>
-                <p className="text-faint text-sm">{company.place}</p>
+                <p className="text-faint mt-1 text-sm">{company.place}</p>
               </div>
               <div className="mt-6 space-y-8">
                 {company.roles.map((role) => (

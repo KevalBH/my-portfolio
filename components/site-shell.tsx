@@ -5,6 +5,7 @@ import { getSiteContent } from "@/queries/site";
 import { MonogramMark } from "@/components/graphics";
 import { SectionNav } from "@/components/section-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { GithubIcon, LinkedinIcon } from "@/components/contact-icons";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const { nav, profile } = getSiteContent();
@@ -29,6 +30,26 @@ export function SiteShell({ children }: { children: ReactNode }) {
               {profile.title}
             </p>
             <p className="text-faint mt-1 text-sm">{profile.location}</p>
+            <div className="mt-5 flex gap-2">
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn (opens in a new tab)"
+                className="border-line bg-bg-2 text-muted hover:border-accent/40 hover:text-accent inline-flex size-9 items-center justify-center rounded-lg border transition-colors"
+              >
+                <LinkedinIcon className="size-4" />
+              </a>
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub (opens in a new tab)"
+                className="border-line bg-bg-2 text-muted hover:border-accent/40 hover:text-accent inline-flex size-9 items-center justify-center rounded-lg border transition-colors"
+              >
+                <GithubIcon className="size-4" />
+              </a>
+            </div>
             <div className="mt-8">
               <SectionNav items={nav} />
             </div>

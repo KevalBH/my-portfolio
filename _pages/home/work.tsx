@@ -5,6 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { WorkMark } from "@/components/graphics";
 import { LiftCard } from "@/components/lift-card";
 import { PageSection } from "@/_pages/home/page-section";
+import { ExternalLink } from "@/components/external-link";
 import { SectionHeading } from "@/_pages/home/section-heading";
 
 type WorkSectionProps = {
@@ -31,7 +32,7 @@ export function WorkSection({ work }: WorkSectionProps) {
                   {item.index} / {item.domain}
                 </p>
                 <h3 className="text-ink mt-2 text-xl leading-snug font-semibold tracking-tight sm:text-2xl">
-                  {item.title}
+                  <ExternalLink href={item.href}>{item.title}</ExternalLink>
                 </h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {item.stack.map((tech) => (

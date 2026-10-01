@@ -79,6 +79,7 @@ export const skillGroups = [
 export const experience = [
   {
     company: "21Twelve Interactive Pvt Ltd",
+    href: "https://www.21twelveinteractive.com",
     place: "Ahmedabad, Gujarat",
     roles: [
       {
@@ -111,6 +112,7 @@ export const experience = [
   },
   {
     company: "E-logicals Technology Pvt Ltd",
+    href: "https://www.elogicals.com",
     place: "Gandhinagar, Gujarat",
     roles: [
       {
@@ -131,6 +133,7 @@ export const work = [
   {
     index: "01",
     title: "Enterprise trading & portfolio analytics platform",
+    href: "https://prospuh.com",
     domain: "Fintech",
     stack: ["React.js", "Next.js", "TypeScript", "Redux Toolkit", "WebSockets"],
     points: [
@@ -144,6 +147,7 @@ export const work = [
   {
     index: "02",
     title: "Geospatial dating & real-time messaging platform",
+    href: "https://matchnmeet.io",
     domain: "Consumer",
     stack: ["Mapbox", "Google Maps", "Firebase", "REST"],
     points: [
@@ -157,6 +161,7 @@ export const work = [
   {
     index: "03",
     title: "High-performance web properties & design-to-code",
+    href: "https://odhavindustries.org",
     domain: "Marketing / product sites",
     stack: ["Next.js", "SSG", "Tailwind CSS", "Styled Components"],
     points: [
@@ -169,6 +174,7 @@ export const work = [
   {
     index: "04",
     title: "Restaurant booking, ordering & management system",
+    href: "https://bookyourtable.com",
     domain: "Hospitality",
     stack: ["React.js", "REST APIs", "Admin dashboards", "Charts"],
     points: [
