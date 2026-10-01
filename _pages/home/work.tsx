@@ -19,11 +19,11 @@ export function WorkSection({ work }: WorkSectionProps) {
         title="Systems shipped in fintech, consumer product, and hospitality."
         description="From the current resume — product work, not a gallery of throwaway demos."
       />
-      <div className="mt-8 grid gap-4 sm:mt-10">
+      <div className="mt-8 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 sm:mt-10">
         {work.map((item, index) => (
-          <Reveal key={item.title} delay={index * 70}>
-            <LiftCard className="group overflow-hidden rounded-3xl">
-              <figure className="border-line relative isolate aspect-[16/6] min-h-[140px] overflow-hidden border-b">
+          <Reveal key={item.title} className="min-w-0" delay={index * 70}>
+            <LiftCard className="group w-full min-w-0 overflow-hidden rounded-3xl">
+              <figure className="border-line relative isolate h-[140px] w-full min-w-0 overflow-hidden border-b sm:aspect-[16/6] sm:h-auto">
                 <WorkMark index={item.index} />
               </figure>
               <div className="min-w-0 p-5 sm:p-7">
