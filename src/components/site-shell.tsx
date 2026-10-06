@@ -27,7 +27,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               {profile.name}
             </p>
             <p className="text-muted mt-3 max-w-[16rem] text-sm leading-6">
-              {profile.title}
+              Senior Frontend Developer
             </p>
             <p className="text-faint mt-1 text-sm">{profile.location}</p>
             <div className="mt-5 flex gap-2">

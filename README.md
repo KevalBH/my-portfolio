@@ -1,6 +1,6 @@
 # Keval Bhatt — Portfolio
 
-Personal site for [Keval Bhatt](https://github.com/KevalBH), Lead Frontend Engineer. Content is taken from the resume: roles, selected work, stack, education, and contact.
+Personal site for [Keval Bhatt](https://github.com/KevalBH), Lead Frontend Developer. Content is taken from the resume: roles, selected work, stack, education, and contact.
 
 **Repo:** [github.com/KevalBH/my-portfolio](https://github.com/KevalBH/my-portfolio)
 
