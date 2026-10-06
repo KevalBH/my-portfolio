@@ -1,13 +1,13 @@
 import { getSiteContent } from "@/queries/site";
 
-import { WorkSection } from "@/_pages/home/work";
-import { HomeFooter } from "@/_pages/home/footer";
-import { HomeHeader } from "@/_pages/home/header";
-import { StackSection } from "@/_pages/home/stack";
-import { ContactSection } from "@/_pages/home/contact";
-import { OverviewSection } from "@/_pages/home/overview";
-import { EducationSection } from "@/_pages/home/education";
-import { ExperienceSection } from "@/_pages/home/experience";
+import { WorkSection } from "@/screens/home/work";
+import { HomeFooter } from "@/screens/home/footer";
+import { HomeHeader } from "@/screens/home/header";
+import { StackSection } from "@/screens/home/stack";
+import { ContactSection } from "@/screens/home/contact";
+import { OverviewSection } from "@/screens/home/overview";
+import { EducationSection } from "@/screens/home/education";
+import { ExperienceSection } from "@/screens/home/experience";
 
 export function HomePage() {
   const { education, experience, nav, profile, skillGroups, stats, work } =

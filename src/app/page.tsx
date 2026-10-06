@@ -6,7 +6,7 @@ import {
   getDocumentDescription,
 } from "@/queries/site";
 
-import { HomePage } from "@/_pages/home";
+import { HomePage } from "@/screens/home";
 
 const title = getDocumentTitle();
 const description = getDocumentDescription();

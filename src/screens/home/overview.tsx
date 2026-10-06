@@ -3,9 +3,9 @@ import type { Profile, Stat } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
 import { LiftCard } from "@/components/lift-card";
 import { HeroSystem } from "@/components/graphics";
-import { PageSection } from "@/_pages/home/page-section";
-import { EmphasizedCopy } from "@/_pages/home/emphasized-copy";
-import { SectionHeading } from "@/_pages/home/section-heading";
+import { PageSection } from "@/screens/home/page-section";
+import { EmphasizedCopy } from "@/screens/home/emphasized-copy";
+import { SectionHeading } from "@/screens/home/section-heading";
 
 type OverviewSectionProps = {
   profile: Profile;

@@ -6,8 +6,8 @@ import type { Profile } from "@/lib/content";
 
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
-import { PageSection } from "@/_pages/home/page-section";
-import { SectionHeading } from "@/_pages/home/section-heading";
+import { PageSection } from "@/screens/home/page-section";
+import { SectionHeading } from "@/screens/home/section-heading";
 import { GithubIcon, LinkedinIcon } from "@/components/contact-icons";
 
 type ContactIcon = ComponentType<{ className?: string }>;

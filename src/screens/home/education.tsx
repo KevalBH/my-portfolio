@@ -2,8 +2,8 @@ import type { EducationItem } from "@/lib/content";
 
 import { Reveal } from "@/components/reveal";
 import { LiftCard } from "@/components/lift-card";
-import { PageSection } from "@/_pages/home/page-section";
-import { SectionHeading } from "@/_pages/home/section-heading";
+import { PageSection } from "@/screens/home/page-section";
+import { SectionHeading } from "@/screens/home/section-heading";
 
 type EducationSectionProps = {
   education: readonly EducationItem[];

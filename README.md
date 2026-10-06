@@ -19,7 +19,7 @@ Personal site for [Keval Bhatt](https://github.com/KevalBH), Lead Frontend Engin
 Application code lives in `src/`. The project root keeps configuration, `public/`, and this readme.
 
 - `src/app/` — thin routes (`metadata` + page render)
-- `src/_pages/` — page views
+- `src/screens/` — page views
 - `src/components/` — reusable UI (`src/components/ui` for Shadcn)
 - `src/lib/` — resume data and theme
 - `src/utils/` — helpers

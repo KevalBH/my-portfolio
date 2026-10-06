@@ -37,7 +37,7 @@ const eslintConfig = [
             },
             {
               groupName: "custom-ui",
-              elementNamePattern: "^@/(components|_pages)/.+",
+              elementNamePattern: "^@/(components|screens)/.+",
             },
           ],
         },
