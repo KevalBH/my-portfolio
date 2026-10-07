@@ -1,7 +1,15 @@
 export const NAMED_SKILL = "Cursor";
 
-export type SectionId =
-  "overview" | "experience" | "work" | "stack" | "education" | "contact";
+export const sectionIds = [
+  "overview",
+  "experience",
+  "work",
+  "stack",
+  "education",
+  "contact",
+] as const;
+
+export type SectionId = (typeof sectionIds)[number];
 
 export type NavItem = {
   href: `#${SectionId}`;

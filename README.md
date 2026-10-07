@@ -42,6 +42,14 @@ npm run build
 
 Commits use conventional messages, for example `feat(home): keep experience copy flush on tablet`.
 
+## WebMCP
+
+The open page registers frontend commands on `navigator.modelContext` and `document.modelContext`. A WebMCP client runs them in the browser:
+
+- `set_theme` — set the site to `light` or `dark`
+- `toggle_theme` — switch the current theme
+- `go_to_section` — scroll to `overview`, `experience`, `work`, `stack`, `education`, or `contact`
+
 ## Contact
 
 - Email: keval.bhatt.777@gmail.com
