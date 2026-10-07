@@ -3,13 +3,13 @@
 import { useEffect } from "react";
 
 import type { Theme } from "@/lib/theme";
-import { sectionIds, type SectionId } from "@/lib/content";
+import { sectionIds } from "@/lib/content";
 
 import { useTheme } from "@/components/theme-provider";
 
 type ToolArgs = Record<string, unknown> | undefined;
 
-type WebMcpTool = {
+type ToolPayload = {
   name: string;
   title: string;
   description: string;
@@ -19,30 +19,134 @@ type WebMcpTool = {
     required?: string[];
     additionalProperties: false;
   };
-  annotations: { readOnlyHint: false };
-  execute: (args: ToolArgs) => Promise<string>;
 };
 
-type ToolRegistration = {
-  unregister?: () => void;
+type ThemeActions = {
+  setThemeMode: (theme: Theme) => void;
+  toggleTheme: () => Theme;
 };
 
-type WebMcpProvider = {
+type Command = (args: ToolArgs, actions: ThemeActions) => string;
+
+type ModelContext = {
   registerTool: (
-    tool: WebMcpTool,
-  ) => ToolRegistration | void | Promise<ToolRegistration | void>;
-  unregisterTool?: (name: string) => void;
+    tool: ToolPayload & {
+      annotations: { readOnlyHint: false };
+      execute: (args: ToolArgs) => Promise<string>;
+    },
+  ) => void;
 };
 
 const LOOKUP_MS = 500;
 const LOOKUP_WINDOW_MS = 30_000;
 
-function modelContexts(): WebMcpProvider[] {
-  const scopes = [document, navigator] as const;
-  const found: WebMcpProvider[] = [];
+function schema(
+  properties: Record<string, unknown>,
+  required?: string[],
+): ToolPayload["inputSchema"] {
+  return {
+    type: "object",
+    properties,
+    ...(required ? { required } : {}),
+    additionalProperties: false,
+  };
+}
 
-  for (const scope of scopes) {
-    const candidate = (scope as { modelContext?: WebMcpProvider }).modelContext;
+const tools: ToolPayload[] = [
+  {
+    name: "set_theme",
+    title: "Set theme",
+    description: "Switch the portfolio between light and dark mode.",
+    inputSchema: schema(
+      {
+        theme: {
+          type: "string",
+          enum: ["light", "dark"],
+          description: "Theme to apply on the open page.",
+        },
+      },
+      ["theme"],
+    ),
+  },
+  {
+    name: "toggle_theme",
+    title: "Toggle theme",
+    description: "Flip the portfolio between light and dark mode.",
+    inputSchema: schema({}),
+  },
+  {
+    name: "go_to_section",
+    title: "Go to section",
+    description: `Scroll the portfolio to one section: ${sectionIds.join(", ")}.`,
+    inputSchema: schema(
+      {
+        section: {
+          type: "string",
+          enum: [...sectionIds],
+          description: "Section to scroll into view.",
+        },
+      },
+      ["section"],
+    ),
+  },
+];
+
+function textArg(args: ToolArgs, key: string) {
+  const value = args?.[key];
+  return typeof value === "string" ? value : "";
+}
+
+function setTheme(args: ToolArgs, actions: ThemeActions) {
+  const theme = textArg(args, "theme");
+  if (theme !== "light" && theme !== "dark") {
+    throw new Error('Pass theme as "light" or "dark".');
+  }
+  actions.setThemeMode(theme);
+  return `Theme is ${theme}.`;
+}
+
+function toggleTheme(_args: ToolArgs, actions: ThemeActions) {
+  return `Theme is ${actions.toggleTheme()}.`;
+}
+
+function goToSection(args: ToolArgs) {
+  const section = textArg(args, "section");
+  if (!(sectionIds as readonly string[]).includes(section)) {
+    throw new Error(`Pass section as one of: ${sectionIds.join(", ")}.`);
+  }
+
+  const node = document.getElementById(section);
+  if (!node) {
+    throw new Error(`Section ${section} is not on this page.`);
+  }
+
+  node.scrollIntoView({ behavior: "smooth", block: "start" });
+  const hash = `#${section}`;
+  if (window.location.hash !== hash) {
+    window.history.pushState(null, "", hash);
+  }
+  return `Scrolled to ${section}.`;
+}
+
+const commands: Record<string, Command> = {
+  set_theme: setTheme,
+  toggle_theme: toggleTheme,
+  go_to_section: goToSection,
+};
+
+function runTool(name: string, args: ToolArgs, actions: ThemeActions) {
+  const command = commands[name];
+  if (!command) {
+    throw new Error(`Unknown command ${name}.`);
+  }
+  return command(args, actions);
+}
+
+function modelContexts() {
+  const found: ModelContext[] = [];
+
+  for (const scope of [document, navigator]) {
+    const candidate = (scope as { modelContext?: ModelContext }).modelContext;
     if (
       candidate &&
       typeof candidate.registerTool === "function" &&
@@ -55,114 +159,42 @@ function modelContexts(): WebMcpProvider[] {
   return found;
 }
 
-function readArg(args: ToolArgs, key: string) {
-  const value = args?.[key];
-  return typeof value === "string" ? value : "";
+function followAbort(source: AbortSignal, target: AbortController) {
+  if (source.aborted) {
+    target.abort();
+    return;
+  }
+  source.addEventListener("abort", () => target.abort(), { once: true });
 }
 
-function isTheme(value: string): value is Theme {
-  return value === "light" || value === "dark";
-}
+function wait(ms: number, signal: AbortSignal) {
+  return new Promise<void>((resolve) => {
+    if (signal.aborted) {
+      resolve();
+      return;
+    }
 
-function isSectionId(value: string): value is SectionId {
-  return (sectionIds as readonly string[]).includes(value);
-}
-
-function currentTheme(): Theme {
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+    const timer = window.setTimeout(resolve, ms);
+    signal.addEventListener(
+      "abort",
+      () => {
+        window.clearTimeout(timer);
+        resolve();
+      },
+      { once: true },
+    );
+  });
 }
 
 export function WebMcpCommands() {
-  const { setThemeMode, toggleTheme } = useTheme();
+  const { setThemeMode, toggleTheme: flipTheme } = useTheme();
 
   useEffect(() => {
-    let stopped = false;
-    const seen = new WeakSet<WebMcpProvider>();
-    const cleanups: Array<() => void> = [];
+    const controller = new AbortController();
+    const seen = new WeakSet<ModelContext>();
+    const { signal } = controller;
 
-    const tools: WebMcpTool[] = [
-      {
-        name: "set_theme",
-        title: "Set theme",
-        description: "Switch the portfolio between light and dark mode.",
-        inputSchema: {
-          type: "object",
-          properties: {
-            theme: {
-              type: "string",
-              enum: ["light", "dark"],
-              description: "Theme to apply on the open page.",
-            },
-          },
-          required: ["theme"],
-          additionalProperties: false,
-        },
-        annotations: { readOnlyHint: false },
-        execute: async (args) => {
-          const theme = readArg(args, "theme");
-          if (!isTheme(theme)) {
-            throw new Error('Pass theme as "light" or "dark".');
-          }
-          setThemeMode(theme);
-          return `Theme is ${theme}.`;
-        },
-      },
-      {
-        name: "toggle_theme",
-        title: "Toggle theme",
-        description: "Flip the portfolio between light and dark mode.",
-        inputSchema: {
-          type: "object",
-          properties: {},
-          additionalProperties: false,
-        },
-        annotations: { readOnlyHint: false },
-        execute: async () => {
-          toggleTheme();
-          return `Theme is ${currentTheme()}.`;
-        },
-      },
-      {
-        name: "go_to_section",
-        title: "Go to section",
-        description: `Scroll the portfolio to one section: ${sectionIds.join(", ")}.`,
-        inputSchema: {
-          type: "object",
-          properties: {
-            section: {
-              type: "string",
-              enum: [...sectionIds],
-              description: "Section to scroll into view.",
-            },
-          },
-          required: ["section"],
-          additionalProperties: false,
-        },
-        annotations: { readOnlyHint: false },
-        execute: async (args) => {
-          const section = readArg(args, "section");
-          if (!isSectionId(section)) {
-            throw new Error(`Pass section as one of: ${sectionIds.join(", ")}.`);
-          }
-          const node = document.getElementById(section);
-          if (!node) {
-            throw new Error(`Section ${section} is not on this page.`);
-          }
-          node.scrollIntoView({ behavior: "smooth", block: "start" });
-          const nextHash = `#${section}`;
-          if (window.location.hash !== nextHash) {
-            window.history.pushState(null, "", nextHash);
-          }
-          return `Scrolled to ${section}.`;
-        },
-      },
-    ];
-
-    const attach = () => {
-      if (stopped) {
-        return;
-      }
-
+    const register = () => {
       for (const provider of modelContexts()) {
         if (seen.has(provider)) {
           continue;
@@ -171,20 +203,11 @@ export function WebMcpCommands() {
 
         for (const tool of tools) {
           try {
-            const pending = provider.registerTool(tool);
-            void Promise.resolve(pending).then((handle) => {
-              if (stopped) {
-                handle?.unregister?.();
-                provider.unregisterTool?.(tool.name);
-                return;
-              }
-              if (handle && typeof handle.unregister === "function") {
-                cleanups.push(() => handle.unregister?.());
-                return;
-              }
-              if (typeof provider.unregisterTool === "function") {
-                cleanups.push(() => provider.unregisterTool?.(tool.name));
-              }
+            provider.registerTool({
+              ...tool,
+              annotations: { readOnlyHint: false },
+              execute: async (args) =>
+                runTool(tool.name, args, { setThemeMode, toggleTheme: flipTheme }),
             });
           } catch {
             // A remount can try to register the same command twice.
@@ -193,22 +216,21 @@ export function WebMcpCommands() {
       }
     };
 
-    attach();
-    const timer = window.setInterval(attach, LOOKUP_MS);
-    const stopTimer = window.setTimeout(
-      () => window.clearInterval(timer),
-      LOOKUP_WINDOW_MS,
-    );
+    const watch = async () => {
+      const lookup = new AbortController();
+      followAbort(signal, lookup);
+      followAbort(AbortSignal.timeout(LOOKUP_WINDOW_MS), lookup);
 
-    return () => {
-      stopped = true;
-      window.clearInterval(timer);
-      window.clearTimeout(stopTimer);
-      for (const cleanup of cleanups) {
-        cleanup();
+      while (!lookup.signal.aborted) {
+        register();
+        await wait(LOOKUP_MS, lookup.signal);
       }
     };
-  }, [setThemeMode, toggleTheme]);
+
+    void watch();
+
+    return () => controller.abort();
+  }, [setThemeMode, flipTheme]);
 
   return null;
 }

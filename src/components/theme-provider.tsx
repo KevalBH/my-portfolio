@@ -16,7 +16,7 @@ type ThemeContextValue = {
   theme: Theme;
   ready: boolean;
   setThemeMode: (next: Theme) => void;
-  toggleTheme: () => void;
+  toggleTheme: () => Theme;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -48,7 +48,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeMode(themeRef.current === "dark" ? "light" : "dark");
+    const next: Theme = themeRef.current === "dark" ? "light" : "dark";
+    setThemeMode(next);
+    return next;
   }, [setThemeMode]);
 
   const value = useMemo(

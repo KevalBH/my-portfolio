@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { sidebarTitle } from "@/lib/resume";
 import { getSiteContent } from "@/queries/site";
 
 import { MonogramMark } from "@/components/graphics";
@@ -27,7 +28,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               {profile.name}
             </p>
             <p className="text-muted mt-3 max-w-[16rem] text-sm leading-6">
-              Senior Frontend Developer
+              {sidebarTitle}
             </p>
             <p className="text-faint mt-1 text-sm">{profile.location}</p>
             <div className="mt-5 flex gap-2">

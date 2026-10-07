@@ -21,6 +21,8 @@ export const profile = {
     "Frontend Developer with 5+ years of experience building and scaling web applications using React.js, Next.js, and TypeScript. Experienced in leading cross-functional teams and delivering 25+ releases across fintech, e-commerce, and real-time collaboration products. Strong focus on frontend architecture, reusable UI systems, performance optimization, and Core Web Vitals, with hands-on experience using AI-assisted development tools and VS Code-based AI workflows to improve development efficiency, code quality, and team productivity.",
 } satisfies Profile;
 
+export const sidebarTitle = "Senior Frontend Developer";
+
 export const stats = [
   { value: "5+", label: "Years shipping product" },
   { value: "25+", label: "Production releases" },
