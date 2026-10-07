@@ -76,9 +76,7 @@ export function getSiteJsonLd() {
     telephone: profile.phoneHref.replace("tel:", ""),
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Mahuva",
-      postalCode: "364290",
-      addressRegion: "Gujarat",
+      addressLocality: "Bhavnagar",
       addressCountry: "IN",
     },
     sameAs: [profile.linkedin, profile.github],

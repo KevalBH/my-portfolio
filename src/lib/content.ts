@@ -1,4 +1,4 @@
-export const NAMED_SKILL = "Cursor";
+export const NAMED_SKILL = "Agentic AI";
 
 export const sectionIds = [
   "overview",
@@ -34,12 +34,12 @@ export type Stat = {
 };
 
 export type SkillGroupTitle =
-  | "Architecture & performance"
+  | "Frontend architecture & performance"
   | "UI & design systems"
-  | "State & data"
-  | "Testing"
-  | "Cloud & delivery"
-  | "Leadership";
+  | "State & data management"
+  | "AI-assisted development"
+  | "Cloud & DevOps"
+  | "Leadership & testing";
 
 export type SkillGroup = {
   title: SkillGroupTitle;

@@ -11,14 +11,14 @@ import type {
 export const profile = {
   name: "Keval Bhatt",
   title: "Lead Frontend Developer",
-  location: "Mahuva 364290, Gujarat, India",
+  location: "Bhavnagar, India",
   email: "keval.bhatt.777@gmail.com",
   phone: "+91 97766-91766",
   phoneHref: "tel:+919776691766",
   linkedin: "https://www.linkedin.com/in/keval-dev",
   github: "https://github.com/KevalBH",
   summary:
-    "Frontend Developer with 5+ years of experience building and scaling web applications using React.js, Next.js, and TypeScript. Experienced in leading cross-functional teams and delivering 25+ releases across fintech, e-commerce, and real-time collaboration products. Strong focus on frontend architecture, reusable UI systems, performance optimization, and Core Web Vitals, with hands-on experience using AI-assisted development tools and VS Code-based AI workflows to improve development efficiency, code quality, and team productivity.",
+    "Frontend Developer with 5+ years of experience building and scaling web applications using React.js, Next.js, and TypeScript. Experienced in leading cross-functional teams and delivering 25+ releases across fintech, e-commerce, and real-time collaboration products. Strong focus on frontend architecture, reusable UI systems, performance optimization, and Core Web Vitals, with hands-on experience using Agentic AI, AI-assisted development tools and workflows to improve development efficiency, code quality, and team productivity.",
 } satisfies Profile;
 
 export const sidebarTitle = "Senior Frontend Developer";
@@ -32,48 +32,79 @@ export const stats = [
 
 export const skillGroups = [
   {
-    title: "Architecture & performance",
+    title: "Frontend architecture & performance",
     items: [
       "React.js",
       "Next.js",
       "TypeScript",
-      "JavaScript (ES6+)",
+      "JavaScript",
+      "Micro Frontends",
+      "Monorepos",
+      "Web Accessibility",
       "Core Web Vitals",
-      "SSR/SSG optimization",
-      "Code-splitting",
+      "SSR/SSG",
+      "Code-Splitting",
       "Webpack",
-      "Vite",
-      "Node.js",
-      "Express.js",
       "Serverless",
+      "Browser DevTools",
+      "PM2",
+      "Node.js",
     ],
   },
   {
     title: "UI & design systems",
-    items: ["Tailwind CSS", "Design-to-code", "Shadcn UI", "Ant Design", "Monorepos"],
-  },
-  {
-    title: "State & data",
-    items: ["Context API", "RESTful APIs", "WebSockets", "React Query", "Redux"],
-  },
-  {
-    title: "Testing",
-    items: ["Jest", "React Testing Library (RTL)", "Enzyme"],
-  },
-  {
-    title: "Cloud & delivery",
-    items: ["AWS", "Google Cloud", "Firebase", "GitHub Actions", "CI/CD pipelines"],
-  },
-  {
-    title: "Leadership",
     items: [
-      "Cursor",
+      "Tailwind CSS",
+      "Styled Components",
+      "Shadcn UI",
+      "Ant Design",
+      "Material UI",
+      "Component Libraries",
+    ],
+  },
+  {
+    title: "State & data management",
+    items: [
+      "Context API",
+      "Redux",
+      "React Query",
+      "REST APIs",
+      "GraphQL",
+      "WebSockets",
+      "Axios",
+      "PWA",
+    ],
+  },
+  {
+    title: "AI-assisted development",
+    items: ["Agentic AI", "Cursor", "GitHub Copilot", "LLMs", "AI Workflows (n8n)", "MCP"],
+  },
+  {
+    title: "Cloud & DevOps",
+    items: [
+      "AWS",
+      "Google Cloud",
+      "Firebase",
+      "Docker",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Vercel",
+      "Netlify",
+    ],
+  },
+  {
+    title: "Leadership & testing",
+    items: [
+      "PR Reviews",
+      "Estimation",
+      "Task Distribution",
+      "Scrum",
+      "Jira",
+      "Nifty",
+      "Jest",
+      "RTL",
+      "Git",
       "GitHub",
-      "PR reviews",
-      "Team management",
-      "Estimations",
-      "Task distribution",
-      "Execution planning",
     ],
   },
 ] satisfies readonly SkillGroup[];
@@ -141,7 +172,7 @@ export const work = [
     points: [
       "Architected a high-frequency trading platform and administration dashboard with React.js, Next.js, and TypeScript for desktop and mobile web.",
       "Integrated Alpaca APIs and WebSocket pipelines to ingest, map, and render real-time market data, order books, and live trade executions with minimal client-side latency.",
-      "Engineered secure onboarding and automated verification with MetaMap APIs for KYC/AML, biometric checks, and identity document processing.",
+      "Engineered secure onboarding and automated verification with MetaMap APIs for real-time KYC/AML, biometric checks, and identity document processing.",
       "Implemented role-based access controls and data-masking in the admin platform for profiles, audit logs, and transaction monitoring.",
       "Optimized client-side state with Redux Toolkit and caching layers so rapid financial streams did not drop frames or trigger redundant re-renders.",
     ],
@@ -154,7 +185,7 @@ export const work = [
     stack: ["Mapbox", "Google Maps", "Firebase", "REST"],
     points: [
       "Architected a visual, cross-platform dating application, translating complex UI/UX wireframes into a pixel-perfect, component-driven frontend with micro-interactions.",
-      "Engineered a dual-provider geospatial engine with Mapbox and Google Maps for location tracking, proximity matchmaking, and heatmaps.",
+      "Engineered a dual-provider geospatial engine with Mapbox and Google Maps for real-time location tracking, proximity matchmaking, and heatmaps.",
       "Implemented low-latency chat and notifications on Firebase (Firestore / Realtime Database), optimizing listeners so messaging stays light on battery and data.",
       "Optimized asset loading, image caching, and lazy-loading for media-heavy profiles and discovery decks.",
       "Integrated REST APIs for profile verification, matchmaking, multi-factor authentication, and premium subscription payments.",
@@ -162,15 +193,15 @@ export const work = [
   },
   {
     index: "03",
-    title: "High-performance web properties & design-to-code",
+    title: "High-performance web properties & design-to-code implementation",
     href: "https://odhavindustries.org",
     domain: "Marketing / product sites",
     stack: ["Next.js", "SSG", "Tailwind CSS", "Styled Components"],
     points: [
       "Engineered responsive, SEO-optimized static properties with Next.js static generation and semantic HTML5, translating visual UI/UX designs into code.",
-      "Architected reusable atomic components with Tailwind CSS, Styled Components, and CSS3 so styling stayed tight to the design guidelines.",
-      "Optimized production builds with compression, image work, and code-splitting for cross-device rendering and a fast first load.",
-      "Delivered modular frontend codebases structured for maintainability and a clean backend handoff.",
+      "Architected reusable atomic components with Tailwind CSS, Styled Components, and CSS3, keeping the styling footprint tight to the design guidelines.",
+      "Optimized production builds with compression, image optimization, and code-splitting for cross-device rendering and a fast first load.",
+      "Delivered modular frontend codebases structured for maintainability and a clean handoff to backend integration.",
     ],
   },
   {
@@ -181,8 +212,8 @@ export const work = [
     stack: ["React.js", "REST APIs", "Admin dashboards", "Charts"],
     points: [
       "Architected a scalable React.js frontend for restaurant discovery, table reservations, and food ordering across dine-in, pickup, and delivery, using reusable components, modular architecture, and client-side state.",
-      "Owned discovery and customer workflows, including live location filtering, voice search, search and sort, nearby and trending restaurants, hotspots, menus, booking, and reviews.",
-      "Designed role-based Restaurant Admin and Super Admin dashboards with API integrations for menus, orders, tables, employees, inventory, restaurants, reviews, and Excel import and export.",
+      "Owned discovery and customer workflows end to end, including live location filtering, voice search, search and sort, nearby and trending restaurants, hotspots, menus, booking, and reviews.",
+      "Designed role-based Restaurant Admin and Super Admin dashboards with API integrations for menus, orders, table arrangements, employees, inventory, restaurants, reviews, and Excel import and export.",
       "Built reporting dashboards with chart visualizations for revenue, order trends, restaurant activity, and performance, plus form validation and a responsive, data-driven UI.",
     ],
   },
@@ -190,15 +221,15 @@ export const work = [
 
 export const education = [
   {
-    school: "Marwadi Education Foundation",
+    school: "Marwadi Education Foundation Group of Institutes",
     place: "Rajkot, Gujarat",
-    credential: "Master of Computer Applications with Distinction; GTU Syllabus",
+    credential: "MCA with Distinction; GTU Syllabus",
     period: "2017 — 2019",
   },
   {
-    school: "K. B. Parekh College of Computer Science",
+    school: "Smt. K. B. Parekh College of Computer Science",
     place: "Mahuva, Gujarat",
-    credential: "Bachelor of Computer Applications; Bhavnagar University Syllabus",
+    credential: "BCA; Bhavnagar University Syllabus",
     period: "2014 — 2017",
   },
 ] satisfies readonly EducationItem[];

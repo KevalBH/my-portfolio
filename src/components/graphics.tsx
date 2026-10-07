@@ -225,7 +225,7 @@ export function WorkMark({ index }: { index: WorkIndex }) {
 }
 
 const skillMarks: Record<SkillGroupTitle, ReactNode> = {
-  "Architecture & performance": (
+  "Frontend architecture & performance": (
     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
   ),
   "UI & design systems": (
@@ -235,13 +235,16 @@ const skillMarks: Record<SkillGroupTitle, ReactNode> = {
       <rect x="3" y="13" width="18" height="8" rx="1.5" />
     </g>
   ),
-  "State & data": <path d="M12 5v14M5 12h14" />,
-  Testing: <path d="M20 6 9 17l-5-5" />,
-  "Cloud & delivery": <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />,
-  Leadership: (
+  "State & data management": <path d="M12 5v14M5 12h14" />,
+  "AI-assisted development": (
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
+  ),
+  "Cloud & DevOps": <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />,
+  "Leadership & testing": (
     <g>
-      <circle cx="12" cy="8" r="3.5" />
-      <path d="M5 19c1.4-3.5 4-5 7-5s5.6 1.5 7 5" />
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19c1.2-3 3.4-4.5 5.5-4.5s4.3 1.5 5.5 4.5" />
+      <path d="m16 11 1.6 1.6L21 9" />
     </g>
   ),
 };
