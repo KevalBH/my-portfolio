@@ -14,7 +14,7 @@ export function HomePage() {
     getSiteContent();
 
   return (
-    <main className="px-4 pt-4 pb-20 sm:px-6 md:px-8 md:pt-8 md:pb-24 lg:px-14 lg:py-14">
+    <main className="px-5 pt-5 pb-16 sm:px-8 md:px-10 md:pt-12 md:pb-20 lg:px-16 lg:py-14">
       <HomeHeader profile={profile} nav={nav} />
       <OverviewSection profile={profile} stats={stats} />
       <ExperienceSection experience={experience} />

@@ -28,14 +28,27 @@ export function SectionHeading({
       <Eyebrow>{eyebrow}</Eyebrow>
       <Heading
         className={cn(
-          "text-ink font-semibold tracking-tight",
+          "text-ink font-serif font-normal tracking-tight",
           isHero
-            ? "mt-5 max-w-3xl text-[clamp(2.1rem,8vw,4.4rem)] leading-[1.02]"
-            : "mt-3 max-w-xl text-[1.7rem] sm:text-3xl md:text-4xl",
+            ? "mt-4 max-w-4xl text-[clamp(2.7rem,7vw,5.4rem)] leading-[0.96]"
+            : "mt-3 max-w-2xl text-[2rem] leading-[1.05] sm:text-4xl md:text-[2.75rem]",
         )}
       >
         {title}
       </Heading>
+      <svg
+        viewBox="0 0 120 8"
+        aria-hidden="true"
+        fill="none"
+        className={cn("mt-4 h-2 w-24", isHero && "mt-6 w-32")}
+      >
+        <path
+          d="M0 4 H120"
+          pathLength="1"
+          strokeWidth="1.5"
+          className="ink-draw stroke-accent"
+        />
+      </svg>
       {description ? (
         <p
           className={cn(

@@ -17,10 +17,10 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#07080d",
+        backgroundColor: "#14110e",
         backgroundImage:
-          "radial-gradient(820px 380px at 100% 0%, rgba(141,164,255,0.32), transparent 58%)",
-        color: "#eef1f8",
+          "radial-gradient(820px 380px at 100% 0%, rgba(231,160,106,0.28), transparent 58%)",
+        color: "#f6f0e6",
         padding: "68px 76px",
         fontFamily: "Geist",
       }}
@@ -31,12 +31,12 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
             width: 64,
             height: 64,
             borderRadius: 18,
-            backgroundColor: "rgba(141,164,255,0.16)",
-            border: "1px solid rgba(141,164,255,0.45)",
+            backgroundColor: "rgba(231,160,106,0.16)",
+            border: "1px solid rgba(231,160,106,0.5)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#8da4ff",
+            color: "#e7a06a",
             fontSize: 34,
             fontWeight: 600,
           }}
@@ -47,7 +47,7 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
           style={{
             display: "flex",
             marginLeft: 22,
-            color: "#8da4ff",
+            color: "#e7a06a",
             fontSize: 22,
             fontWeight: 600,
             letterSpacing: 4,
@@ -74,7 +74,7 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
             marginTop: 18,
             fontSize: 36,
             lineHeight: 1.2,
-            color: "#9aa3b8",
+            color: "#c9bbaa",
           }}
         >
           {title}
@@ -96,8 +96,8 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
                 marginLeft: index === 0 ? 0 : 12,
                 padding: "10px 16px",
                 borderRadius: 999,
-                backgroundColor: "rgba(141,164,255,0.14)",
-                color: "#c9d4ff",
+                backgroundColor: "rgba(231,160,106,0.16)",
+                color: "#f0d2b4",
                 fontSize: 22,
                 fontWeight: 600,
               }}
@@ -106,7 +106,7 @@ export function ShareCard({ name, title, location }: ShareCardProps) {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", color: "#6d758a", fontSize: 22 }}>{location}</div>
+        <div style={{ display: "flex", color: "#8f8478", fontSize: 22 }}>{location}</div>
       </div>
     </div>
   );

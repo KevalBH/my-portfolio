@@ -205,8 +205,8 @@ export function getManifest(): MetadataRoute.Manifest {
     description: getDocumentDescription(),
     start_url: "/",
     display: "standalone",
-    background_color: "#07080d",
-    theme_color: "#07080d",
+    background_color: "#14110e",
+    theme_color: "#14110e",
     lang: "en",
     icons: [
       {

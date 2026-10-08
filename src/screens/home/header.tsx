@@ -11,10 +11,10 @@ type HomeHeaderProps = {
 
 export function HomeHeader({ profile, nav }: HomeHeaderProps) {
   return (
-    <header className="border-line bg-bg/80 sticky top-0 z-20 -mx-4 mb-8 border-b px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6 md:hidden">
+    <header className="border-line bg-bg/85 sticky top-0 z-20 -mx-5 mb-8 border-b px-5 py-3 backdrop-blur-xl sm:-mx-8 sm:px-8 md:hidden">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-ink text-lg leading-none font-semibold tracking-tight">
+          <p className="text-ink font-serif text-2xl leading-none tracking-tight">
             {profile.name}
           </p>
           <p className="text-muted mt-1 truncate text-xs">{profile.title}</p>

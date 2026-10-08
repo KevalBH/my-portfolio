@@ -3,10 +3,9 @@ import type { ReactNode } from "react";
 import { sidebarTitle } from "@/lib/resume";
 import { getSiteContent } from "@/queries/site";
 
-import { MonogramMark } from "@/components/graphics";
+import { StudioMark } from "@/components/ink";
 import { SectionNav } from "@/components/section-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { GithubIcon, LinkedinIcon } from "@/components/contact-icons";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const { nav, profile } = getSiteContent();
@@ -16,46 +15,47 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a className="skip-link" href={nav[0].href}>
         Skip to content
       </a>
-      <div className="relative z-[1] mx-auto grid min-h-screen max-w-[1180px] grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="md:border-line hidden md:sticky md:top-0 md:flex md:h-svh md:flex-col md:justify-between md:border-r md:px-6 md:py-8 lg:px-8 lg:py-10">
+      <div className="relative z-[1] mx-auto grid min-h-screen max-w-[1240px] grid-cols-1 md:grid-cols-[210px_minmax(0,1fr)] lg:grid-cols-[250px_minmax(0,1fr)]">
+        <aside className="border-line hidden md:sticky md:top-0 md:flex md:h-svh md:flex-col md:justify-between md:border-r md:px-6 md:py-10 lg:px-8">
           <div>
-            <p className="text-accent inline-flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase">
-              <span className="hero-node bg-accent h-1.5 w-1.5 rounded-full" />
+            <p className="text-faint font-mono text-[11px] tracking-[0.22em] uppercase">
               Portfolio
             </p>
-            <MonogramMark className="mt-6 size-12 transition-transform duration-500 hover:rotate-6" />
-            <p className="text-ink mt-4 text-2xl leading-none font-semibold tracking-tight">
+            <p className="text-ink mt-8 font-serif text-[2.6rem] leading-[0.9] tracking-tight">
               {profile.name}
             </p>
-            <p className="text-muted mt-3 max-w-[16rem] text-sm leading-6">
+            <p className="text-muted mt-4 font-serif text-lg leading-6 italic">
               {sidebarTitle}
             </p>
-            <p className="text-faint mt-1 text-sm">{profile.location}</p>
-            <div className="mt-5 flex gap-2">
+            <p className="text-faint mt-2 text-sm">{profile.location}</p>
+            <div className="text-muted mt-6 flex gap-4 text-sm">
               <a
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn (opens in a new tab)"
-                className="border-line bg-bg-2 text-muted hover:border-accent/40 hover:text-accent inline-flex size-9 items-center justify-center rounded-lg border transition-colors"
+                className="hover:text-accent underline-offset-4 hover:underline"
               >
-                <LinkedinIcon className="size-4" />
+                LinkedIn
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
               <a
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub (opens in a new tab)"
-                className="border-line bg-bg-2 text-muted hover:border-accent/40 hover:text-accent inline-flex size-9 items-center justify-center rounded-lg border transition-colors"
+                className="hover:text-accent underline-offset-4 hover:underline"
               >
-                <GithubIcon className="size-4" />
+                GitHub
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </div>
-            <div className="mt-8">
+            <div className="mt-10">
               <SectionNav items={nav} />
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-end justify-between gap-4">
+            <StudioMark className="size-[4.5rem]" />
+            <ThemeToggle />
+          </div>
         </aside>
         <div className="min-w-0">{children}</div>
       </div>

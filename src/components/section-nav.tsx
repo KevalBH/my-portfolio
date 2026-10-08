@@ -89,7 +89,7 @@ export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
 
   if (variant === "pills") {
     return (
-      <nav aria-label="Page sections" className="flex flex-wrap gap-2">
+      <nav aria-label="Page sections" className="flex flex-wrap gap-x-4 gap-y-2">
         {items.map((item) => {
           const isActive = active === item.href;
           return (
@@ -98,10 +98,10 @@ export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
               href={item.href}
               aria-current={isActive ? "location" : undefined}
               className={cn(
-                "rounded-full border px-3 py-2 text-[13px] font-medium whitespace-nowrap transition-all duration-300",
+                "py-1 text-[13px] whitespace-nowrap transition-colors duration-300",
                 isActive
-                  ? "border-accent bg-accent text-white"
-                  : "border-line bg-bg-2 text-muted",
+                  ? "text-ink border-accent border-b"
+                  : "text-faint hover:text-muted border-b border-transparent",
               )}
             >
               {item.label}
@@ -113,8 +113,8 @@ export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
   }
 
   return (
-    <nav aria-label="Page sections" className="flex flex-col gap-1">
-      {items.map((item) => {
+    <nav aria-label="Page sections" className="flex flex-col">
+      {items.map((item, index) => {
         const isActive = active === item.href;
         return (
           <a
@@ -122,16 +122,18 @@ export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
             href={item.href}
             aria-current={isActive ? "location" : undefined}
             className={cn(
-              "group flex min-h-10 items-center gap-3 py-1.5 text-[13px] tracking-wide transition-colors duration-300",
+              "flex min-h-9 items-baseline gap-3 py-1.5 text-[13px] transition-colors duration-300",
               isActive ? "text-ink" : "text-faint hover:text-muted",
             )}
           >
             <span
               className={cn(
-                "h-px transition-all duration-300",
-                isActive ? "bg-accent w-8" : "bg-line w-4 group-hover:w-6",
+                "font-mono text-[10px] tracking-[0.14em]",
+                isActive ? "text-accent" : "text-faint",
               )}
-            />
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
             {item.label}
           </a>
         );

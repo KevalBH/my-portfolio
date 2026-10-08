@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f5f6fa;
-  --bg-2: #ffffff;
-  --bg-3: #eceef5;
-  --line: rgba(15, 18, 32, 0.08);
-  --text: #0c0e14;
-  --muted: #5c6378;
-  --faint: #8b91a3;
-  --accent: #4f6ef7;
-  --glow: rgba(79, 110, 247, 0.14);
+  --bg: #f6f1e8;
+  --bg-2: #fffdf8;
+  --bg-3: #ebe4d6;
+  --line: rgba(36, 24, 14, 0.12);
+  --text: #1c1612;
+  --muted: #5f564c;
+  --faint: #8d8378;
+  --accent: #b5522a;
+  --glow: rgba(181, 82, 42, 0.08);
 }
 
 html.dark {
-  --bg: #07080d;
-  --bg-2: #101218;
-  --bg-3: #181b24;
-  --line: rgba(232, 236, 255, 0.09);
-  --text: #eef1f8;
-  --muted: #9aa3b8;
-  --faint: #6d758a;
-  --accent: #8da4ff;
-  --glow: rgba(141, 164, 255, 0.12);
+  --bg: #14110e;
+  --bg-2: #1c1814;
+  --bg-3: #2a241e;
+  --line: rgba(246, 236, 220, 0.1);
+  --text: #f6f0e6;
+  --muted: #c9bbaa;
+  --faint: #8f8478;
+  --accent: #e7a06a;
+  --glow: rgba(231, 160, 106, 0.12);
 }
 
 @theme inline {
@@ -34,7 +34,7 @@ html.dark {
   --color-faint: var(--faint);
   --color-accent: var(--accent);
   --font-sans: var(--font-geist);
-  --font-serif: var(--font-geist);
+  --font-serif: var(--font-display);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -47,31 +47,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    radial-gradient(900px 420px at 92% -8%, var(--glow), transparent 55%),
-    radial-gradient(
-      640px 280px at -8% 12%,
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 50%
-    ),
-    var(--bg);
+    radial-gradient(720px 280px at 100% 0%, var(--glow), transparent 60%), var(--bg);
   color: var(--text);
   font-family: var(--font-geist), system-ui, sans-serif;
   letter-spacing: -0.011em;
-}
-
-body::before {
-  content: "";
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  opacity: 0.45;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse at 50% 0%, black 20%, transparent 75%);
-  animation: grid-breathe 12s ease-in-out infinite;
 }
 
 ::selection {
@@ -117,9 +96,7 @@ body::before {
 }
 
 .lift:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
-  box-shadow: 0 20px 44px -28px color-mix(in srgb, var(--accent) 58%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
 }
 
 @keyframes node-pulse {
@@ -153,13 +130,119 @@ body::before {
   }
 }
 
-@keyframes grid-breathe {
-  0%,
-  100% {
-    opacity: 0.38;
+.ink-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ink-draw 1.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--draw-delay, var(--reveal-delay, 180ms));
+}
+
+.plate-drift {
+  animation: plate-drift 26s ease-in-out infinite alternate;
+}
+
+.plate-image {
+  transition:
+    filter 0.45s ease,
+    opacity 0.45s ease;
+}
+
+html.dark .plate-frame {
+  background: var(--bg-2);
+}
+
+html.dark .plate-image {
+  filter: invert(0.92) hue-rotate(180deg) saturate(1.08) brightness(1.28) contrast(1.02);
+  opacity: 0.96;
+}
+
+.plate-frame:hover .plate-drift {
+  animation-play-state: paused;
+}
+
+.folio-frames,
+.folio-block {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.folio-frames {
+  animation: folio-shift 12s ease-in-out infinite alternate;
+}
+
+.folio-block {
+  animation: folio-block 9s ease-in-out infinite alternate;
+}
+
+.orbit-spin,
+.orbit-spin-reverse {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: orbit-spin 18s linear infinite;
+}
+
+.orbit-spin-reverse {
+  animation-duration: 26s;
+  animation-direction: reverse;
+}
+
+.grow-y {
+  transform-origin: top;
+  animation: grow-y 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mark-frame {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ink-draw 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes ink-draw {
+  to {
+    stroke-dashoffset: 0;
   }
-  50% {
-    opacity: 0.55;
+}
+
+@keyframes plate-drift {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.065) translate3d(0, -1.6%, 0);
+  }
+}
+
+@keyframes folio-shift {
+  from {
+    transform: translate3d(-5px, 4px, 0);
+  }
+  to {
+    transform: translate3d(7px, -6px, 0);
+  }
+}
+
+@keyframes folio-block {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-12px, 8px, 0);
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
   }
 }
 

@@ -258,13 +258,21 @@ const skillMarks: Record<SkillGroupTitle, ReactNode> = {
 
 export function SkillMark({ title }: { title: SkillGroupTitle }) {
   return (
-    <span
-      className="bg-accent/10 flex size-9 shrink-0 items-center justify-center rounded-[10px]"
-      aria-hidden="true"
-    >
+    <span className="relative size-8 shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 32 32" className="absolute inset-0" fill="none">
+        <rect
+          x="1.25"
+          y="1.25"
+          width="29.5"
+          height="29.5"
+          pathLength="1"
+          className="mark-frame stroke-accent"
+          strokeWidth="1"
+        />
+      </svg>
       <svg
         viewBox="0 0 24 24"
-        className="text-accent size-[18px]"
+        className="text-accent absolute inset-0 m-auto size-4"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.7"
