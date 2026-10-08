@@ -236,6 +236,13 @@ const skillMarks: Record<SkillGroupTitle, ReactNode> = {
     </g>
   ),
   "State & data management": <path d="M12 5v14M5 12h14" />,
+  "Backend & realtime": (
+    <g>
+      <rect x="3" y="3" width="18" height="7" rx="2" />
+      <rect x="3" y="14" width="18" height="7" rx="2" />
+      <path d="M7 6.5h.01M7 17.5h.01" />
+    </g>
+  ),
   "AI-assisted development": (
     <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
   ),

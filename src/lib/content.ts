@@ -37,6 +37,7 @@ export type SkillGroupTitle =
   | "Frontend architecture & performance"
   | "UI & design systems"
   | "State & data management"
+  | "Backend & realtime"
   | "AI-assisted development"
   | "Cloud & DevOps"
   | "Leadership & testing";

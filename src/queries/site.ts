@@ -35,7 +35,7 @@ export function getDocumentTitle() {
 }
 
 export function getDocumentDescription() {
-  return `${profile.name} is a ${profile.title} in ${profile.location}, building production React, Next.js, and TypeScript systems for fintech, e-commerce, and real-time products.`;
+  return `${profile.name} is a MERN Stack Developer and ${profile.title} in ${profile.location}, building production React, Next.js, and TypeScript systems for fintech, e-commerce, and real-time products.`;
 }
 
 export function getShareSkills() {
@@ -84,6 +84,7 @@ export function getSiteJsonLd() {
       "React",
       "Next.js",
       "TypeScript",
+      "MERN",
       "Frontend architecture",
       "Design systems",
     ],
@@ -111,6 +112,7 @@ export function getRootMetadata(): Metadata {
       "React",
       "Next.js",
       "TypeScript",
+      "MERN",
       "frontend architecture",
       "design systems",
       profile.location,

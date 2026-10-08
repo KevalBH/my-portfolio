@@ -17,7 +17,11 @@ export function StackSection({ skillGroups }: StackSectionProps) {
       <SectionHeading eyebrow="04 / Stack" title="The operating layer." />
       <div className="mt-8 grid gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4">
         {skillGroups.map((group, index) => (
-          <Reveal key={group.title} delay={index * 60}>
+          <Reveal
+            key={group.title}
+            className={index === skillGroups.length - 1 ? "sm:col-span-2" : undefined}
+            delay={index * 60}
+          >
             <LiftCard className="rounded-3xl p-4 sm:p-5">
               <h3 className="text-ink flex items-center gap-3 text-sm leading-none font-semibold">
                 <SkillMark title={group.title} />
