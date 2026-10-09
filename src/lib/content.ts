@@ -60,7 +60,7 @@ export type Company = {
   roles: readonly Role[];
 };
 
-export type WorkIndex = "01" | "02" | "03" | "04";
+export type WorkIndex = "01" | "02" | "03" | "04" | "05";
 
 export type WorkItem = {
   index: WorkIndex;
@@ -69,6 +69,7 @@ export type WorkItem = {
   domain: string;
   stack: readonly string[];
   points: readonly string[];
+  aiPoints?: readonly string[];
 };
 
 export type EducationItem = {

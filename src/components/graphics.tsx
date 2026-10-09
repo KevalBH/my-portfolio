@@ -208,6 +208,26 @@ const workArt: Record<WorkIndex, ReactNode> = {
       </g>
     </g>
   ),
+  "05": (
+    <g>
+      <rect width="640" height="220" className="fill-accent/8" />
+      <circle cx="250" cy="110" r="72" className="stroke-line fill-none" />
+      <circle cx="250" cy="110" r="42" className="stroke-accent/40 fill-none" />
+      <circle cx="214" cy="86" r="7" className="fill-accent" />
+      <circle cx="292" cy="124" r="10" className="fill-accent/80" />
+      <circle cx="236" cy="146" r="5" className="fill-accent/50" />
+      <rect
+        x="390"
+        y="64"
+        width="180"
+        height="44"
+        rx="14"
+        className="fill-bg-2 stroke-line"
+      />
+      <rect x="408" y="80" width="120" height="8" rx="4" className="fill-accent/50" />
+      <rect x="214" y="168" width="72" height="10" rx="3" className="fill-accent/70" />
+    </g>
+  ),
 };
 
 export function WorkMark({ index }: { index: WorkIndex }) {

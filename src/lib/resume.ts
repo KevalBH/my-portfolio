@@ -168,6 +168,47 @@ export const experience = [
 export const work = [
   {
     index: "01",
+    title: "Tablekart — AI booking, ordering & management",
+    href: "https://cv-byt.vercel.app/",
+    domain: "Hospitality · AI",
+    stack: [
+      "WebMCP",
+      "MCP",
+      "React.js",
+      "REST APIs",
+      "Real-time reservations",
+      "Admin dashboards",
+    ],
+    aiPoints: [
+      "Built Tablekart, a dining product for finding a restaurant, locking a table in real time, and ordering from the seat once you are there.",
+      "Turned the customer portal into an AI tool surface with WebMCP, so an assistant in the browser, Claude, or Cursor can search restaurants, read a menu, check live slots, and book a table in the page.",
+      "Kept those tools on guest routes only — discovery, cart, and reservations — and left back-office panels out of the agent context.",
+    ],
+    points: [
+      "Built and scaled the React.js frontend for restaurant discovery, table reservations, and food ordering across dine-in, pickup, and delivery, using reusable components and modular architecture.",
+      "Implemented key customer workflows including location-based restaurant discovery, voice search, search, filter, and sort, nearby and trending restaurants, hotspots, menu details, bookings, and customer reviews.",
+      "Designed and developed Restaurant Admin and Super Admin dashboards, integrating APIs for menus, orders, table arrangements, employees, inventory, restaurants, reviews, and Excel-based data import and export.",
+      "Built interactive reporting and analytics dashboards with charts for revenue, order trends, restaurant activity, and performance, along with responsive forms, validation, and reusable data-driven components.",
+      "Structured shared UI components, business logic, and data-handling patterns to reduce duplication and keep customer-facing and admin workflows easier to maintain and extend.",
+      "Worked closely with API and backend teams to integrate data-driven workflows, handle loading and error states, validate responses, and provide reliable user feedback across booking, ordering, and management flows.",
+    ],
+  },
+  {
+    index: "02",
+    title: "Come closer — AI-powered chat",
+    href: "https://cv-chat-app-five.vercel.app/",
+    domain: "Spatial meetings · AI",
+    stack: ["WebMCP", "Spatial audio", "Screen share", "Browser agents"],
+    aiPoints: [
+      "Opened the room to browser AI agents through WebMCP, so an agent can discover the stage and invoke join_stage on its own.",
+    ],
+    points: [
+      "Built a browser meeting stage where someone walks in with a name and hears the room change with distance — voices soften as they step away, so presence is spatial rather than a flat grid of tiles.",
+      "When a person shares a screen, the whole room sees it, keeping the stage one shared place instead of a private window.",
+    ],
+  },
+  {
+    index: "03",
     title: "Trading & portfolio management platform",
     href: "https://prospuh.com",
     domain: "Fintech",
@@ -181,7 +222,7 @@ export const work = [
     ],
   },
   {
-    index: "02",
+    index: "04",
     title: "Dating & real-time messaging platform",
     href: "https://matchnmeet.io",
     domain: "Consumer",
@@ -195,7 +236,7 @@ export const work = [
     ],
   },
   {
-    index: "03",
+    index: "05",
     title: "Responsive websites & UI development",
     href: "https://odhavindustries.org",
     domain: "Marketing / product sites",
@@ -205,21 +246,6 @@ export const work = [
       "Developed reusable and scalable UI components with Tailwind CSS, Styled Components, and modern CSS3, keeping the codebase consistent, maintainable, and aligned with design standards.",
       "Improved website performance through image optimization, asset compression, and code-splitting, resulting in fast page loads and consistent experiences across devices and browsers.",
       "Maintained clean, modular frontend code that made future updates, backend integration, and team handoffs straightforward.",
-    ],
-  },
-  {
-    index: "04",
-    title: "Restaurant table booking, ordering & management system",
-    href: "https://bookyourtable.com",
-    domain: "Hospitality",
-    stack: ["React.js", "REST APIs", "Admin dashboards", "Charts"],
-    points: [
-      "Built and scaled the React.js frontend for restaurant discovery, table reservations, and food ordering across dine-in, pickup, and delivery, using reusable components and modular architecture.",
-      "Implemented key customer workflows including location-based restaurant discovery, voice search, search, filter, and sort, nearby and trending restaurants, hotspots, menu details, bookings, and customer reviews.",
-      "Designed and developed Restaurant Admin and Super Admin dashboards, integrating APIs for menus, orders, table arrangements, employees, inventory, restaurants, reviews, and Excel-based data import and export.",
-      "Built interactive reporting and analytics dashboards with charts for revenue, order trends, restaurant activity, and performance, along with responsive forms, validation, and reusable data-driven components.",
-      "Structured shared UI components, business logic, and data-handling patterns to reduce duplication and keep customer-facing and admin workflows easier to maintain and extend.",
-      "Worked closely with API and backend teams to integrate data-driven workflows, handle loading and error states, validate responses, and provide reliable user feedback across booking, ordering, and management flows.",
     ],
   },
 ] satisfies readonly WorkItem[];

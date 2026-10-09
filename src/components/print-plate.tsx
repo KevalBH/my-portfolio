@@ -1,11 +1,11 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
 
 import { CropMarks } from "@/components/ink";
 
-type PrintPlateProps = {
-  src: string;
+type PrintPlateBase = {
   alt: string;
   className?: string;
   imageClassName?: string;
@@ -13,9 +13,15 @@ type PrintPlateProps = {
   priority?: boolean;
 };
 
+type PrintPlateProps = PrintPlateBase & {
+  artwork?: ReactNode;
+  src?: string;
+};
+
 export function PrintPlate({
   src,
   alt,
+  artwork,
   className,
   imageClassName,
   sizes = "(min-width: 1024px) 640px, 100vw",
@@ -29,15 +35,22 @@ export function PrintPlate({
       )}
     >
       <div className="plate-drift absolute inset-3">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          quality={95}
-          priority={priority}
-          className={cn("plate-image object-cover", imageClassName)}
-        />
+        {artwork ? (
+          <div className="absolute inset-0" role="img" aria-label={alt}>
+            {artwork}
+          </div>
+        ) : null}
+        {!artwork && src ? (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes={sizes}
+            quality={95}
+            priority={priority}
+            className={cn("plate-image object-cover", imageClassName)}
+          />
+        ) : null}
       </div>
       <CropMarks />
     </figure>
