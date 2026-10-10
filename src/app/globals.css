@@ -156,6 +156,11 @@ html.dark .plate-image {
   opacity: 0.96;
 }
 
+html.dark .plate-image.plate-photo {
+  filter: none;
+  opacity: 1;
+}
+
 .plate-frame:hover .plate-drift {
   animation-play-state: paused;
 }

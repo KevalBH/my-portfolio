@@ -81,6 +81,7 @@ export function WorkSection({ work }: WorkSectionProps) {
                       src={plates[item.index].src}
                       alt={plates[item.index].alt}
                       sizes="(min-width: 1024px) 760px, 100vw"
+                      imageClassName="plate-photo"
                       className="aspect-[16/9]"
                     />
                     <span className="text-faint group-hover:text-accent mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase">
