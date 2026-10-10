@@ -33,6 +33,12 @@ function getContactLinks(profile: Profile): ContactLink[] {
       name: "GitHub",
       external: true,
     },
+    {
+      href: profile.cv,
+      label: "View r\u00e9sum\u00e9",
+      name: "CV",
+      external: true,
+    },
   ];
 }
 
@@ -73,7 +79,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
           />
         </Reveal>
       </div>
-      <ul className="mt-8 grid gap-5 sm:grid-cols-3">
+      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {links.map((item, index) => (
           <Reveal key={item.href} as="li" delay={index * 70}>
             <a

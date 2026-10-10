@@ -17,6 +17,7 @@ export const profile = {
   phoneHref: "tel:+919776691766",
   linkedin: "https://www.linkedin.com/in/keval-dev",
   github: "https://github.com/KevalBH",
+  cv: "https://drive.google.com/file/d/14bRLM3Vr5EH_pQqlGA2OkdgfIbZ0qwST/view",
   summary:
     "MERN Stack Developer with 5+ years of experience building and scaling web applications, with strong expertise in frontend engineering using React.js, Next.js, TypeScript, and JavaScript, and limited hands-on backend experience. Focused on scalable UI architecture, reusable component systems, performance, and Core Web Vitals, contributing to 25+ products across fintech, e-commerce, and real-time collaboration. Experienced in Agentic AI development using tools such as Cursor and Claude to build applications, with hands-on experience in AI-assisted coding and workflow automation using GitHub Copilot, Codeium, and n8n to improve development speed and quality.",
 } satisfies Profile;

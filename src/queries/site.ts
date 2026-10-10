@@ -79,7 +79,7 @@ export function getSiteJsonLd() {
       addressLocality: "Bhavnagar",
       addressCountry: "IN",
     },
-    sameAs: [profile.linkedin, profile.github],
+    sameAs: [profile.linkedin, profile.github, profile.cv],
     knowsAbout: [
       "React",
       "Next.js",

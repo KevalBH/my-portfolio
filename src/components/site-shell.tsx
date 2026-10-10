@@ -47,6 +47,15 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 GitHub
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
+              <a
+                href={profile.cv}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent underline-offset-4 hover:underline"
+              >
+                CV
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </div>
             <div className="mt-10">
               <SectionNav items={nav} />

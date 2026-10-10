@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-
+import { compactUrl } from "@/utils/url";
 import type { WorkIndex, WorkItem } from "@/lib/content";
 
 import { Chip } from "@/components/chip";
@@ -8,36 +7,34 @@ import { PrintPlate } from "@/components/print-plate";
 import { ExternalLink } from "@/components/external-link";
 import { PageSection } from "@/screens/home/page-section";
 import { SectionHeading } from "@/screens/home/section-heading";
-import { MeetingPlate, TablekartPlate } from "@/components/work-plates";
 
 type Plate = {
   alt: string;
-  artwork?: ReactNode;
-  src?: string;
+  src: string;
 };
 
 const aiMarks = new Set(["WebMCP", "MCP", "Browser agents", "Typed tools"]);
 
 const plates: Record<WorkIndex, Plate> = {
   "01": {
-    artwork: <TablekartPlate />,
-    alt: "A table, four seats, and a small copper spark",
+    src: "/work/tablekart.jpg",
+    alt: "Tablekart homepage, with restaurant search and live table booking",
   },
   "02": {
-    artwork: <MeetingPlate />,
-    alt: "A room drawn as two circles, three voices, and a shared bar",
+    src: "/work/come-closer.png",
+    alt: "Come closer meeting stage, with spatial chat in the browser",
   },
   "03": {
-    src: "/art/plate-trading.jpg",
-    alt: "Seven copper bars and a single rising line, printed on warm paper",
+    src: "/work/prospuh.png",
+    alt: "Prospuh trading and portfolio platform",
   },
   "04": {
-    src: "/art/plate-places.jpg",
-    alt: "A quiet circle holding three copper points",
+    src: "/work/matchnmeet.jpg",
+    alt: "Matchnmeet dating and messaging site",
   },
   "05": {
-    src: "/art/plate-pages.jpg",
-    alt: "Overlapping sheets with a copper block and three rules",
+    src: "/work/odhav.jpg",
+    alt: "Featured marketing sites, including Odhav Industries",
   },
 };
 
@@ -74,13 +71,23 @@ export function WorkSection({ work }: WorkSectionProps) {
                   <h3 className="text-ink mt-2 font-serif text-3xl leading-tight tracking-tight sm:text-4xl">
                     <ExternalLink href={item.href}>{item.title}</ExternalLink>
                   </h3>
-                  <PrintPlate
-                    src={plates[item.index].src}
-                    artwork={plates[item.index].artwork}
-                    alt={plates[item.index].alt}
-                    sizes="(min-width: 1024px) 760px, 100vw"
-                    className="mt-6 aspect-[16/9] sm:mt-8"
-                  />
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group mt-6 block sm:mt-8"
+                  >
+                    <PrintPlate
+                      src={plates[item.index].src}
+                      alt={plates[item.index].alt}
+                      sizes="(min-width: 1024px) 760px, 100vw"
+                      className="aspect-[16/9]"
+                    />
+                    <span className="text-faint group-hover:text-accent mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase">
+                      {compactUrl(item.href)}
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </span>
+                  </a>
                   <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1">
                     {item.stack.map((tech) => (
                       <li key={tech}>
