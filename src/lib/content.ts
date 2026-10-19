@@ -25,7 +25,6 @@ export type Profile = {
   phoneHref: string;
   linkedin: string;
   github: string;
-  cv: string;
   summary: string;
 };
 

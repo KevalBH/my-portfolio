@@ -33,12 +33,6 @@ function getContactLinks(profile: Profile): ContactLink[] {
       name: "GitHub",
       external: true,
     },
-    {
-      href: profile.cv,
-      label: "View r\u00e9sum\u00e9",
-      name: "CV",
-      external: true,
-    },
   ];
 }
 
