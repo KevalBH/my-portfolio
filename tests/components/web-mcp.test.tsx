@@ -14,7 +14,10 @@ type ModelContext = {
   registerTool: (tool: Tool) => void;
 };
 
-function installContexts(documentContext: ModelContext | undefined, navigatorContext?: ModelContext) {
+function installContexts(
+  documentContext: ModelContext | undefined,
+  navigatorContext?: ModelContext,
+) {
   Object.defineProperty(document, "modelContext", {
     configurable: true,
     value: documentContext,
@@ -115,15 +118,23 @@ describe("WebMcpCommands", () => {
 
     await expect(byName("set_theme")?.execute()).rejects.toThrow(/light/);
     await expect(byName("set_theme")?.execute({ theme: 1 })).rejects.toThrow(/light/);
-    await expect(byName("set_theme")?.execute({ theme: "sepia" })).rejects.toThrow(/light/);
-    await expect(byName("set_theme")?.execute({ theme: "light" })).resolves.toBe("Theme is light.");
+    await expect(byName("set_theme")?.execute({ theme: "sepia" })).rejects.toThrow(
+      /light/,
+    );
+    await expect(byName("set_theme")?.execute({ theme: "light" })).resolves.toBe(
+      "Theme is light.",
+    );
 
     await expect(byName("toggle_theme")?.execute()).resolves.toBe("Theme is dark.");
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe("dark");
 
     await expect(byName("go_to_section")?.execute()).rejects.toThrow(/section/);
-    await expect(byName("go_to_section")?.execute({ section: "missing" })).rejects.toThrow(/section/);
-    await expect(byName("go_to_section")?.execute({ section: "work" })).rejects.toThrow(/not on this page/);
+    await expect(
+      byName("go_to_section")?.execute({ section: "missing" }),
+    ).rejects.toThrow(/section/);
+    await expect(byName("go_to_section")?.execute({ section: "work" })).rejects.toThrow(
+      /not on this page/,
+    );
 
     window.history.pushState(null, "", "#overview");
     pushState.mockClear();
@@ -137,12 +148,46 @@ describe("WebMcpCommands", () => {
       "Scrolled to overview.",
     );
     expect(pushState).toHaveBeenCalledWith(null, "", "#overview");
-    expect(section.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+    expect(section.scrollIntoView).toHaveBeenCalledWith({
+      behavior: "smooth",
+      block: "start",
+    });
 
     unmount();
   });
 
-  it("survives a duplicate registration and keeps polling until abort", async () => {
+  it("waits for a second model context and does not register twice", async () => {
+    jest.useFakeTimers();
+    const documentRegister = jest.fn();
+    const navigatorRegister = jest.fn();
+    const documentContext = { registerTool: documentRegister };
+    installContexts(undefined, undefined);
+
+    const { unmount } = render(
+      <ThemeProvider>
+        <WebMcpCommands />
+      </ThemeProvider>,
+    );
+
+    await jest.advanceTimersByTimeAsync(500);
+    installContexts(documentContext, undefined);
+    await jest.advanceTimersByTimeAsync(500);
+    expect(documentRegister).toHaveBeenCalledTimes(3);
+
+    await jest.advanceTimersByTimeAsync(500);
+    expect(documentRegister).toHaveBeenCalledTimes(3);
+
+    installContexts(documentContext, { registerTool: navigatorRegister });
+    await jest.advanceTimersByTimeAsync(500);
+    expect(navigatorRegister).toHaveBeenCalledTimes(3);
+    expect(documentRegister).toHaveBeenCalledTimes(3);
+
+    await jest.advanceTimersByTimeAsync(1500);
+    expect(navigatorRegister).toHaveBeenCalledTimes(3);
+    unmount();
+  });
+
+  it("survives a duplicate registration and does not poll again", async () => {
     jest.useFakeTimers();
     const registerTool = jest.fn(() => {
       throw new Error("already registered");

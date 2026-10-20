@@ -1,16 +1,16 @@
 import { ImageResponse } from "next/og";
 
-import TwitterImage, {
-  alt as twitterAlt,
-  contentType as twitterType,
-  size as twitterSize,
-} from "@/app/twitter-image";
 import OpenGraphImage, { alt, contentType, size } from "@/app/opengraph-image";
 import IconRoute, { contentType as iconType, size as iconSize } from "@/app/icon";
 import AppleIconRoute, {
   contentType as appleType,
   size as appleSize,
 } from "@/app/apple-icon";
+import TwitterImage, {
+  alt as twitterAlt,
+  contentType as twitterType,
+  size as twitterSize,
+} from "@/app/twitter-image";
 
 jest.mock("next/og", () => ({
   ImageResponse: jest.fn((element: unknown, options: unknown) => ({ element, options })),

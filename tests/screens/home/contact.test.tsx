@@ -18,7 +18,7 @@ const profile = {
 
 describe("ContactSection", () => {
   it("lists a mailto and compact external profiles", () => {
-    render(<ContactSection profile={profile} />);
+    const { container } = render(<ContactSection profile={profile} />);
 
     expect(screen.getByRole("link", { name: profile.email })).toHaveAttribute(
       "href",
@@ -39,5 +39,6 @@ describe("ContactSection", () => {
       "_blank",
     );
     expect(document.getElementById("contact")).toBeInTheDocument();
+    expect(container.querySelector("#contact ul")).toHaveClass("lg:grid-cols-3");
   });
 });

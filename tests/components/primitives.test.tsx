@@ -1,22 +1,31 @@
 import { render, screen } from "@testing-library/react";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Chip } from "@/components/chip";
+import { Reveal } from "@/components/reveal";
+import { Eyebrow } from "@/components/eyebrow";
 import { Switch } from "@/components/ui/switch";
 import { LiftCard } from "@/components/lift-card";
-import { Reveal } from "@/components/reveal";
-import { Chip } from "@/components/chip";
-import { Eyebrow } from "@/components/eyebrow";
-import { GithubIcon, LinkedinIcon } from "@/components/contact-icons";
 import { BrandMark } from "@/components/brand-mark";
 import { ShareCard } from "@/components/share-card";
 import { PrintPlate } from "@/components/print-plate";
-import { CropMarks, FolioGraphic, InkStroke, SealOrbit, StudioMark } from "@/components/ink";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { GithubIcon, LinkedinIcon } from "@/components/contact-icons";
 import { HeroSystem, MonogramMark, SkillMark, WorkMark } from "@/components/graphics";
+import {
+  CropMarks,
+  FolioGraphic,
+  InkStroke,
+  SealOrbit,
+  StudioMark,
+} from "@/components/ink";
 
 describe("primitives", () => {
   it("renders button variants, including a slotted child", () => {
     const { rerender } = render(<Button>Send</Button>);
-    expect(screen.getByRole("button", { name: "Send" })).toHaveAttribute("data-slot", "button");
+    expect(screen.getByRole("button", { name: "Send" })).toHaveAttribute(
+      "data-slot",
+      "button",
+    );
     expect(buttonVariants()).toContain("bg-accent");
     expect(buttonVariants({ variant: "outline", size: "sm" })).toContain("border");
     expect(buttonVariants({ variant: "default", size: "default" })).toContain("h-11");
@@ -51,7 +60,11 @@ describe("primitives", () => {
         <LinkedinIcon className="size-4" />
         <BrandMark size={32} />
         <BrandMark size={180} rounded />
-        <ShareCard name="Keval Bhatt" title="Lead Frontend Developer" location="Bhavnagar" />
+        <ShareCard
+          name="Keval Bhatt"
+          title="Lead Frontend Developer"
+          location="Bhavnagar"
+        />
         <MonogramMark />
         <MonogramMark className="size-8" />
         <HeroSystem />
@@ -86,15 +99,14 @@ describe("primitives", () => {
     expect(screen.getAllByRole("img", { name: /architectural frames/ })).toHaveLength(2);
   });
 
-  it("renders a plate from artwork, a photo, both, or neither", () => {
-    const { rerender } = render(<PrintPlate alt="Empty plate" />);
-    expect(screen.queryByRole("img")).not.toBeInTheDocument();
-
-    rerender(
-      <PrintPlate alt="Drawn plate" artwork={<span>Drawing</span>} src="/art/unused.jpg" />,
+  it("renders a plate from artwork or a photo", () => {
+    const { rerender } = render(
+      <PrintPlate alt="Drawn plate" artwork={<span>Drawing</span>} />,
     );
     expect(screen.getByRole("img", { name: "Drawn plate" })).toHaveTextContent("Drawing");
-    expect(screen.queryByRole("img", { name: "Drawn plate" })?.querySelector("img")).toBeNull();
+    expect(
+      screen.queryByRole("img", { name: "Drawn plate" })?.querySelector("img"),
+    ).toBeNull();
 
     rerender(
       <PrintPlate

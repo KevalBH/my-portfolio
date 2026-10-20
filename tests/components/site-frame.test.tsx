@@ -2,10 +2,10 @@ import { render, screen } from "@testing-library/react";
 
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 
-import { SiteJsonLd } from "@/components/site-json-ld";
 import { SiteShell } from "@/components/site-shell";
-import { ThemeProvider } from "@/components/theme-provider";
+import { SiteJsonLd } from "@/components/site-json-ld";
 import { RootProviders } from "@/components/root-providers";
+import { ThemeProvider } from "@/components/theme-provider";
 
 describe("site frame", () => {
   afterEach(() => {
@@ -38,9 +38,14 @@ describe("site frame", () => {
       "#overview",
     );
     expect(screen.getByText("Keval Bhatt")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /LinkedIn/ })).toHaveAttribute("target", "_blank");
+    expect(screen.getByRole("link", { name: /LinkedIn/ })).toHaveAttribute(
+      "target",
+      "_blank",
+    );
     expect(screen.getByText("Main column")).toBeInTheDocument();
-    expect(screen.getByRole("switch", { name: "Switch to light mode" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("switch", { name: "Switch to light mode" }),
+    ).toBeInTheDocument();
   });
 
   it("wraps children in the theme provider", () => {

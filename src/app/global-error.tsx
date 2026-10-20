@@ -6,6 +6,9 @@ import Link from "next/link";
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 
+import { fontVariableClassName } from "@/lib/fonts";
+import { themeBootScript } from "@/lib/theme-script";
+
 import { Button } from "@/components/ui/button";
 
 interface GlobalErrorProps {
@@ -19,7 +22,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   }, [error]);
 
   return (
-    <html lang="en">
+    <html lang="en" className={fontVariableClassName} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body className="antialiased">
         <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center px-6 py-16">
           <p className="text-faint font-mono text-[11px] tracking-[0.22em] uppercase">

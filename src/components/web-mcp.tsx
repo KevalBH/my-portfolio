@@ -142,18 +142,18 @@ export function runTool(name: string, args: ToolArgs, actions: ThemeActions) {
   return command(args, actions);
 }
 
+function readableContext(scope: Document | Navigator) {
+  const candidate = (scope as { modelContext?: ModelContext }).modelContext;
+  if (!candidate || typeof candidate.registerTool !== "function") return undefined;
+  return candidate;
+}
+
 function modelContexts() {
   const found: ModelContext[] = [];
 
   for (const scope of [document, navigator]) {
-    const candidate = (scope as { modelContext?: ModelContext }).modelContext;
-    if (
-      candidate &&
-      typeof candidate.registerTool === "function" &&
-      !found.includes(candidate)
-    ) {
-      found.push(candidate);
-    }
+    const candidate = readableContext(scope);
+    if (candidate && !found.includes(candidate)) found.push(candidate);
   }
 
   return found;
@@ -196,11 +196,9 @@ export function WebMcpCommands() {
 
     const register = () => {
       for (const provider of modelContexts()) {
-        if (seen.has(provider)) {
-          continue;
-        }
-        seen.add(provider);
+        if (seen.has(provider)) continue;
 
+        seen.add(provider);
         for (const tool of tools) {
           try {
             provider.registerTool({
@@ -214,6 +212,8 @@ export function WebMcpCommands() {
           }
         }
       }
+
+      return Boolean(readableContext(document) && readableContext(navigator));
     };
 
     const watch = async () => {
@@ -222,7 +222,12 @@ export function WebMcpCommands() {
       followAbort(AbortSignal.timeout(LOOKUP_WINDOW_MS), lookup);
 
       while (!lookup.signal.aborted) {
-        register();
+        const ready = register();
+        if (lookup.signal.aborted) {
+          await wait(LOOKUP_MS, lookup.signal);
+          break;
+        }
+        if (ready) break;
         await wait(LOOKUP_MS, lookup.signal);
       }
     };

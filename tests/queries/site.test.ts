@@ -7,6 +7,8 @@ import {
   getRobots,
   getRootMetadata,
   getShareImageAlt,
+  getContentUpdatedOn,
+  getPostalAddress,
   getShareSkills,
   getSiteContent,
   getSiteJsonLd,
@@ -105,6 +107,7 @@ describe("getSiteUrl", () => {
 describe("site metadata", () => {
   beforeEach(() => {
     delete process.env.NEXT_PUBLIC_SITE_URL;
+    delete process.env.VERCEL_GIT_COMMIT_DATE;
     delete process.env.VERCEL_PROJECT_PRODUCTION_URL;
     delete process.env.VERCEL_URL;
   });
@@ -119,6 +122,22 @@ describe("site metadata", () => {
       url: "http://localhost:3000",
       image: "http://localhost:3000/opengraph-image",
       sameAs: [profile.linkedin, profile.github],
+      address: getPostalAddress(profile.location),
+    });
+    expect(getPostalAddress("Bhavnagar, India")).toEqual({
+      "@type": "PostalAddress",
+      addressLocality: "Bhavnagar",
+      addressCountry: "IN",
+    });
+    expect(getPostalAddress("Lyon, France")).toEqual({
+      "@type": "PostalAddress",
+      addressLocality: "Lyon",
+      addressCountry: "France",
+    });
+    expect(getPostalAddress("Remote")).toEqual({
+      "@type": "PostalAddress",
+      addressLocality: "Remote",
+      addressCountry: "IN",
     });
   });
 
@@ -137,10 +156,16 @@ describe("site metadata", () => {
     expect(getSitemap()).toEqual([
       expect.objectContaining({
         url: "http://localhost:3000",
+        lastModified: "2026-10-20",
         changeFrequency: "monthly",
         priority: 1,
       }),
     ]);
+    expect(getContentUpdatedOn()).toBe("2026-10-20");
+    process.env.VERCEL_GIT_COMMIT_DATE = "   ";
+    expect(getContentUpdatedOn()).toBe("2026-10-20");
+    process.env.VERCEL_GIT_COMMIT_DATE = "2024-05-01T00:00:00.000Z";
+    expect(getSitemap()[0]?.lastModified).toBe("2024-05-01");
     expect(getManifest()).toMatchObject({
       name: getDocumentTitle(),
       short_name: profile.name,

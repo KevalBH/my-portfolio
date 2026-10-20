@@ -73,7 +73,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
           />
         </Reveal>
       </div>
-      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {links.map((item, index) => (
           <Reveal key={item.href} as="li" delay={index * 70}>
             <a

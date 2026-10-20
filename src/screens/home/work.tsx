@@ -4,7 +4,6 @@ import type { WorkIndex, WorkItem } from "@/lib/content";
 import { Chip } from "@/components/chip";
 import { Reveal } from "@/components/reveal";
 import { PrintPlate } from "@/components/print-plate";
-import { ExternalLink } from "@/components/external-link";
 import { PageSection } from "@/screens/home/page-section";
 import { SectionHeading } from "@/screens/home/section-heading";
 
@@ -68,25 +67,29 @@ export function WorkSection({ work }: WorkSectionProps) {
                   <p className="text-accent font-mono text-[11px] tracking-[0.18em] uppercase">
                     {item.domain}
                   </p>
-                  <h3 className="text-ink mt-2 font-serif text-3xl leading-tight tracking-tight sm:text-4xl">
-                    <ExternalLink href={item.href}>{item.title}</ExternalLink>
-                  </h3>
                   <a
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group mt-6 block sm:mt-8"
+                    className="mt-2 block"
                   >
-                    <PrintPlate
-                      src={plates[item.index].src}
-                      alt={plates[item.index].alt}
-                      sizes="(min-width: 1024px) 760px, 100vw"
-                      imageClassName="plate-photo"
-                      className="aspect-[16/9]"
-                    />
-                    <span className="text-faint group-hover:text-accent mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase">
-                      {compactUrl(item.href)}
-                      <span className="sr-only"> (opens in a new tab)</span>
+                    <h3 className="text-ink font-serif text-3xl leading-tight tracking-tight sm:text-4xl">
+                      <span className="decoration-accent/40 hover:text-accent underline-offset-4 hover:underline">
+                        {item.title}
+                      </span>
+                    </h3>
+                    <span className="sr-only"> Opens in a new tab.</span>
+                    <span className="group mt-6 block sm:mt-8">
+                      <PrintPlate
+                        src={plates[item.index].src}
+                        alt={plates[item.index].alt}
+                        sizes="(min-width: 1024px) 760px, 100vw"
+                        imageClassName="plate-photo"
+                        className="aspect-[16/9]"
+                      />
+                      <span className="text-faint group-hover:text-accent mt-3 block font-mono text-[11px] tracking-[0.14em] uppercase">
+                        {compactUrl(item.href)}
+                      </span>
                     </span>
                   </a>
                   <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1">

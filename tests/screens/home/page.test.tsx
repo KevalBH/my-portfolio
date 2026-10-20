@@ -4,6 +4,7 @@ import { profile } from "@/lib/resume";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 
 import { ThemeProvider } from "@/components/theme-provider";
+
 import Page from "@/app/page";
 
 describe("Home page", () => {
@@ -21,10 +22,16 @@ describe("Home page", () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByRole("heading", { level: 1, name: /Frontend architecture/ })).toBeInTheDocument();
-    expect(screen.getAllByText("Agentic AI").some((node) => node.tagName === "STRONG")).toBe(true);
-    expect(screen.getByRole("link", { name: /21Twelve Interactive Pvt Ltd/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /Tablekart/ }).length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Frontend architecture/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByText("Agentic AI").some((node) => node.tagName === "STRONG"),
+    ).toBe(true);
+    expect(
+      screen.getByRole("link", { name: /21Twelve Interactive Pvt Ltd/ }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /Tablekart/ })).toHaveLength(1);
     expect(screen.getByText("The operating layer.")).toBeInTheDocument();
     expect(screen.getByText("Foundations.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: profile.email })).toBeInTheDocument();

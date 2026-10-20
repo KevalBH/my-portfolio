@@ -11,6 +11,27 @@ import {
 } from "@/lib/resume";
 
 const shareSkills = ["React", "Next.js", "TypeScript"] as const;
+const fallbackUpdatedOn = "2026-10-20";
+
+const countryCodes: Record<string, string> = {
+  India: "IN",
+};
+
+export function getPostalAddress(location: string) {
+  const [city, region = ""] = location.split(",").map((part) => part.trim());
+
+  return {
+    "@type": "PostalAddress" as const,
+    addressLocality: city,
+    addressCountry: countryCodes[region] ?? (region || "IN"),
+  };
+}
+
+export function getContentUpdatedOn() {
+  const committed = process.env.VERCEL_GIT_COMMIT_DATE?.trim();
+  if (!committed) return fallbackUpdatedOn;
+  return committed.slice(0, 10);
+}
 
 export function getSiteContent() {
   return {
@@ -74,11 +95,7 @@ export function getSiteJsonLd() {
     image: `${url}/opengraph-image`,
     email: profile.email,
     telephone: profile.phoneHref.replace("tel:", ""),
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Bhavnagar",
-      addressCountry: "IN",
-    },
+    address: getPostalAddress(profile.location),
     sameAs: [profile.linkedin, profile.github],
     knowsAbout: [
       "React",
@@ -191,7 +208,7 @@ export function getSitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: getSiteUrl(),
-      lastModified: new Date(),
+      lastModified: getContentUpdatedOn(),
       changeFrequency: "monthly",
       priority: 1,
     },

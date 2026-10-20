@@ -3,6 +3,12 @@ import { render, screen } from "@testing-library/react";
 
 import GlobalError from "@/app/global-error";
 
+jest.mock("next/font/google", () => ({
+  Geist: () => ({ variable: "--font-geist" }),
+  Geist_Mono: () => ({ variable: "--font-geist-mono" }),
+  Instrument_Serif: () => ({ variable: "--font-display" }),
+}));
+
 const captureException = jest.fn();
 
 jest.mock("@sentry/nextjs", () => ({
@@ -30,6 +36,12 @@ describe("GlobalError", () => {
     await user.click(screen.getByRole("button", { name: "Try again" }));
     expect(reset).toHaveBeenCalledTimes(1);
     expect(screen.getByRole("link", { name: "Back home" })).toHaveAttribute("href", "/");
+    expect(document.head.querySelector("script")?.textContent).toContain("kb-theme");
+    expect(document.documentElement).toHaveClass(
+      "--font-geist",
+      "--font-geist-mono",
+      "--font-display",
+    );
   });
 
   it("omits the reference when Next does not provide a digest", () => {

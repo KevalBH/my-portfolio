@@ -5,27 +5,24 @@ import { cn } from "@/utils/cn";
 
 import { CropMarks } from "@/components/ink";
 
-type PrintPlateBase = {
+interface PrintPlateBase {
   alt: string;
   className?: string;
   imageClassName?: string;
   sizes?: string;
   priority?: boolean;
-};
+}
 
-type PrintPlateProps = PrintPlateBase & {
-  artwork?: ReactNode;
-  src?: string;
-};
+type PrintPlateProps = PrintPlateBase &
+  ({ artwork: ReactNode; src?: never } | { artwork?: never; src: string });
 
 export function PrintPlate({
-  src,
   alt,
-  artwork,
   className,
   imageClassName,
   sizes = "(min-width: 1024px) 640px, 100vw",
   priority = false,
+  ...media
 }: PrintPlateProps) {
   return (
     <figure
@@ -35,14 +32,9 @@ export function PrintPlate({
       )}
     >
       <div className="plate-drift absolute inset-3">
-        {artwork ? (
-          <div className="absolute inset-0" role="img" aria-label={alt}>
-            {artwork}
-          </div>
-        ) : null}
-        {!artwork && src ? (
+        {media.src ? (
           <Image
-            src={src}
+            src={media.src}
             alt={alt}
             fill
             sizes={sizes}
@@ -50,7 +42,11 @@ export function PrintPlate({
             priority={priority}
             className={cn("plate-image object-cover", imageClassName)}
           />
-        ) : null}
+        ) : (
+          <div className="absolute inset-0" role="img" aria-label={alt}>
+            {media.artwork}
+          </div>
+        )}
       </div>
       <CropMarks />
     </figure>

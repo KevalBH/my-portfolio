@@ -1,6 +1,6 @@
-import manifest from "@/app/manifest";
-import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
+import sitemap from "@/app/sitemap";
+import manifest from "@/app/manifest";
 import page, { metadata } from "@/app/page";
 
 describe("app routes", () => {
