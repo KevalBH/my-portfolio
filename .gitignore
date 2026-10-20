@@ -7,6 +7,9 @@ out
 dist
 .DS_Store
 *.local
+.env
+.env.*
+!.env.example
 .husky/_
 .cursor
 *.tsbuildinfo
