@@ -134,7 +134,7 @@ const commands: Record<string, Command> = {
   go_to_section: goToSection,
 };
 
-function runTool(name: string, args: ToolArgs, actions: ThemeActions) {
+export function runTool(name: string, args: ToolArgs, actions: ThemeActions) {
   const command = commands[name];
   if (!command) {
     throw new Error(`Unknown command ${name}.`);

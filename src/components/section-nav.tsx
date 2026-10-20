@@ -39,7 +39,7 @@ function activeHref(nodes: readonly HTMLElement[]): NavItem["href"] | "" {
     }
   }
 
-  let href: NavItem["href"] | "" = nodes[0] ? toHref(nodes[0].id) : "";
+  let href: NavItem["href"] = toHref(nodes[0].id);
   for (const node of nodes) {
     if (node.getBoundingClientRect().top <= probeY) {
       href = toHref(node.id);

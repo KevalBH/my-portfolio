@@ -45,9 +45,26 @@ function mockPage({
     });
 }
 
+const desktopMedia = (query: string) => ({
+  matches: query.includes("min-width: 768px"),
+  media: query,
+  onchange: null,
+  addListener: () => undefined,
+  removeListener: () => undefined,
+  addEventListener: () => undefined,
+  removeEventListener: () => undefined,
+  dispatchEvent: () => false,
+});
+
 describe("SectionNav", () => {
   afterEach(() => {
     jest.restoreAllMocks();
+    window.matchMedia = desktopMedia;
+    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
+      callback(0);
+      return 0;
+    };
+    window.cancelAnimationFrame = () => undefined;
   });
 
   it("marks the section under the reading line", () => {
@@ -100,5 +117,99 @@ describe("SectionNav", () => {
       "location",
     );
     expect(screen.getByRole("navigation", { name: "Page sections" })).toBeInTheDocument();
+  });
+
+  it("uses the taller mobile reading line", () => {
+    window.matchMedia = (query: string) => ({
+      ...desktopMedia(query),
+      matches: false,
+    });
+    mockPage({
+      scrollY: 0,
+      scrollHeight: 4000,
+      rects: {
+        overview: rect(160, 220),
+        work: rect(900, 1400),
+      },
+    });
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 400 });
+
+    render(
+      <>
+        <section id="overview" />
+        <section id="work" />
+        <SectionNav items={items} />
+      </>,
+    );
+
+    expect(screen.getByRole("link", { name: "01 Overview" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+  });
+
+  it("keeps the last section that has passed the reading line", () => {
+    mockPage({
+      scrollY: 0,
+      scrollHeight: 4000,
+      rects: {
+        overview: rect(0, 50),
+        work: rect(900, 1400),
+      },
+    });
+
+    render(
+      <>
+        <section id="overview" />
+        <section id="work" />
+        <SectionNav items={items} variant="pills" />
+      </>,
+    );
+
+    expect(screen.getByRole("link", { name: "Overview" })).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+  });
+
+  it("renders an empty nav and ignores missing sections", () => {
+    mockPage({ scrollY: 0, scrollHeight: 4000, rects: {} });
+    const { rerender } = render(<SectionNav items={[]} />);
+    expect(screen.getByRole("navigation").querySelector("a")).toBeNull();
+
+    rerender(<SectionNav items={items} />);
+    expect(screen.getByRole("link", { name: "01 Overview" })).not.toHaveAttribute("aria-current");
+  });
+
+  it("coalesces scroll events and cancels a pending frame", () => {
+    const pending: FrameRequestCallback[] = [];
+    const cancel = jest.fn();
+    window.requestAnimationFrame = (callback) => {
+      pending.push(callback);
+      return pending.length;
+    };
+    window.cancelAnimationFrame = cancel;
+    mockPage({
+      scrollY: 0,
+      scrollHeight: 4000,
+      rects: {
+        overview: rect(0, 500),
+        work: rect(900, 1400),
+      },
+    });
+
+    const { unmount } = render(
+      <>
+        <section id="overview" />
+        <section id="work" />
+        <SectionNav items={items} />
+      </>,
+    );
+
+    window.dispatchEvent(new Event("scroll"));
+    window.dispatchEvent(new Event("resize"));
+    expect(pending).toHaveLength(1);
+    unmount();
+    expect(cancel).toHaveBeenCalledWith(1);
   });
 });
