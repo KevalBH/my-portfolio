@@ -74,7 +74,9 @@ export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
       frame = requestAnimationFrame(sync);
     };
 
-    sync();
+    frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(sync);
+    });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 

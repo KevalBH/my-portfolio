@@ -1,0 +1,20 @@
+name: Lighthouse
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          cache: npm
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lighthouse

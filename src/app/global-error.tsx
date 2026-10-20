@@ -1,10 +1,7 @@
 "use client";
 
-import "./globals.css";
-
 import Link from "next/link";
 import { useEffect } from "react";
-import * as Sentry from "@sentry/nextjs";
 
 import { fontVariableClassName } from "@/lib/fonts";
 import { themeBootScript } from "@/lib/theme-script";
@@ -18,7 +15,11 @@ interface GlobalErrorProps {
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
-    Sentry.captureException(error);
+    if (!process.env.NEXT_PUBLIC_SENTRY_DSN?.trim()) return;
+
+    void import("@sentry/nextjs").then((Sentry) => {
+      Sentry.captureException(error);
+    });
   }, [error]);
 
   return (

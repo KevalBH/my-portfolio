@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
-imageConfigDefault.qualities = [75, 95];
+imageConfigDefault.qualities = [75, 92];
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,

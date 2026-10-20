@@ -13,7 +13,11 @@ export function PageSection({ id, first = false, children }: PageSectionProps) {
   return (
     <section
       id={id}
-      className={cn("scroll-mt-56 md:scroll-mt-8", !first && "mt-16 sm:mt-24")}
+      className={cn(
+        "scroll-mt-56 md:scroll-mt-8",
+        !first &&
+          "mt-16 [contain-intrinsic-size:auto_48rem] [content-visibility:auto] sm:mt-24",
+      )}
     >
       {children}
     </section>

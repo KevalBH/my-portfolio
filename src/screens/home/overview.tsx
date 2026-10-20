@@ -47,22 +47,23 @@ export function OverviewSection({ profile, stats }: OverviewSectionProps) {
       </div>
       <dl className="border-line mt-12 grid grid-cols-2 border-y lg:mt-16 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <Reveal key={stat.label} as="div" delay={index * 80}>
-            <div
-              className={cn(
-                "py-5 pr-4 sm:py-6",
-                index % 2 === 1 && "border-line border-l pl-4 sm:pl-6",
-                index >= 2 && "border-line border-t lg:border-t-0",
-                index > 0 && "lg:border-line lg:border-l lg:pl-6",
-              )}
-            >
-              <dt className="text-faint min-h-8 text-[11px] leading-4 tracking-[0.12em] uppercase">
-                {stat.label}
-              </dt>
-              <dd className="text-ink mt-3 font-serif text-4xl leading-none tracking-tight sm:text-5xl">
-                {stat.value}
-              </dd>
-            </div>
+          <Reveal
+            key={stat.label}
+            as="div"
+            delay={index * 80}
+            className={cn(
+              "py-5 pr-4 sm:py-6",
+              index % 2 === 1 && "border-line border-l pl-4 sm:pl-6",
+              index >= 2 && "border-line border-t lg:border-t-0",
+              index > 0 && "lg:border-line lg:border-l lg:pl-6",
+            )}
+          >
+            <dt className="text-faint min-h-8 text-[11px] leading-4 tracking-[0.12em] uppercase">
+              {stat.label}
+            </dt>
+            <dd className="text-ink mt-3 font-serif text-4xl leading-none tracking-tight sm:text-5xl">
+              {stat.value}
+            </dd>
           </Reveal>
         ))}
       </dl>

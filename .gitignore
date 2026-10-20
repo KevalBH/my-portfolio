@@ -3,6 +3,7 @@ coverage
 test-results
 playwright-report
 .next
+.lighthouseci
 out
 dist
 .DS_Store

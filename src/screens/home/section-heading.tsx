@@ -24,7 +24,7 @@ export function SectionHeading({
   const Heading = isHero ? "h1" : "h2";
 
   return (
-    <Reveal>
+    <Reveal animate={!isHero}>
       <Eyebrow>{eyebrow}</Eyebrow>
       <Heading
         className={cn(

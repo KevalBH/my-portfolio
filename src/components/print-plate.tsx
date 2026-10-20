@@ -38,7 +38,7 @@ export function PrintPlate({
             alt={alt}
             fill
             sizes={sizes}
-            quality={95}
+            quality={92}
             priority={priority}
             className={cn("plate-image object-cover", imageClassName)}
           />

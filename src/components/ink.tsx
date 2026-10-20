@@ -102,19 +102,6 @@ export function FolioGraphic({ className }: { className?: string }) {
         Overlapping architectural frames, a copper block, and a flowing line
       </title>
       <defs>
-        <filter id="folio-grain" x="0" y="0" width="100%" height="100%">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.82"
-            numOctaves="3"
-            seed="17"
-            result="noise"
-          />
-          <feColorMatrix in="noise" type="saturate" values="0" result="monochromeNoise" />
-          <feComponentTransfer in="monochromeNoise">
-            <feFuncA type="table" tableValues="0 0.055" />
-          </feComponentTransfer>
-        </filter>
         <linearGradient id="folio-wash" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="var(--bg-2)" />
           <stop offset="1" stopColor="var(--bg-3)" />
@@ -122,7 +109,6 @@ export function FolioGraphic({ className }: { className?: string }) {
       </defs>
 
       <rect width="720" height="900" fill="url(#folio-wash)" />
-      <rect width="720" height="900" filter="url(#folio-grain)" className="fill-ink" />
 
       <g className="folio-frames stroke-ink/65" strokeWidth="2">
         <rect x="178" y="150" width="286" height="362" />

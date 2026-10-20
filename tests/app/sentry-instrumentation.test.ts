@@ -79,6 +79,9 @@ describe("Sentry instrumentation", () => {
       expect(client.onRouterTransitionStart).toEqual(expect.any(Function));
     });
 
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    });
     expect(init).toHaveBeenCalled();
   });
 });

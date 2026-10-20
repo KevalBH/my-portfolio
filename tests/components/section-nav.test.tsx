@@ -57,6 +57,14 @@ const desktopMedia = (query: string) => ({
 });
 
 describe("SectionNav", () => {
+  beforeEach(() => {
+    window.requestAnimationFrame = (callback: FrameRequestCallback) => {
+      callback(0);
+      return 0;
+    };
+    window.cancelAnimationFrame = () => undefined;
+  });
+
   afterEach(() => {
     jest.restoreAllMocks();
     window.matchMedia = desktopMedia;

@@ -1,5 +1,5 @@
 import userEvent from "@testing-library/user-event";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 import GlobalError from "@/app/global-error";
 
@@ -16,18 +16,31 @@ jest.mock("@sentry/nextjs", () => ({
 }));
 
 describe("GlobalError", () => {
+  const originalDsn = process.env.NEXT_PUBLIC_SENTRY_DSN;
+
   beforeEach(() => {
     captureException.mockClear();
   });
 
+  afterEach(() => {
+    if (originalDsn === undefined) {
+      delete process.env.NEXT_PUBLIC_SENTRY_DSN;
+    } else {
+      process.env.NEXT_PUBLIC_SENTRY_DSN = originalDsn;
+    }
+  });
+
   it("reports the error and offers a way back", async () => {
+    process.env.NEXT_PUBLIC_SENTRY_DSN = "https://key@example.ingest.sentry.io/1";
     const reset = jest.fn();
     const error = Object.assign(new Error("boom"), { digest: "abc123" });
     const user = userEvent.setup();
 
     render(<GlobalError error={error} reset={reset} />);
 
-    expect(captureException).toHaveBeenCalledWith(error);
+    await waitFor(() => {
+      expect(captureException).toHaveBeenCalledWith(error);
+    });
     expect(
       screen.getByRole("heading", { name: "Something slipped." }),
     ).toBeInTheDocument();

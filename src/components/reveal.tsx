@@ -9,6 +9,7 @@ import { cn } from "@/utils/cn";
 
 type RevealProps<T extends ElementType> = {
   as?: T;
+  animate?: boolean;
   children: ReactNode;
   className?: string;
   delay?: number;
@@ -16,6 +17,7 @@ type RevealProps<T extends ElementType> = {
 
 export function Reveal<T extends ElementType = "div">({
   as,
+  animate = true,
   children,
   className,
   delay = 0,
@@ -25,8 +27,8 @@ export function Reveal<T extends ElementType = "div">({
 
   return (
     <Comp
-      className={cn("reveal", className)}
-      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
+      className={cn(animate && "reveal", className)}
+      style={animate ? ({ "--reveal-delay": `${delay}ms` } as CSSProperties) : undefined}
       {...props}
     >
       {children}
