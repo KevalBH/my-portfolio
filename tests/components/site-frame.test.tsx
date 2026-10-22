@@ -43,6 +43,7 @@ describe("site frame", () => {
       "_blank",
     );
     expect(screen.getByText("Main column")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "View in 3D" })).toBeInTheDocument();
     expect(
       screen.getByRole("switch", { name: "Switch to light mode" }),
     ).toBeInTheDocument();

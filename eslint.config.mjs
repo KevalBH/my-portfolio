@@ -14,6 +14,7 @@ const eslintConfig = [
       "coverage/**",
       "playwright-report/**",
       "test-results/**",
+      "src/screens/protfolio-3D/**",
     ],
   },
   {

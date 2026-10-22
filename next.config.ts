@@ -5,22 +5,28 @@ import { withSentryConfig } from "@sentry/nextjs/config";
 
 const isDeployed = process.env.VERCEL === "1";
 
+const isDev = process.env.NODE_ENV !== "production";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self'",
+  "frame-src 'self'",
   "img-src 'self' blob: data:",
-  "font-src 'self'",
+  "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline'",
-  "connect-src 'self' https://*.sentry.io https://*.ingest.sentry.io",
+  isDev
+    ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    : "script-src 'self' 'unsafe-inline'",
+  "worker-src 'self' blob:",
+  "connect-src 'self' https://*.sentry.io https://*.ingest.sentry.io https://fonts.gstatic.com https://cdn.jsdelivr.net",
 ].join("; ");
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
-  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -39,7 +45,11 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || ".next",
   reactStrictMode: true,
+  // DevTools Lighthouse sends a normal Chrome UA, so metadata stays in <head>.
+  htmlLimitedBots: /.*/,
+  outputFileTracingRoot: path.join(process.cwd()),
   images: {
     qualities: [75, 92],
   },

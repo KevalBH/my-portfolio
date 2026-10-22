@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  --font-geist: "Geist Fallback";
+  --font-geist-mono: "Geist Mono Fallback";
+  --font-display: "Instrument Serif Fallback";
   --bg: #f6f1e8;
   --bg-2: #fffdf8;
   --bg-3: #ebe4d6;

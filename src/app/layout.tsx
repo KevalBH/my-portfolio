@@ -4,10 +4,9 @@ import type { Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { getRootMetadata } from "@/queries/site";
-import { fontVariableClassName } from "@/lib/fonts";
 import { themeBootScript } from "@/lib/theme-script";
 
-import { SiteShell } from "@/components/site-shell";
+import { SiteFrame } from "@/components/site-frame";
 import { SiteJsonLd } from "@/components/site-json-ld";
 import { RootProviders } from "@/components/root-providers";
 
@@ -27,35 +26,14 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={fontVariableClassName} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link
-          rel="preload"
-          href="/_next/static/media/e6099e249fd938cc-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/_next/static/media/22a5144ee8d83bca-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/_next/static/media/7d4881bb7e1bf84d-s.p.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body className="antialiased">
         <SiteJsonLd />
         <RootProviders>
-          <SiteShell>{children}</SiteShell>
+          <SiteFrame>{children}</SiteFrame>
         </RootProviders>
       </body>
     </html>

@@ -2,6 +2,10 @@ import { render, screen } from "@testing-library/react";
 
 import RootLayout, { metadata, viewport } from "@/app/layout";
 
+jest.mock("next/navigation", () => ({
+  usePathname: () => "/",
+}));
+
 jest.mock("next/font/google", () => ({
   Geist: () => ({ variable: "--font-geist" }),
   Geist_Mono: () => ({ variable: "--font-geist-mono" }),
