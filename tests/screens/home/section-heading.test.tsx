@@ -14,13 +14,17 @@ describe("SectionHeading", () => {
       />,
     );
 
-    expect(screen.getByRole("heading", { level: 1, name: "A title" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: "A title" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("A longer introduction.")).toHaveClass("max-w-lg");
   });
 
   it("uses a section heading without a description", () => {
     render(<SectionHeading eyebrow="05 / Education" title="Foundations." />);
 
-    expect(screen.getByRole("heading", { level: 2, name: "Foundations." })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Foundations." }),
+    ).toBeInTheDocument();
   });
 });

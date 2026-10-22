@@ -2,7 +2,7 @@ import type { ComponentPropsWithoutRef, ElementType, ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
 
-type LiftCardProps<T extends ElementType> = {
+type Props<T extends ElementType> = {
   as?: T;
   className?: string;
   children: ReactNode;
@@ -13,7 +13,7 @@ export function LiftCard<T extends ElementType = "article">({
   className,
   children,
   ...props
-}: LiftCardProps<T>) {
+}: Props<T>) {
   const Comp = as ?? "article";
 
   return (

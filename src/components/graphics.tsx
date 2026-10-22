@@ -2,7 +2,11 @@ import type { ReactNode } from "react";
 
 import type { SkillGroupTitle, WorkIndex } from "@/lib/content";
 
-export function MonogramMark({ className }: { className?: string }) {
+interface Props {
+  className?: string;
+}
+
+export function MonogramMark({ className }: Props) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true" fill="none">
       <rect width="48" height="48" rx="14" className="fill-accent/15" />
@@ -230,7 +234,11 @@ const workArt: Record<WorkIndex, ReactNode> = {
   ),
 };
 
-export function WorkMark({ index }: { index: WorkIndex }) {
+interface WorkMarkProps {
+  index: WorkIndex;
+}
+
+export function WorkMark({ index }: WorkMarkProps) {
   return (
     <svg
       viewBox="0 0 640 220"
@@ -276,7 +284,11 @@ const skillMarks: Record<SkillGroupTitle, ReactNode> = {
   ),
 };
 
-export function SkillMark({ title }: { title: SkillGroupTitle }) {
+interface SkillMarkProps {
+  title: SkillGroupTitle;
+}
+
+export function SkillMark({ title }: SkillMarkProps) {
   return (
     <span className="relative size-8 shrink-0" aria-hidden="true">
       <svg viewBox="0 0 32 32" className="absolute inset-0" fill="none">

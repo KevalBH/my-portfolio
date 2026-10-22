@@ -7,12 +7,12 @@ import { CropMarks, FolioGraphic } from "@/components/ink";
 import { EmphasizedCopy } from "@/screens/home/emphasized-copy";
 import { SectionHeading } from "@/screens/home/section-heading";
 
-type OverviewSectionProps = {
+interface Props {
   profile: Profile;
   stats: readonly Stat[];
-};
+}
 
-export function OverviewSection({ profile, stats }: OverviewSectionProps) {
+export function OverviewSection({ profile, stats }: Props) {
   return (
     <PageSection id="overview" first>
       <div className="text-faint mb-10 hidden items-baseline justify-between font-mono text-[11px] tracking-[0.2em] uppercase md:flex">

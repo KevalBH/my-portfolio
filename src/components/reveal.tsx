@@ -7,7 +7,7 @@ import type {
 
 import { cn } from "@/utils/cn";
 
-type RevealProps<T extends ElementType> = {
+type Props<T extends ElementType> = {
   as?: T;
   animate?: boolean;
   children: ReactNode;
@@ -22,7 +22,7 @@ export function Reveal<T extends ElementType = "div">({
   className,
   delay = 0,
   ...props
-}: RevealProps<T>) {
+}: Props<T>) {
   const Comp = as ?? "div";
 
   return (

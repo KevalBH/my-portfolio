@@ -2,7 +2,9 @@ import gsap from "gsap";
 import * as THREE from "three";
 import { useMemo } from "react";
 
-export const usePaintMaterial = (options: import("../types/content").PaintOptions = {}) => {
+export const usePaintMaterial = (
+  options: import("../types/content").PaintOptions = {},
+) => {
   const {
     dirX = -1.0,
     dirY = 0.0,
@@ -122,7 +124,9 @@ export const usePaintMaterial = (options: import("../types/content").PaintOption
     uniformsData.uPaintProgress.value = 0.0;
   };
 
-  const updateRoomOrigin = (groupRef: import("react").RefObject<import("three").Object3D | null>) => {
+  const updateRoomOrigin = (
+    groupRef: import("react").RefObject<import("three").Object3D | null>,
+  ) => {
     if (groupRef?.current) {
       groupRef.current.getWorldPosition(uniformsData.uRoomOrigin.value);
     }

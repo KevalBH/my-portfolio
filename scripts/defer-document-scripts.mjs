@@ -1,5 +1,5 @@
-import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 
 const distDir = process.env.NEXT_DIST_DIR || ".next";
 const scriptPattern = /<script\b([^>]*?)\bsrc="([^"]+)"([^>]*)>\s*<\/script>/gi;
@@ -86,7 +86,8 @@ async function main() {
   console.log(`deferred scripts in ${changed} html files`);
 }
 
-const isDirectRun = process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]));
+const isDirectRun =
+  process.argv[1] && import.meta.url.endsWith(path.basename(process.argv[1]));
 
 if (isDirectRun) {
   main().catch((error) => {

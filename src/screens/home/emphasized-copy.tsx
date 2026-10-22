@@ -2,11 +2,11 @@ import { NAMED_SKILL } from "@/lib/content";
 
 const namedSkillPattern = new RegExp(`(${NAMED_SKILL})`);
 
-type EmphasizedCopyProps = {
+interface Props {
   text: string;
-};
+}
 
-export function EmphasizedCopy({ text }: EmphasizedCopyProps) {
+export function EmphasizedCopy({ text }: Props) {
   const parts = text.split(namedSkillPattern);
 
   return (

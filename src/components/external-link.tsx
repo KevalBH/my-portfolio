@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
 
-type ExternalLinkProps = {
+interface Props {
   href: string;
   children: ReactNode;
   className?: string;
-};
+}
 
-export function ExternalLink({ href, children, className }: ExternalLinkProps) {
+export function ExternalLink({ href, children, className }: Props) {
   return (
     <a
       href={href}

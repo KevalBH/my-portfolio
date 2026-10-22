@@ -43,7 +43,8 @@ const Avatar = ({
     }
 
     if (meshRef.current && textures[currentFrame.current]) {
-      (meshRef.current.material as import("three").MeshBasicMaterial).map = textures[currentFrame.current];
+      (meshRef.current.material as import("three").MeshBasicMaterial).map =
+        textures[currentFrame.current];
       (meshRef.current.material as import("three").Material).needsUpdate = true;
     }
   }, [textures]);
@@ -96,7 +97,8 @@ const Avatar = ({
 
       const safeIndex = Math.max(0, Math.min(TOTAL_FRAMES - 1, currentFrame.current));
 
-      (meshRef.current.material as import("three").MeshBasicMaterial).map = textures[safeIndex];
+      (meshRef.current.material as import("three").MeshBasicMaterial).map =
+        textures[safeIndex];
       (meshRef.current.material as import("three").Material).needsUpdate = true;
     }
   });

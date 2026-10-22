@@ -7,7 +7,6 @@ import { useTexture } from "@react-three/drei";
 
 import { useAudio } from "../../../context/AudioManager";
 
-
 const SEGMENT_DOOR_AUDIO_SETTINGS = {
   openVolume: 0.15,
   closeVolume: 0.15,

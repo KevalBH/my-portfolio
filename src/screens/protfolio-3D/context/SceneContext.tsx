@@ -101,9 +101,12 @@ export const SceneProvider = ({ children }: Props) => {
     setHasEntered(true);
   }, []);
 
-  const openOverlay = useCallback((content: import("../types/content").OverlayContent | null) => {
-    setOverlayContent(content);
-  }, []);
+  const openOverlay = useCallback(
+    (content: import("../types/content").OverlayContent | null) => {
+      setOverlayContent(content);
+    },
+    [],
+  );
 
   const closeOverlay = useCallback(() => {
     setOverlayContent(null);

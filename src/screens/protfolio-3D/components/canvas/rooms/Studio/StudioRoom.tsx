@@ -16,7 +16,6 @@ import FloatingCodeParticles from "./FloatingCodeParticles";
 
 import "../../shaders/RevealMaterial";
 
-
 const STUDIO_PAINT_CONFIG = {
   dirX: 0.0,
   dirY: -1.0,
@@ -92,7 +91,9 @@ const StudioRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
   const SWIPE_SENSITIVITY = 0.005;
   const SPEED_DECAY = 0.985;
 
-  const [selectedMonitor, setSelectedMonitor] = useState<import("../../../../types/content").PlacedMonitor | null>(null);
+  const [selectedMonitor, setSelectedMonitor] = useState<
+    import("../../../../types/content").PlacedMonitor | null
+  >(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const { openOverlay, overlayContent, isTeleporting } = useScene();
@@ -295,7 +296,9 @@ const StudioRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
 
   const lastYRef = useRef(0);
 
-  const handlePointerDown = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
+  const handlePointerDown = (
+    e: import("@react-three/fiber").ThreeEvent<PointerEvent>,
+  ) => {
     if (isAnimating) return;
 
     e.stopPropagation();
@@ -315,7 +318,11 @@ const StudioRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
   }, []);
 
   const handlePointerMove = useCallback(
-    (e: { clientX?: number; clientY?: number; touches?: ArrayLike<{ clientX: number; clientY: number }> }) => {
+    (e: {
+      clientX?: number;
+      clientY?: number;
+      touches?: ArrayLike<{ clientX: number; clientY: number }>;
+    }) => {
       if (!isDraggingRef.current || !towerRef.current || isAnimating) return;
 
       const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
@@ -443,7 +450,9 @@ const StudioRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
     [isAnimating, camera, responsiveParams, openOverlay],
   );
 
-  const prevOverlayContent = useRef<import("../../../../types/content").OverlayContent | null>(null);
+  const prevOverlayContent = useRef<
+    import("../../../../types/content").OverlayContent | null
+  >(null);
 
   useEffect(() => {
     if (
@@ -583,8 +592,13 @@ interface MonitorBlockProps {
   isSelected?: boolean;
   onMonitorClick?: (item: import("../../../../types/content").PlacedMonitor) => void;
   disabled?: boolean;
-  paintOnBeforeCompile?: (shader: import("../../../../types/content").ShaderTarget) => void;
-  paintUniforms?: { uPaintProgress?: { value: number } | null; uRoomOrigin?: { value: import("three").Vector3 } | null } | null;
+  paintOnBeforeCompile?: (
+    shader: import("../../../../types/content").ShaderTarget,
+  ) => void;
+  paintUniforms?: {
+    uPaintProgress?: { value: number } | null;
+    uRoomOrigin?: { value: import("three").Vector3 } | null;
+  } | null;
   index?: number;
 }
 

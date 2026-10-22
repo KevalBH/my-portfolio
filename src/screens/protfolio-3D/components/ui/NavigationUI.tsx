@@ -1,7 +1,12 @@
 import "../../styles/NavigationUI.scss";
 
 import gsap from "gsap";
-import { useRef, useState, useEffect, type KeyboardEvent as ReactKeyboardEvent } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 
 import { useAudio } from "../../context/AudioManager";
 import { useScene } from "../../context/SceneContext";

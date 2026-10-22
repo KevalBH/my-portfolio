@@ -20,11 +20,11 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface Props {
   children: ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: Readonly<Props>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

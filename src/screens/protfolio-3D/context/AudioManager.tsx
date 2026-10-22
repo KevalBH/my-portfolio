@@ -73,18 +73,21 @@ export const AudioProvider = ({ children }: Props) => {
 
   const toggleMute = () => setIsMuted((prev) => !prev);
 
-  const enhancedSetGlobalVolume = useCallback((vol: number | ((prev: number) => number)) => {
-    if (typeof vol === "function") {
-      setGlobalVolume((prev) => {
-        const newVol = vol(prev);
-        if (newVol > 0) setIsMuted(false);
-        return newVol;
-      });
-    } else {
-      setGlobalVolume(vol);
-      if (vol > 0) setIsMuted(false);
-    }
-  }, []);
+  const enhancedSetGlobalVolume = useCallback(
+    (vol: number | ((prev: number) => number)) => {
+      if (typeof vol === "function") {
+        setGlobalVolume((prev) => {
+          const newVol = vol(prev);
+          if (newVol > 0) setIsMuted(false);
+          return newVol;
+        });
+      } else {
+        setGlobalVolume(vol);
+        if (vol > 0) setIsMuted(false);
+      }
+    },
+    [],
+  );
 
   const enableAudio = useCallback(() => {
     if (!audioEnabled) {

@@ -17,8 +17,13 @@ interface Props {
   label?: string;
   onClick?: () => void;
   scale?: [number, number];
-  paintOnBeforeCompile?: (shader: import("../../../../types/content").ShaderTarget) => void;
-  paintUniforms?: { uPaintProgress?: { value: number } | null; uRoomOrigin?: { value: import("three").Vector3 } | null } | null;
+  paintOnBeforeCompile?: (
+    shader: import("../../../../types/content").ShaderTarget,
+  ) => void;
+  paintUniforms?: {
+    uPaintProgress?: { value: number } | null;
+    uRoomOrigin?: { value: import("three").Vector3 } | null;
+  } | null;
 }
 
 const SocialBarrel = ({

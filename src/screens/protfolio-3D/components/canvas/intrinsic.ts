@@ -37,4 +37,5 @@ export const Line = "line" as unknown as ComponentType<NodeProps>;
 export const BufferAttribute = "bufferAttribute" as unknown as ComponentType<BufferProps>;
 export const Float32BufferAttribute =
   "float32BufferAttribute" as unknown as ComponentType<BufferProps>;
-export const PositionalAudio = PositionalAudioBase as unknown as ComponentType<AudioProps>;
+export const PositionalAudio =
+  PositionalAudioBase as unknown as ComponentType<AudioProps>;

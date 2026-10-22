@@ -163,10 +163,13 @@ const useInfiniteCamera = ({
     [parallaxIntensity],
   );
 
-  const handleTouchStart = useCallback((e: { touches: ArrayLike<{ clientX: number; clientY: number }> }) => {
-    touchStart.current.x = e.touches[0].clientX;
-    touchStart.current.y = e.touches[0].clientY;
-  }, []);
+  const handleTouchStart = useCallback(
+    (e: { touches: ArrayLike<{ clientX: number; clientY: number }> }) => {
+      touchStart.current.x = e.touches[0].clientX;
+      touchStart.current.y = e.touches[0].clientY;
+    },
+    [],
+  );
 
   const handleTouchMove = useCallback(
     (e: { touches: ArrayLike<{ clientX: number; clientY: number }> }) => {
@@ -219,7 +222,10 @@ const useInfiniteCamera = ({
         requestPermission?: () => Promise<"granted" | "denied">;
       }
     ).requestPermission;
-    if (typeof DeviceOrientationEvent !== "undefined" && typeof requestPermission === "function") {
+    if (
+      typeof DeviceOrientationEvent !== "undefined" &&
+      typeof requestPermission === "function"
+    ) {
       try {
         const permission = await requestPermission();
         if (permission === "granted") {
@@ -246,13 +252,17 @@ const useInfiniteCamera = ({
       onPress: (e) => {
         const touchEvent = e.event as Event & { deltaY?: number; touches?: TouchList };
         if (touchEvent.touches && touchEvent.touches.length > 0) {
-          handleTouchStart(touchEvent as { touches: ArrayLike<{ clientX: number; clientY: number }> });
+          handleTouchStart(
+            touchEvent as { touches: ArrayLike<{ clientX: number; clientY: number }> },
+          );
         }
       },
       onDrag: (e) => {
         const touchEvent = e.event as Event & { deltaY?: number; touches?: TouchList };
         if (touchEvent.touches && touchEvent.touches.length > 0) {
-          handleTouchMove(touchEvent as { touches: ArrayLike<{ clientX: number; clientY: number }> });
+          handleTouchMove(
+            touchEvent as { touches: ArrayLike<{ clientX: number; clientY: number }> },
+          );
         }
       },
     });

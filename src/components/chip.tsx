@@ -2,19 +2,19 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/utils/cn";
 
-type ChipProps = {
+interface Props {
   children: ReactNode;
   emphasized?: boolean;
   bordered?: boolean;
   className?: string;
-};
+}
 
 export function Chip({
   children,
   emphasized = false,
   bordered = false,
   className,
-}: ChipProps) {
+}: Props) {
   return (
     <span
       className={cn(

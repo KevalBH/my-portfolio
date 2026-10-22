@@ -510,7 +510,9 @@ const EntranceDoors = ({
     }
   });
 
-  const handleWindowEnter = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
+  const handleWindowEnter = (
+    e: import("@react-three/fiber").ThreeEvent<PointerEvent>,
+  ) => {
     e.stopPropagation();
     setIsWindowHovered(true);
     document.body.style.cursor = "pointer";
@@ -531,7 +533,9 @@ const EntranceDoors = ({
     }
   };
 
-  const handleWindowLeave = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
+  const handleWindowLeave = (
+    e: import("@react-three/fiber").ThreeEvent<PointerEvent>,
+  ) => {
     e.stopPropagation();
     setIsWindowHovered(false);
     document.body.style.cursor = "auto";

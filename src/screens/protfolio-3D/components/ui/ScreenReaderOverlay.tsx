@@ -93,32 +93,40 @@ const ScreenReaderOverlay = () => {
                   <section>
                     <h4>My Awards</h4>
                     <ul>
-                      {awards.featured.items.map((a: import("../../types/content").AwardItem, i: number) => (
-                        <li key={`featured-${i}`}>
-                          {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
-                        </li>
-                      ))}
+                      {awards.featured.items.map(
+                        (a: import("../../types/content").AwardItem, i: number) => (
+                          <li key={`featured-${i}`}>
+                            {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
+                          </li>
+                        ),
+                      )}
                       {awards.sotd &&
                         awards.sotd.items &&
-                        awards.sotd.items.map((a: import("../../types/content").AwardItem, i: number) => (
-                          <li key={i}>
-                            {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
-                          </li>
-                        ))}
+                        awards.sotd.items.map(
+                          (a: import("../../types/content").AwardItem, i: number) => (
+                            <li key={i}>
+                              {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
+                            </li>
+                          ),
+                        )}
                       {awards.sotm &&
                         awards.sotm.items &&
-                        awards.sotm.items.map((a: import("../../types/content").AwardItem, i: number) => (
-                          <li key={i}>
-                            {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
-                          </li>
-                        ))}
+                        awards.sotm.items.map(
+                          (a: import("../../types/content").AwardItem, i: number) => (
+                            <li key={i}>
+                              {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
+                            </li>
+                          ),
+                        )}
                       {awards.other &&
                         awards.other.items &&
-                        awards.other.items.map((a: import("../../types/content").AwardItem, i: number) => (
-                          <li key={i}>
-                            {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
-                          </li>
-                        ))}
+                        awards.other.items.map(
+                          (a: import("../../types/content").AwardItem, i: number) => (
+                            <li key={i}>
+                              {a.label} - {a.date} {a.url && <a href={a.url}>View</a>}
+                            </li>
+                          ),
+                        )}
                     </ul>
                   </section>
                 )}
@@ -134,13 +142,15 @@ const ScreenReaderOverlay = () => {
 
                 {projects && projects.length > 0 && (
                   <ul>
-                    {projects.map((p: import("../../types/content").GalleryProject, i: number) => (
-                      <li key={i}>
-                        <h4>{p.title}</h4>
-                        <p>{p.description}</p>
-                        {p.url && <a href={p.url}>Visit {p.title}</a>}
-                      </li>
-                    ))}
+                    {projects.map(
+                      (p: import("../../types/content").GalleryProject, i: number) => (
+                        <li key={i}>
+                          <h4>{p.title}</h4>
+                          <p>{p.description}</p>
+                          {p.url && <a href={p.url}>Visit {p.title}</a>}
+                        </li>
+                      ),
+                    )}
                   </ul>
                 )}
               </div>
@@ -164,15 +174,17 @@ const ScreenReaderOverlay = () => {
 
                 {studio && studio.length > 0 && (
                   <ul>
-                    {studio.map((s: import("../../types/content").StudioItem, i: number) => (
-                      <li key={i}>
-                        <h4>
-                          {s.title} ({s.platform})
-                        </h4>
-                        <p>{s.description}</p>
-                        {s.url && <a href={s.url}>View content</a>}
-                      </li>
-                    ))}
+                    {studio.map(
+                      (s: import("../../types/content").StudioItem, i: number) => (
+                        <li key={i}>
+                          <h4>
+                            {s.title} ({s.platform})
+                          </h4>
+                          <p>{s.description}</p>
+                          {s.url && <a href={s.url}>View content</a>}
+                        </li>
+                      ),
+                    )}
                   </ul>
                 )}
               </div>

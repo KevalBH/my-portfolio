@@ -8,7 +8,11 @@ import { SectionNav } from "@/components/section-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ViewToggle } from "@/components/stage/view-toggle";
 
-export function SiteShell({ children }: { children: ReactNode }) {
+interface Props {
+  children: ReactNode;
+}
+
+export function SiteShell({ children }: Props) {
   const { nav, profile } = getSiteContent();
 
   return (
@@ -28,9 +32,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             <p className="text-ink mt-8 font-serif text-[2.6rem] leading-[0.9] tracking-tight">
               {profile.name}
             </p>
-            <p
-              className="text-muted mt-4 font-serif text-lg leading-6 italic"
-            >
+            <p className="text-muted mt-4 font-serif text-lg leading-6 italic">
               {sidebarTitle}
             </p>
             <p className="text-faint mt-2 text-sm">{profile.location}</p>

@@ -3,10 +3,7 @@ import gsap from "gsap";
 import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useMemo, useState, useEffect, useCallback } from "react";
-import {
-  Text,
-  useTexture,
-} from "@react-three/drei";
+import { Text, useTexture } from "@react-three/drei";
 
 import { useAudio } from "../../../context/AudioManager";
 import { useScene } from "../../../context/SceneContext";
@@ -15,7 +12,6 @@ import { isTouchDevice } from "../../../utils/deviceDetect";
 import RoomInterior from "./RoomInterior";
 
 import "../shaders/RevealMaterial";
-
 
 const WALL_X_OUTER = 3.5;
 const WALL_X_INNER = 1.7;

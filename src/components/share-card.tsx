@@ -1,12 +1,12 @@
 import { getShareSkills } from "@/queries/site";
 
-type ShareCardProps = {
+interface Props {
   name: string;
   title: string;
   location: string;
-};
+}
 
-export function ShareCard({ name, title, location }: ShareCardProps) {
+export function ShareCard({ name, title, location }: Props) {
   const skills = getShareSkills();
 
   return (

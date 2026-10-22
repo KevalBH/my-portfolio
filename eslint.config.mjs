@@ -9,8 +9,11 @@ const eslintConfig = [
   {
     ignores: [
       ".next/**",
+      ".next-prod/**",
+      ".lighthouseci/**",
       "node_modules/**",
       "out/**",
+      "dist/**",
       "coverage/**",
       "playwright-report/**",
       "test-results/**",

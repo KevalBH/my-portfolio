@@ -13,7 +13,7 @@ interface PrintPlateBase {
   priority?: boolean;
 }
 
-type PrintPlateProps = PrintPlateBase &
+type Props = PrintPlateBase &
   ({ artwork: ReactNode; src?: never } | { artwork?: never; src: string });
 
 export function PrintPlate({
@@ -23,7 +23,7 @@ export function PrintPlate({
   sizes = "(min-width: 1024px) 640px, 100vw",
   priority = false,
   ...media
-}: PrintPlateProps) {
+}: Props) {
   return (
     <figure
       className={cn(

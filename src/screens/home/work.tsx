@@ -37,11 +37,11 @@ const plates: Record<WorkIndex, Plate> = {
   },
 };
 
-type WorkSectionProps = {
+interface Props {
   work: readonly WorkItem[];
-};
+}
 
-export function WorkSection({ work }: WorkSectionProps) {
+export function WorkSection({ work }: Props) {
   return (
     <PageSection id="work">
       <SectionHeading

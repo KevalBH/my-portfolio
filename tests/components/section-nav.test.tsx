@@ -186,7 +186,9 @@ describe("SectionNav", () => {
     expect(screen.getByRole("navigation").querySelector("a")).toBeNull();
 
     rerender(<SectionNav items={items} />);
-    expect(screen.getByRole("link", { name: "01 Overview" })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("link", { name: "01 Overview" })).not.toHaveAttribute(
+      "aria-current",
+    );
   });
 
   it("coalesces scroll events and cancels a pending frame", () => {

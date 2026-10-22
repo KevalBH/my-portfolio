@@ -3,13 +3,13 @@ import type { ReactNode } from "react";
 import { cn } from "@/utils/cn";
 import type { SectionId } from "@/lib/content";
 
-type PageSectionProps = {
+interface Props {
   id: SectionId;
   first?: boolean;
   children: ReactNode;
-};
+}
 
-export function PageSection({ id, first = false, children }: PageSectionProps) {
+export function PageSection({ id, first = false, children }: Props) {
   return (
     <section
       id={id}

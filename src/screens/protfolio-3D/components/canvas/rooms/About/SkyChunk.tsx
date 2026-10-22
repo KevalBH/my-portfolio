@@ -31,7 +31,17 @@ const SkyChunk = ({ chunkIndex = 0, seed = 0, scrollProgressRef }: Props) => {
   const zOffset = -(chunkIndex * CHUNK_LENGTH) - 15;
 
   const clouds = useMemo(() => {
-    const items: { id: string; position: [number, number, number]; scale: number; baseOpacity: number; textureIndex: number; driftSpeed: number; driftAmount: number; bobAmount: number; timeOffset: number }[] = [];
+    const items: {
+      id: string;
+      position: [number, number, number];
+      scale: number;
+      baseOpacity: number;
+      textureIndex: number;
+      driftSpeed: number;
+      driftAmount: number;
+      bobAmount: number;
+      timeOffset: number;
+    }[] = [];
     const random = seededRandom(seed + chunkIndex * 1000);
     const cloudCount = 15 + Math.floor(random() * 8);
 

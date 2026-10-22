@@ -1,9 +1,9 @@
-type BrandMarkProps = {
+interface Props {
   size: number;
   rounded?: boolean;
-};
+}
 
-export function BrandMark({ size, rounded = false }: BrandMarkProps) {
+export function BrandMark({ size, rounded = false }: Props) {
   const radius = rounded ? Math.round(size * 0.22) : 0;
 
   return (

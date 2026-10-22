@@ -23,7 +23,8 @@ export interface RevealMaterialParameters extends THREE.MeshBasicMaterialParamet
 
 class RevealMaterial extends THREE.MeshBasicMaterial {
   _uProgress = 0;
-  _shader: { uniforms: Record<string, { value: number | THREE.Vector3 | null }> } | null = null;
+  _shader: { uniforms: Record<string, { value: number | THREE.Vector3 | null }> } | null =
+    null;
   _paintProgress: { value: number } | null = null;
   _roomOrigin: { value: THREE.Vector3 } | null = null;
   _paintConfig: PaintConfig = {

@@ -8,11 +8,11 @@ import { PrintPlate } from "@/components/print-plate";
 import { PageSection } from "@/screens/home/page-section";
 import { SectionHeading } from "@/screens/home/section-heading";
 
-type StackSectionProps = {
+interface Props {
   skillGroups: readonly SkillGroup[];
-};
+}
 
-export function StackSection({ skillGroups }: StackSectionProps) {
+export function StackSection({ skillGroups }: Props) {
   return (
     <PageSection id="stack">
       <SectionHeading eyebrow="04 / Stack" title="The operating layer." />

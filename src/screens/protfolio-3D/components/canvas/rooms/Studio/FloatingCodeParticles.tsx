@@ -53,7 +53,20 @@ const getRandomSymbol = () => {
 };
 
 const generateParticles = () => {
-  const particles: { id: number; symbol: { text: string; size: number; weight: number }; position: import("three").Vector3; initialX: number; z: number; initialY: number; rotation: number; driftSpeed: number; rotationSpeed: number; parallaxFactor: number; phaseOffset: number; opacity: number }[] = [];
+  const particles: {
+    id: number;
+    symbol: { text: string; size: number; weight: number };
+    position: import("three").Vector3;
+    initialX: number;
+    z: number;
+    initialY: number;
+    rotation: number;
+    driftSpeed: number;
+    rotationSpeed: number;
+    parallaxFactor: number;
+    phaseOffset: number;
+    opacity: number;
+  }[] = [];
 
   const X_SPREAD = 50;
   const Z_MIN = -4;

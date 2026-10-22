@@ -5,13 +5,13 @@ import { cn } from "@/utils/cn";
 import { Reveal } from "@/components/reveal";
 import { Eyebrow } from "@/components/eyebrow";
 
-type SectionHeadingProps = {
+interface Props {
   eyebrow: string;
   title: string;
   description?: ReactNode;
   level?: "hero" | "section";
   descriptionClassName?: string;
-};
+}
 
 export function SectionHeading({
   eyebrow,
@@ -19,7 +19,7 @@ export function SectionHeading({
   description,
   level = "section",
   descriptionClassName,
-}: SectionHeadingProps) {
+}: Props) {
   const isHero = level === "hero";
   const Heading = isHero ? "h1" : "h2";
 

@@ -231,8 +231,10 @@ const PaperMaterial = forwardRef<unknown, Props>(
       }
     });
 
-    const shaderHasUniform = (shader: import("../../../../types/content").ShaderTarget, name: string) =>
-      shader.uniforms && shader.uniforms[name];
+    const shaderHasUniform = (
+      shader: import("../../../../types/content").ShaderTarget,
+      name: string,
+    ) => shader.uniforms && shader.uniforms[name];
 
     return (
       <meshBasicMaterial

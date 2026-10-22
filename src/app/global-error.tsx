@@ -8,12 +8,12 @@ import { themeBootScript } from "@/lib/theme-script";
 
 import { Button } from "@/components/ui/button";
 
-interface GlobalErrorProps {
+interface Props {
   error: Error & { digest?: string };
   reset: () => void;
 }
 
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
+export default function GlobalError({ error, reset }: Props) {
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_SENTRY_DSN?.trim()) return;
 

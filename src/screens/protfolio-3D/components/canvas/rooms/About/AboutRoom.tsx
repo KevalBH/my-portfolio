@@ -10,7 +10,6 @@ import { useAchievements } from "../../../../context/AchievementsContext";
 import PaperAirplane from "./PaperAirplane";
 import InfiniteSkyManager from "./InfiniteSkyManager";
 
-
 const CHUNK_LENGTH = 40;
 
 export const AUDIO_SETTINGS = {

@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { useRef, useMemo } from "react";
 import { Edges } from "@react-three/drei";
 
-
 interface Props {
   position?: [number, number, number];
   rotation?: [number, number, number];

@@ -6,11 +6,11 @@ import { PrintPlate } from "@/components/print-plate";
 import { PageSection } from "@/screens/home/page-section";
 import { SectionHeading } from "@/screens/home/section-heading";
 
-type EducationSectionProps = {
+interface Props {
   education: readonly EducationItem[];
-};
+}
 
-export function EducationSection({ education }: EducationSectionProps) {
+export function EducationSection({ education }: Props) {
   return (
     <PageSection id="education">
       <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_200px] lg:gap-12">

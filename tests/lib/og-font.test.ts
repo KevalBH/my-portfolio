@@ -8,7 +8,9 @@ describe("loadShareFonts", () => {
   });
 
   it("returns both Geist weights", async () => {
-    global.fetch = jest.fn(async () => ({ ok: true, arrayBuffer: async () => new ArrayBuffer(4) }) as Response);
+    global.fetch = jest.fn(
+      async () => ({ ok: true, arrayBuffer: async () => new ArrayBuffer(4) }) as Response,
+    );
 
     const fonts = await loadShareFonts();
 
@@ -19,7 +21,10 @@ describe("loadShareFonts", () => {
   });
 
   it("returns undefined when the font file is missing", async () => {
-    global.fetch = jest.fn(async () => ({ ok: false, arrayBuffer: async () => new ArrayBuffer(0) }) as Response);
+    global.fetch = jest.fn(
+      async () =>
+        ({ ok: false, arrayBuffer: async () => new ArrayBuffer(0) }) as Response,
+    );
 
     await expect(loadShareFonts()).resolves.toBeUndefined();
   });

@@ -4,12 +4,12 @@ import type { SiteContent } from "@/queries/site";
 import { SectionNav } from "@/components/section-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-type HomeHeaderProps = {
+interface Props {
   profile: Profile;
   nav: SiteContent["nav"];
-};
+}
 
-export function HomeHeader({ profile, nav }: HomeHeaderProps) {
+export function HomeHeader({ profile, nav }: Props) {
   return (
     <header className="border-line bg-bg/85 sticky top-0 z-20 -mx-5 mb-8 border-b px-5 py-3 backdrop-blur-xl sm:-mx-8 sm:px-8 md:hidden">
       <div className="flex items-center justify-between gap-3">

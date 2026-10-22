@@ -36,11 +36,11 @@ function getContactLinks(profile: Profile): ContactLink[] {
   ];
 }
 
-type ContactSectionProps = {
+interface Props {
   profile: Profile;
-};
+}
 
-export function ContactSection({ profile }: ContactSectionProps) {
+export function ContactSection({ profile }: Props) {
   const links = getContactLinks(profile);
 
   return (

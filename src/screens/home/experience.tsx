@@ -6,11 +6,11 @@ import { ExternalLink } from "@/components/external-link";
 import { PageSection } from "@/screens/home/page-section";
 import { SectionHeading } from "@/screens/home/section-heading";
 
-type ExperienceSectionProps = {
+interface Props {
   experience: readonly Company[];
-};
+}
 
-export function ExperienceSection({ experience }: ExperienceSectionProps) {
+export function ExperienceSection({ experience }: Props) {
   return (
     <PageSection id="experience">
       <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(240px,0.82fr)] lg:gap-12">

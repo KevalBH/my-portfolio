@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
 import type { NavItem } from "@/lib/content";
 
-type SectionNavProps = {
+interface Props {
   items: readonly NavItem[];
   variant?: "rail" | "pills";
-};
+}
 
 function toHref(id: string): NavItem["href"] {
   return `#${id}` as NavItem["href"];
@@ -49,7 +49,7 @@ function activeHref(nodes: readonly HTMLElement[]): NavItem["href"] | "" {
   return href;
 }
 
-export function SectionNav({ items, variant = "rail" }: SectionNavProps) {
+export function SectionNav({ items, variant = "rail" }: Props) {
   const [active, setActive] = useState(items[0]?.href ?? "");
 
   useEffect(() => {

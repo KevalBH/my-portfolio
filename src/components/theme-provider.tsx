@@ -1,27 +1,32 @@
 "use client";
 
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
   useRef,
+  useMemo,
   useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+  type ReactNode,
 } from "react";
 
 import { applyTheme, resolveTheme, THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 
-type ThemeContextValue = {
+interface ThemeContextValue {
   theme: Theme;
   ready: boolean;
   setThemeMode: (next: Theme) => void;
   toggleTheme: () => Theme;
-};
+}
+
+interface Props {
+  children: ReactNode;
+}
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: Props) {
   const [theme, setTheme] = useState<Theme>("dark");
   const [ready, setReady] = useState(false);
   const themeRef = useRef<Theme>("dark");

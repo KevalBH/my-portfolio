@@ -2,6 +2,10 @@ import type { CSSProperties } from "react";
 
 import { cn } from "@/utils/cn";
 
+interface Props {
+  className?: string;
+}
+
 const corners = [
   { d: "M0 16 V0 H16", delay: "0.15s" },
   { d: "M84 0 H100 V16", delay: "0.28s" },
@@ -9,7 +13,7 @@ const corners = [
   { d: "M16 100 H0 V84", delay: "0.54s" },
 ];
 
-export function CropMarks({ className }: { className?: string }) {
+export function CropMarks({ className }: Props) {
   return (
     <svg
       viewBox="0 0 100 100"
@@ -33,7 +37,7 @@ export function CropMarks({ className }: { className?: string }) {
   );
 }
 
-export function StudioMark({ className }: { className?: string }) {
+export function StudioMark({ className }: Props) {
   return (
     <svg
       viewBox="0 0 120 120"
@@ -69,7 +73,7 @@ export function StudioMark({ className }: { className?: string }) {
   );
 }
 
-export function InkStroke({ className }: { className?: string }) {
+export function InkStroke({ className }: Props) {
   return (
     <svg
       viewBox="0 0 640 40"
@@ -88,7 +92,7 @@ export function InkStroke({ className }: { className?: string }) {
   );
 }
 
-export function FolioGraphic({ className }: { className?: string }) {
+export function FolioGraphic({ className }: Props) {
   return (
     <svg
       viewBox="0 0 720 900"
@@ -135,7 +139,7 @@ export function FolioGraphic({ className }: { className?: string }) {
   );
 }
 
-export function SealOrbit({ className }: { className?: string }) {
+export function SealOrbit({ className }: Props) {
   return (
     <svg
       viewBox="0 0 120 120"
