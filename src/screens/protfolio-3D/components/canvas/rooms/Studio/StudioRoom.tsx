@@ -7,8 +7,8 @@ import { memo, useRef, useMemo, useState, useEffect, useCallback } from "react";
 
 import { useAudio } from "../../../../context/AudioManager";
 import { useScene } from "../../../../context/SceneContext";
-import { isTouchDevice } from "../../../../utils/deviceDetect";
 import { usePaintMaterial } from "../../../../hooks/usePaintMaterial";
+import { armTouchPaint, postponeTouchHide } from "../../../../utils/touchPaint";
 import { useAchievements } from "../../../../context/AchievementsContext";
 import { CONTENT_DATA, PLATFORM_CONFIG } from "../../../../config/contentData";
 
@@ -639,18 +639,13 @@ const MonitorBlock = memo(
           ? "/textures/studio/tv_front.webp"
           : "/textures/studio/phone_front.webp");
 
-    const isTouch = isTouchDevice();
-    const dummyTex =
-      "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
-    const paintedFrontTextureUrl = isTouch
-      ? dummyTex
-      : item.paintedFrontTexture ||
-        (isBlogMonitor
-          ? "/textures/studio/monitor_front_painted.webp"
-          : isTvMonitor
-            ? "/textures/studio/tv_front_painted.webp"
-            : "/textures/studio/phone_front_painted.webp");
+    const paintedFrontTextureUrl =
+      item.paintedFrontTexture ||
+      (isBlogMonitor
+        ? "/textures/studio/monitor_front_painted.webp"
+        : isTvMonitor
+          ? "/textures/studio/tv_front_painted.webp"
+          : "/textures/studio/phone_front_painted.webp");
 
     const frontTex = useLoader(TextureLoader, frontTextureUrl);
     const frontPaintedTex = useLoader(TextureLoader, paintedFrontTextureUrl);
@@ -665,23 +660,23 @@ const MonitorBlock = memo(
     const monitorRight = useLoader(TextureLoader, "/textures/studio/monitor_right.webp");
     const monitorBackPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/monitor_back_painted.webp",
+      "/textures/studio/monitor_back_painted.webp",
     );
     const monitorTopPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/monitor_top_painted.webp",
+      "/textures/studio/monitor_top_painted.webp",
     );
     const monitorBottomPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/monitor_bottom_painted.webp",
+      "/textures/studio/monitor_bottom_painted.webp",
     );
     const monitorLeftPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/monitor_left_painted.webp",
+      "/textures/studio/monitor_left_painted.webp",
     );
     const monitorRightPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/monitor_right_painted.webp",
+      "/textures/studio/monitor_right_painted.webp",
     );
 
     const tvBack = useLoader(TextureLoader, "/textures/studio/tv_back.webp");
@@ -690,30 +685,27 @@ const MonitorBlock = memo(
     const tvSide = useLoader(TextureLoader, "/textures/studio/tv_side.webp");
     const tvBackPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/tv_back_painted.webp",
+      "/textures/studio/tv_back_painted.webp",
     );
-    const tvTopPainted = useLoader(
-      TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/tv_top_painted.webp",
-    );
+    const tvTopPainted = useLoader(TextureLoader, "/textures/studio/tv_top_painted.webp");
     const tvBottomPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/tv_bottom_painted.webp",
+      "/textures/studio/tv_bottom_painted.webp",
     );
     const tvSidePainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/tv_side_painted.webp",
+      "/textures/studio/tv_side_painted.webp",
     );
 
     const phoneBack = useLoader(TextureLoader, "/textures/studio/phone_back.webp");
     const phoneSide = useLoader(TextureLoader, "/textures/studio/phone_side.webp");
     const phoneBackPainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/phone_back_painted.webp",
+      "/textures/studio/phone_back_painted.webp",
     );
     const phoneSidePainted = useLoader(
       TextureLoader,
-      isTouch ? dummyTex : "/textures/studio/phone_side_painted.webp",
+      "/textures/studio/phone_side_painted.webp",
     );
 
     const faceConfig = useMemo(() => {
@@ -814,11 +806,13 @@ const MonitorBlock = memo(
     }, [faceConfig, paintOnBeforeCompile]);
 
     const isHoveredRef = useRef(false);
+    const paintLockUntil = useRef(0);
+    const touchHoldRef = useRef<gsap.core.Tween | null>(null);
 
     const updatePaintState = useCallback(() => {
       if (!faceConfig) return;
 
-      const shouldPaint = !isTouch && (isHoveredRef.current || isSelected);
+      const shouldPaint = isHoveredRef.current || isSelected;
       const targetProgress = shouldPaint ? 1.0 : 0.0;
       const duration = shouldPaint ? 0.8 : 0.5;
 
@@ -842,7 +836,7 @@ const MonitorBlock = memo(
           if (paintedBoxRef.current) paintedBoxRef.current.visible = false;
         });
       }
-    }, [faceConfig, isSelected, isTouch]);
+    }, [faceConfig, isSelected]);
 
     useEffect(() => {
       updatePaintState();
@@ -871,14 +865,28 @@ const MonitorBlock = memo(
         onPointerOver={(e) => {
           if (disabled) return;
           e.stopPropagation();
+          if (touchHoldRef.current) touchHoldRef.current.kill();
+          armTouchPaint(paintLockUntil);
           isHoveredRef.current = true;
           updatePaintState();
           document.body.style.cursor = "pointer";
         }}
-        onPointerOut={() => {
-          isHoveredRef.current = false;
+        onPointerDown={(e) => {
+          if (disabled) return;
+          e.stopPropagation();
+          if (touchHoldRef.current) touchHoldRef.current.kill();
+          armTouchPaint(paintLockUntil);
+          isHoveredRef.current = true;
           updatePaintState();
-          document.body.style.cursor = "auto";
+        }}
+        onPointerOut={() => {
+          const hide = () => {
+            isHoveredRef.current = false;
+            updatePaintState();
+            document.body.style.cursor = "auto";
+          };
+          if (postponeTouchHide(paintLockUntil, touchHoldRef, hide)) return;
+          hide();
         }}
         onPointerUp={(e) => {
           if (disabled) return;

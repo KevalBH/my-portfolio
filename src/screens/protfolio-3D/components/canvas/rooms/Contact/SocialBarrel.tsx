@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Text, useTexture } from "@react-three/drei";
 
-import { isTouchDevice } from "../../../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../../../utils/touchPaint";
 
 import "../../shaders/RevealMaterial";
 
@@ -40,13 +40,14 @@ const SocialBarrel = ({
   const materialRef = useRef<import("three").Material>(null);
   const paintedRef = useRef<import("three").Object3D>(null);
   const hideDelayRef = useRef<gsap.core.Tween | null>(null);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
 
   const texture = useTexture(texturePath);
 
-  const isTouch = isTouchDevice();
-  const paintedTexturePath = isTouch
-    ? texturePath
-    : texturePath.replace(".png", "_painted.png").replace(".webp", "_painted.webp");
+  const paintedTexturePath = texturePath
+    .replace(".png", "_painted.png")
+    .replace(".webp", "_painted.webp");
   const texturePainted = useTexture(paintedTexturePath);
   const textRef = useRef<import("three").Object3D>(null);
 
@@ -88,7 +89,8 @@ const SocialBarrel = ({
   });
 
   const handlePointerOver = () => {
-    if (isTouch) return;
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
     document.body.style.cursor = "pointer";
     setHovered(true);
 
@@ -106,7 +108,7 @@ const SocialBarrel = ({
   };
 
   const handlePointerOut = () => {
-    if (isTouch) return;
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, handlePointerOut)) return;
     document.body.style.cursor = "auto";
     setHovered(false);
 
@@ -134,6 +136,7 @@ const SocialBarrel = ({
         onClick && onClick();
       }}
       onPointerOver={handlePointerOver}
+      onPointerDown={handlePointerOver}
       onPointerOut={handlePointerOut}
     >
       <mesh ref={paintedRef} position={[0, 0, -0.001]} visible={false}>

@@ -5,6 +5,7 @@ import { Text, useTexture } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
 import { isTouchDevice } from "../../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../../utils/touchPaint";
 import { playBackgroundMusic } from "../../../utils/audioManager";
 import { useAchievements } from "../../../context/AchievementsContext";
 
@@ -39,39 +40,28 @@ const EntranceDoors = ({
   const [isOpen, setIsOpen] = useState(false);
   const [, setIsHovered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
+  const doorStateRef = useRef({ isOpen: false, isAnimating: false });
+  doorStateRef.current = { isOpen, isAnimating };
   const [, setIsWindowHovered] = useState(false);
   const windowAvatarRef = useRef<import("three").Object3D>(null);
   const { camera } = useThree();
   const { unlockAchievement } = useAchievements();
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(isTouchDevice() || window.innerWidth < 1000);
-  }, []);
-
   const isMobileDevice =
     typeof window !== "undefined" && (isTouchDevice() || window.innerWidth < 1000);
-  const dummyTex =
-    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
   const frameTexture = useTexture("/textures/doors/frame_sketch.webp");
   const doorLeftTexture = useTexture("/textures/doors/door_left_sketch.webp");
   const doorRightTexture = useTexture("/textures/doors/door_right_sketch.webp");
 
-  const doorRightPaintedTexture = useTexture(
-    isMobileDevice ? dummyTex : "/textures/doors/door_right_painted.webp",
-  );
-  const doorLeftPaintedTexture = useTexture(
-    isMobileDevice ? dummyTex : "/textures/doors/door_left_painted.webp",
-  );
+  const doorRightPaintedTexture = useTexture("/textures/doors/door_right_painted.webp");
+  const doorLeftPaintedTexture = useTexture("/textures/doors/door_left_painted.webp");
   const handleLeftTexture = useTexture("/textures/doors/handle_left_sketch.webp");
-  const handleLeftPaintedTexture = useTexture(
-    isMobileDevice ? dummyTex : "/textures/doors/handle_left_painted.webp",
-  );
+  const handleLeftPaintedTexture = useTexture("/textures/doors/handle_left_painted.webp");
   const handleRightTexture = useTexture("/textures/doors/handle_right_sketch.webp");
   const handleRightPaintedTexture = useTexture(
-    isMobileDevice ? dummyTex : "/textures/doors/handle_right_painted.webp",
+    "/textures/doors/handle_right_painted.webp",
   );
 
   const doorBackTexture = useTexture(
@@ -311,7 +301,9 @@ const EntranceDoors = ({
   };
 
   const handlePointerEnter = () => {
-    if (isOpen || isAnimating || isMobile) return;
+    if (doorStateRef.current.isOpen || doorStateRef.current.isAnimating) return;
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
     setIsHovered(true);
     document.body.style.cursor = "pointer";
 
@@ -384,7 +376,8 @@ const EntranceDoors = ({
   };
 
   const handlePointerLeave = () => {
-    if (isOpen || isAnimating || isMobile) return;
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, handlePointerLeave)) return;
+    if (doorStateRef.current.isOpen || doorStateRef.current.isAnimating) return;
     setIsHovered(false);
     document.body.style.cursor = "auto";
 
@@ -612,23 +605,22 @@ const EntranceDoors = ({
           position={[doorWidth / 2, 0, 0.06]}
           onClick={handleClick}
           onPointerEnter={handlePointerEnter}
+          onPointerDown={handlePointerEnter}
           onPointerLeave={handlePointerLeave}
         >
           <boxGeometry args={[doorWidth, doorHeight, 0.04]} />
           <meshBasicMaterial color="#e0e0e0" map={edgeTexture} />
         </mesh>
 
-        {!isMobile && (
-          <mesh position={[doorWidth / 2, 0, 0.088]}>
-            <planeGeometry args={[doorWidth, doorHeight]} />
-            <meshBasicMaterial
-              color="#e0e0e0"
-              map={doorLeftPaintedTexture}
-              transparent={true}
-              alphaTest={0.5}
-            />
-          </mesh>
-        )}
+        <mesh position={[doorWidth / 2, 0, 0.088]}>
+          <planeGeometry args={[doorWidth, doorHeight]} />
+          <meshBasicMaterial
+            color="#e0e0e0"
+            map={doorLeftPaintedTexture}
+            transparent={true}
+            alphaTest={0.5}
+          />
+        </mesh>
 
         <mesh position={[doorWidth / 2, 0, 0.09]}>
           <planeGeometry args={[doorWidth, doorHeight]} />
@@ -659,22 +651,20 @@ const EntranceDoors = ({
         </mesh>
 
         <group ref={leftHandleRef} position={[doorWidth / 2 + 0.357, -0.099, 0.1]}>
-          {!isMobile && (
-            <mesh
-              ref={leftHandlePaintedRef}
-              position={[-0.357, 0.09, -0.001]}
-              visible={false}
-            >
-              <planeGeometry args={[doorWidth, doorHeight]} />
-              <meshBasicMaterial
-                color="#e0e0e0"
-                map={handleLeftPaintedTexture}
-                transparent={true}
-                alphaTest={0.5}
-                depthWrite={false}
-              />
-            </mesh>
-          )}
+          <mesh
+            ref={leftHandlePaintedRef}
+            position={[-0.357, 0.09, -0.001]}
+            visible={false}
+          >
+            <planeGeometry args={[doorWidth, doorHeight]} />
+            <meshBasicMaterial
+              color="#e0e0e0"
+              map={handleLeftPaintedTexture}
+              transparent={true}
+              alphaTest={0.5}
+              depthWrite={false}
+            />
+          </mesh>
 
           <mesh position={[-0.357, 0.099, 0]}>
             <planeGeometry args={[doorWidth, doorHeight]} />
@@ -696,23 +686,22 @@ const EntranceDoors = ({
           position={[-doorWidth / 2, 0, 0.06]}
           onClick={handleClick}
           onPointerEnter={handlePointerEnter}
+          onPointerDown={handlePointerEnter}
           onPointerLeave={handlePointerLeave}
         >
           <boxGeometry args={[doorWidth, doorHeight, 0.04]} />
           <meshBasicMaterial color="#e0e0e0" map={edgeTexture} />
         </mesh>
 
-        {!isMobile && (
-          <mesh position={[-doorWidth / 2, 0, 0.088]}>
-            <planeGeometry args={[doorWidth, doorHeight]} />
-            <meshBasicMaterial
-              color="#e0e0e0"
-              map={doorRightPaintedTexture}
-              transparent={true}
-              alphaTest={0.5}
-            />
-          </mesh>
-        )}
+        <mesh position={[-doorWidth / 2, 0, 0.088]}>
+          <planeGeometry args={[doorWidth, doorHeight]} />
+          <meshBasicMaterial
+            color="#e0e0e0"
+            map={doorRightPaintedTexture}
+            transparent={true}
+            alphaTest={0.5}
+          />
+        </mesh>
 
         <mesh position={[-doorWidth / 2, 0, 0.09]}>
           <planeGeometry args={[doorWidth, doorHeight]} />
@@ -738,22 +727,20 @@ const EntranceDoors = ({
         </mesh>
 
         <group ref={rightHandleRef} position={[-doorWidth / 2 - 0.357, -0.099, 0.1]}>
-          {!isMobile && (
-            <mesh
-              ref={rightHandlePaintedRef}
-              position={[0.357, 0.09, -0.001]}
-              visible={false}
-            >
-              <planeGeometry args={[doorWidth, doorHeight]} />
-              <meshBasicMaterial
-                color="#e0e0e0"
-                map={handleRightPaintedTexture}
-                transparent={true}
-                alphaTest={0.5}
-                depthWrite={false}
-              />
-            </mesh>
-          )}
+          <mesh
+            ref={rightHandlePaintedRef}
+            position={[0.357, 0.09, -0.001]}
+            visible={false}
+          >
+            <planeGeometry args={[doorWidth, doorHeight]} />
+            <meshBasicMaterial
+              color="#e0e0e0"
+              map={handleRightPaintedTexture}
+              transparent={true}
+              alphaTest={0.5}
+              depthWrite={false}
+            />
+          </mesh>
 
           <mesh position={[0.357, 0.099, 0]}>
             <planeGeometry args={[doorWidth, doorHeight]} />

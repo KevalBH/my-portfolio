@@ -18,6 +18,7 @@ import { useAudio } from "../../../../context/AudioManager";
 import { useScene } from "../../../../context/SceneContext";
 import { usePaintMaterial } from "../../../../hooks/usePaintMaterial";
 import { useAchievements } from "../../../../context/AchievementsContext";
+import { armTouchPaint, postponeTouchHide } from "../../../../utils/touchPaint";
 
 import GalleryClouds from "./GalleryClouds";
 import PaperMaterial from "./PaperMaterial";
@@ -266,36 +267,17 @@ const GalleryRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
 
   const RAILING_HEIGHT = 1.25;
 
-  const [canHover, setCanHover] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia("(hover: hover)").matches : true,
-  );
-
   const activeProjects = FALLBACK_PROJECTS;
-
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover)");
-    const handleHoverChange = (e: MediaQueryListEvent) => setCanHover(e.matches);
-    mq.addEventListener("change", handleHoverChange);
-    return () => mq.removeEventListener("change", handleHoverChange);
-  }, []);
 
   const textureUrls = activeProjects.map((p) => p.front) as string[];
   const projectTextures = useTexture(textureUrls);
 
-  const paintedUrls = activeProjects.map((p) =>
-    canHover && p.painted ? p.painted : p.front,
-  ) as string[];
+  const paintedUrls = activeProjects.map((p) => p.painted || p.front) as string[];
   const paintedTextures = useTexture(paintedUrls);
 
-  const backTextureRaw = useTexture(
-    canHover
-      ? "/textures/gallery/tylkartki_painted.webp"
-      : "/textures/gallery/tylkartki.webp",
-  );
+  const backTextureRaw = useTexture("/textures/gallery/tylkartki_painted.webp");
   const overlayTextureRaw = useTexture(
-    canHover
-      ? "/textures/gallery/przyciskdotylukartki_painted.webp"
-      : "/textures/gallery/przyciskdotylukartki.webp",
+    "/textures/gallery/przyciskdotylukartki_painted.webp",
   );
 
   const allLogos = useMemo(() => {
@@ -312,11 +294,10 @@ const GalleryRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
       "wordpresslogo",
     ];
     return names.map((name) => {
-      if (!canHover) return `/textures/gallery/${name}.webp`;
       if (name === "csslogo") return `/textures/gallery/css3logo_painted.webp`;
       return `/textures/gallery/${name}_painted.webp`;
     });
-  }, [canHover]);
+  }, []);
 
   useTexture(allLogos);
 
@@ -342,7 +323,6 @@ const GalleryRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
       }
 
       const techStack = projectData.techStack.map((path: string) => {
-        if (!canHover) return path;
         const name = path.split("/").pop()!.replace(".webp", "");
         if (name === "csslogo") return "/textures/gallery/css3logo_painted.webp";
         return `/textures/gallery/${name}_painted.webp`;
@@ -352,13 +332,13 @@ const GalleryRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
         ...projectData,
         index: i,
         frontTexture: frontTex,
-        paintedTexture: paintedTex !== frontTex && canHover ? paintedTex : null,
+        paintedTexture: paintedTex !== frontTex ? paintedTex : null,
         backTexture: backTextureRaw,
         buttonTexture: overlayTextureRaw,
         techStack: techStack,
       };
     });
-  }, [projectTextures, backTextureRaw, overlayTextureRaw]);
+  }, [projectTextures, paintedTextures, backTextureRaw, overlayTextureRaw]);
 
   const scrollToIndex = (index: number, onComplete: () => void) => {
     const totalWidth = PROJECT_COUNT * GAP;
@@ -588,7 +568,6 @@ const GalleryRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
               isSelected={selectedCard === i}
               scrollToIndex={scrollToIndex}
               onClick={handleCardClick}
-              isMobile={!canHover}
               isTransitioning={isTransitioning}
               paintProgress={uniformsData.uPaintProgress}
               roomOrigin={uniformsData.uRoomOrigin}
@@ -783,7 +762,6 @@ interface ProjectCardProps {
   isSelected?: boolean;
   scrollToIndex: (index: number, onComplete: () => void) => void;
   onClick: (index: number) => void;
-  isMobile?: boolean;
   isTransitioning?: boolean;
   paintProgress?: { value: number } | null;
   roomOrigin?: { value: import("three").Vector3 } | null;
@@ -802,7 +780,6 @@ const ProjectCard = memo(
         isSelected,
         scrollToIndex,
         onClick,
-        isMobile,
         isTransitioning,
         paintProgress,
         roomOrigin,
@@ -831,6 +808,11 @@ const ProjectCard = memo(
         import("three").Object3D & { material?: import("three").Material }
       >(null);
       const [hovered, setHovered] = useState(false);
+      const isSelectedRef = useRef(!!isSelected);
+      isSelectedRef.current = !!isSelected;
+      const keepPaintRef = useRef(false);
+      const paintLockUntil = useRef(0);
+      const touchHoldRef = useRef<gsap.core.Tween | null>(null);
       const [btnHovered, setBtnHovered] = useState(false);
       const [isAnimating, setIsAnimating] = useState(false);
       const [, setIsScrolling] = useState(false);
@@ -855,6 +837,7 @@ const ProjectCard = memo(
       useImperativeHandle(ref, () => ({
         closeCard: () => {
           return new Promise<void>((resolve) => {
+            keepPaintRef.current = false;
             setIsAnimating(true);
             playPaperSound();
 
@@ -955,6 +938,7 @@ const ProjectCard = memo(
         },
         openCard: () => {
           return new Promise<void>((resolve) => {
+            keepPaintRef.current = true;
             setIsScrolling(true);
             scrollToIndex(index, () => {
               setIsScrolling(false);
@@ -1285,11 +1269,29 @@ const ProjectCard = memo(
           ref={cardRef}
           onClick={handleClick}
           onPointerEnter={(e) => {
-            if (isMobile || isTransitioning) return;
+            if (isTransitioning) return;
             e.stopPropagation();
+            if (touchHoldRef.current) touchHoldRef.current.kill();
+            armTouchPaint(paintLockUntil);
             setHovered(true);
 
-            if (materialRef.current && project.paintedTexture && !isSelected) {
+            if (materialRef.current && project.paintedTexture && !isSelectedRef.current) {
+              gsap.to(materialRef.current, {
+                uProgress: 1.0,
+                duration: 0.8,
+                ease: "power2.out",
+                overwrite: "auto",
+              });
+            }
+          }}
+          onPointerDown={(e) => {
+            if (isTransitioning) return;
+            e.stopPropagation();
+            if (touchHoldRef.current) touchHoldRef.current.kill();
+            armTouchPaint(paintLockUntil);
+            setHovered(true);
+
+            if (materialRef.current && project.paintedTexture && !isSelectedRef.current) {
               gsap.to(materialRef.current, {
                 uProgress: 1.0,
                 duration: 0.8,
@@ -1299,18 +1301,22 @@ const ProjectCard = memo(
             }
           }}
           onPointerLeave={(e) => {
-            if (isMobile || isTransitioning) return;
+            if (isTransitioning) return;
             e.stopPropagation();
-            setHovered(false);
-
-            if (materialRef.current && project.paintedTexture && !isSelected) {
-              gsap.to(materialRef.current, {
-                uProgress: 0.0,
-                duration: 0.5,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            }
+            const hide = () => {
+              setHovered(false);
+              if (keepPaintRef.current || isSelectedRef.current) return;
+              if (materialRef.current && project.paintedTexture) {
+                gsap.to(materialRef.current, {
+                  uProgress: 0.0,
+                  duration: 0.5,
+                  ease: "power2.out",
+                  overwrite: "auto",
+                });
+              }
+            };
+            if (postponeTouchHide(paintLockUntil, touchHoldRef, hide)) return;
+            hide();
           }}
         >
           <mesh position={[0, -0.08, 0.15]} rotation={[0, 0, Math.PI]}>

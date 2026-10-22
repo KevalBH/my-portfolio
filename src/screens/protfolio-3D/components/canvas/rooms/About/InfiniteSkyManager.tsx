@@ -8,6 +8,7 @@ import { Text } from "@react-three/drei";
 import { useAudio } from "../../../../context/AudioManager";
 import { useScene } from "../../../../context/SceneContext";
 import { isTouchDevice } from "../../../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../../../utils/touchPaint";
 
 import SkyChunk, { ROOM_Z, CHUNK_LENGTH } from "./SkyChunk";
 
@@ -40,11 +41,12 @@ const AwardButton = ({
   position,
   onHoverChange,
 }: AwardButtonProps) => {
-  const isTouch = isTouchDevice();
   const meshRef = useRef<import("three").Mesh>(null);
   const buttonRevealRef = useRef<import("three").Object3D>(null);
   const paintedRef = useRef<import("three").Mesh>(null);
   const hideDelayRef = useRef<gsap.core.Tween | null>(null);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
   const [hovered, setHovered] = useState(false);
 
   useFrame((state, delta) => {
@@ -71,7 +73,8 @@ const AwardButton = ({
   });
 
   const handlePointerOver = () => {
-    if (isTouch) return;
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
     setHovered(true);
     document.body.style.cursor = "pointer";
     onHoverChange?.(true);
@@ -93,7 +96,7 @@ const AwardButton = ({
   };
 
   const handlePointerOut = () => {
-    if (isTouch) return;
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, handlePointerOut)) return;
     setHovered(false);
     document.body.style.cursor = "auto";
     onHoverChange?.(false);
@@ -131,6 +134,7 @@ const AwardButton = ({
       <mesh
         onClick={onClick}
         onPointerOver={handlePointerOver}
+        onPointerDown={handlePointerOver}
         onPointerOut={handlePointerOut}
       >
         <planeGeometry args={[width, height]} />
@@ -507,7 +511,6 @@ interface AwardsMilestoneProps {
 const AwardsMilestone = ({ z = 0, scrollProgressRef }: AwardsMilestoneProps) => {
   const awardsData = AWARDS_DATA;
 
-  const isTouch = isTouchDevice();
   const { openOverlay } = useScene();
   const groupRef = useRef<import("three").Object3D>(null);
   const sotyRef = useRef<import("three").Object3D>(null);
@@ -529,20 +532,20 @@ const AwardsMilestone = ({ z = 0, scrollProgressRef }: AwardsMilestoneProps) => 
   const sotmTexture = useLoader(THREE.TextureLoader, "/textures/about/SOTM.webp");
   const sotyPaintedTexture = useLoader(
     THREE.TextureLoader,
-    isTouch ? "/textures/about/SOTY.webp" : "/textures/about/SOTY_painted.webp",
+    "/textures/about/SOTY_painted.webp",
   );
   const sotdPaintedTexture = useLoader(
     THREE.TextureLoader,
-    isTouch ? "/textures/about/SOTD.webp" : "/textures/about/SOTD_painted.webp",
+    "/textures/about/SOTD_painted.webp",
   );
   const sotmPaintedTexture = useLoader(
     THREE.TextureLoader,
-    isTouch ? "/textures/about/SOTM.webp" : "/textures/about/SOTM_painted.webp",
+    "/textures/about/SOTM_painted.webp",
   );
   const buttonTexture = useLoader(THREE.TextureLoader, "/textures/about/button.webp");
   const buttonPaintedTexture = useLoader(
     THREE.TextureLoader,
-    isTouch ? "/textures/about/button.webp" : "/textures/about/button_painted.webp",
+    "/textures/about/button_painted.webp",
   );
 
   sotyTexture.colorSpace = THREE.SRGBColorSpace;
@@ -570,7 +573,6 @@ const AwardsMilestone = ({ z = 0, scrollProgressRef }: AwardsMilestoneProps) => 
       hideDelayRef: import("react").RefObject<gsap.core.Tween | null>,
     ) =>
     (isHovered: boolean) => {
-      if (isTouch) return;
       if (isHovered) {
         if (revealRef.current) {
           gsap.to(revealRef.current, {
@@ -1138,11 +1140,12 @@ const SkillBalloon = ({
 }: SkillBalloonProps) => {
   const isTouch = isTouchDevice();
   const texture = useLoader(THREE.TextureLoader, config.texture) as THREE.Texture;
-  const paintedTextureUrl = isTouch ? config.texture : config.paintedTexture;
   const paintedTexture = useLoader(
     THREE.TextureLoader,
-    paintedTextureUrl || config.texture,
+    config.paintedTexture || config.texture,
   ) as THREE.Texture;
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
   texture.colorSpace = THREE.SRGBColorSpace;
   paintedTexture.colorSpace = THREE.SRGBColorSpace;
 
@@ -1216,8 +1219,9 @@ const SkillBalloon = ({
   const handlePointerOver = (
     e: import("@react-three/fiber").ThreeEvent<PointerEvent>,
   ) => {
-    if (isTouch) return;
     e.stopPropagation();
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
     if (!isPopping) setHovered(true);
 
     if (balloonRevealRef.current) {
@@ -1234,7 +1238,8 @@ const SkillBalloon = ({
   };
 
   const handlePointerOut = (e: import("@react-three/fiber").ThreeEvent<PointerEvent>) => {
-    if (isTouch) return;
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, () => handlePointerOut(e)))
+      return;
     e.stopPropagation();
     setHovered(false);
 
@@ -1406,6 +1411,7 @@ const SkillBalloon = ({
             }
           }}
           onPointerOver={handlePointerOver}
+          onPointerDown={handlePointerOver}
           onPointerOut={handlePointerOut}
           onPointerMove={(e) => {
             if (hovered && !isPopping && outerGroupRef.current) {
