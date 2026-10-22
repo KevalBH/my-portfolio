@@ -5,6 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useMemo, useState, useEffect } from "react";
 
 import { isTouchDevice } from "../../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../../utils/touchPaint";
 
 import "../shaders/RevealMaterial";
 
@@ -161,6 +162,8 @@ const InspectableFrame = ({
 
   const [isHovered, setIsHovered] = useState(false);
   const [isInspected, setIsInspected] = useState(false);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
 
   const isTouch = useMemo(() => isTouchDevice(), []);
 
@@ -274,29 +277,39 @@ const InspectableFrame = ({
         }}
         onPointerEnter={(e) => {
           e.stopPropagation();
-          if (!isInspected && !isMobile) setIsHovered(true);
+          if (isInspected) return;
+          if (touchHoldRef.current) touchHoldRef.current.kill();
+          armTouchPaint(paintLockUntil);
+          setIsHovered(true);
+        }}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          if (isInspected) return;
+          if (touchHoldRef.current) touchHoldRef.current.kill();
+          armTouchPaint(paintLockUntil);
+          setIsHovered(true);
         }}
         onPointerLeave={(e) => {
           e.stopPropagation();
-          setIsHovered(false);
+          const hide = () => setIsHovered(false);
+          if (postponeTouchHide(paintLockUntil, touchHoldRef, hide)) return;
+          hide();
         }}
       >
         <planeGeometry args={[frame.width, frame.height]} />
         <meshBasicMaterial color="#e0e0e0" transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      {!isTouch && (
-        <mesh ref={framePaintedRef} position={[0, 0, -0.001]} scale={[0.98, 0.98, 1]}>
-          <planeGeometry args={[frame.width, frame.height]} />
-          <meshBasicMaterial
-            color="#e0e0e0"
-            map={framePaintedTexture}
-            transparent={true}
-            alphaTest={0.5}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-      )}
+      <mesh ref={framePaintedRef} position={[0, 0, -0.001]} scale={[0.98, 0.98, 1]}>
+        <planeGeometry args={[frame.width, frame.height]} />
+        <meshBasicMaterial
+          color="#e0e0e0"
+          map={framePaintedTexture}
+          transparent={true}
+          alphaTest={0.5}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
 
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[frame.width, frame.height]} />
@@ -314,7 +327,7 @@ const InspectableFrame = ({
       {frame.image && (
         <PictureContent
           imagePath={frame.image}
-          imagePaintedPath={!isTouch ? frame.imagePainted : null}
+          imagePaintedPath={frame.imagePainted}
           width={frame.imageWidth || frame.width * 0.7}
           height={frame.imageHeight || frame.height * 0.7}
           isPainted={isHovered || isInspected}

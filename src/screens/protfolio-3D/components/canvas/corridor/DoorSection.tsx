@@ -7,7 +7,7 @@ import { Text, useTexture } from "@react-three/drei";
 
 import { useAudio } from "../../../context/AudioManager";
 import { useScene } from "../../../context/SceneContext";
-import { isTouchDevice } from "../../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../../utils/touchPaint";
 
 import RoomInterior from "./RoomInterior";
 
@@ -82,9 +82,13 @@ const DoorSection = ({
   const handlePaintedRef = useRef<import("three").Object3D>(null);
   const doorPaintedRef = useRef<import("three").Object3D>(null);
   const handleHideDelayRef = useRef<gsap.core.Tween | null>(null);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const doorStateRef = useRef({ isOpen: false, isAnimating: false });
+  doorStateRef.current = { isOpen, isAnimating };
   const isNearRef = useRef(false);
   const [isInsideRoom, setIsInsideRoom] = useState(false);
   const [isTiltLocked, setIsTiltLocked] = useState(false);
@@ -199,18 +203,14 @@ const DoorSection = ({
     DOOR_TEXTURES[label as keyof typeof DOOR_TEXTURES] || DOOR_TEXTURES["THE GALLERY"];
   const doorTexture = useTexture(doorTexturePath);
 
-  const isTouch = isTouchDevice();
-  const dummyTex =
-    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
   const doorPaintedTexturePath =
     DOOR_PAINTED_TEXTURES[label as keyof typeof DOOR_PAINTED_TEXTURES] ||
     DOOR_PAINTED_TEXTURES["THE GALLERY"];
-  const doorPaintedTexture = useTexture(isTouch ? dummyTex : doorPaintedTexturePath);
+  const doorPaintedTexture = useTexture(doorPaintedTexturePath);
   const frameTexture = useTexture("/textures/corridor/doors/ramkasingledoors.webp");
   const handleTexture = useTexture("/textures/corridor/doors/klamkadodrzwi.webp");
   const handlePaintedTexture = useTexture(
-    isTouch ? dummyTex : "/textures/corridor/doors/klamkadodrzwi_painted.webp",
+    "/textures/corridor/doors/klamkadodrzwi_painted.webp",
   );
   const doorBackTexture = useTexture("/textures/corridor/doors/backsingledoors.webp");
   const arrowTexture = useTexture("/textures/corridor/strzalka.webp");
@@ -707,7 +707,9 @@ const DoorSection = ({
   );
 
   const handlePointerEnter = () => {
-    if (isOpen || isAnimating) return;
+    if (doorStateRef.current.isOpen || doorStateRef.current.isAnimating) return;
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
     setIsHovered(true);
     document.body.style.cursor = "pointer";
 
@@ -760,7 +762,8 @@ const DoorSection = ({
   };
 
   const handlePointerLeave = () => {
-    if (isOpen || isAnimating) return;
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, handlePointerLeave)) return;
+    if (doorStateRef.current.isOpen || doorStateRef.current.isAnimating) return;
     setIsHovered(false);
     document.body.style.cursor = "auto";
 
@@ -1000,6 +1003,7 @@ const DoorSection = ({
               position={[doorMeshX, -0.2, 0.005]}
               onClick={handleClick}
               onPointerEnter={handlePointerEnter}
+              onPointerDown={handlePointerEnter}
               onPointerLeave={handlePointerLeave}
             >
               <planeGeometry args={[doorWidth, doorHeight]} />

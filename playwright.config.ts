@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = "https://keval-bhatt-my-portfolio.vercel.app";
+const baseURL = "https://keval-h-my-portfolio.vercel.app/";
 
 export default defineConfig({
   forbidOnly: Boolean(process.env.CI),

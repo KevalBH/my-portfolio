@@ -18,7 +18,7 @@ describe("site frame", () => {
     const script = container.querySelector('script[type="application/ld+json"]');
     expect(JSON.parse(script?.textContent ?? "{}")).toMatchObject({
       "@type": "Person",
-      name: "Keval Bhatt",
+      name: "Keval H.",
     });
   });
 
@@ -37,7 +37,7 @@ describe("site frame", () => {
       "href",
       "#overview",
     );
-    expect(screen.getByText("Keval Bhatt")).toBeInTheDocument();
+    expect(screen.getByText("Keval H.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /LinkedIn/ })).toHaveAttribute(
       "target",
       "_blank",

@@ -183,7 +183,7 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }: Props) => {
   const handleMailSelect = () => {
     const host = window.top ?? window;
     const link = host.document.createElement("a");
-    link.href = "mailto:keval.bhatt.777@gmail.com";
+    link.href = "mailto:keval696@gmail.com";
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     host.document.body.appendChild(link);

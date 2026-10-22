@@ -42,7 +42,7 @@ describe("generated images", () => {
   it("publishes the share image contract", () => {
     expect(contentType).toBe("image/png");
     expect(size).toEqual({ width: 1200, height: 630 });
-    expect(alt).toContain("Keval Bhatt");
+    expect(alt).toContain("Keval H.");
     expect(iconType).toBe("image/png");
     expect(iconSize).toEqual({ width: 32, height: 32 });
     expect(appleType).toBe("image/png");

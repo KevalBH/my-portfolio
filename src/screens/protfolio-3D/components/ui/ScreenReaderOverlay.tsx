@@ -24,7 +24,7 @@ const ScreenReaderOverlay = () => {
       </a>
 
       <nav id="sr-main-nav" className="sr-only" aria-label="Portfolio rooms">
-        <h1>Keval Bhatt — Creative Developer Portfolio</h1>
+        <h1>Keval H. — Creative Developer Portfolio</h1>
         <h2>Portfolio Navigation</h2>
 
         {!hasEntered && (

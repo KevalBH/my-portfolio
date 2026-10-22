@@ -69,8 +69,8 @@ describe("sketch painters", () => {
     expect(card.font).toContain("Caveat");
 
     const sign = mockContext(640, 280);
-    paintSign(sign, "Keval Bhatt", "Lead Frontend Developer", "Caveat");
-    expect(sign.fillText).toHaveBeenCalledWith("Keval Bhatt", 320, 280 * 0.4);
+    paintSign(sign, "Keval H.", "Lead Frontend Developer", "Caveat");
+    expect(sign.fillText).toHaveBeenCalledWith("Keval H.", 320, 280 * 0.4);
   });
 
   it("draws clouds, houses, monitors, and planks", () => {

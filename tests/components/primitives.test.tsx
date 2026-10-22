@@ -60,11 +60,7 @@ describe("primitives", () => {
         <LinkedinIcon className="size-4" />
         <BrandMark size={32} />
         <BrandMark size={180} rounded />
-        <ShareCard
-          name="Keval Bhatt"
-          title="Lead Frontend Developer"
-          location="Bhavnagar"
-        />
+        <ShareCard name="Keval H." title="Lead Frontend Developer" location="Bhavnagar" />
         <MonogramMark />
         <MonogramMark className="size-8" />
         <HeroSystem />
@@ -94,7 +90,7 @@ describe("primitives", () => {
     );
 
     expect(screen.getByRole("switch", { name: "Power" })).toBeInTheDocument();
-    expect(screen.getByText("Keval Bhatt")).toBeInTheDocument();
+    expect(screen.getByText("Keval H.")).toBeInTheDocument();
     expect(screen.getByText("React")).toBeInTheDocument();
     expect(screen.getAllByRole("img", { name: /architectural frames/ })).toHaveLength(2);
   });

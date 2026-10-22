@@ -1,6 +1,6 @@
-# Keval Bhatt — Portfolio
+# Keval H — Portfolio
 
-Personal site for [Keval Bhatt](https://github.com/KevalBH), Lead Frontend Developer. Content is taken from the resume: roles, selected work, stack, education, and contact.
+Personal site for [Keval H](https://github.com/KevalBH), Lead Frontend Developer. Content is taken from the resume: roles, selected work, stack, education, and contact.
 
 **Repo:** [github.com/KevalBH/my-portfolio](https://github.com/KevalBH/my-portfolio)
 
@@ -52,6 +52,6 @@ The open page registers frontend commands on `navigator.modelContext` and `docum
 
 ## Contact
 
-- Email: keval.bhatt.777@gmail.com
+- Email: keval696@gmail.com
 - LinkedIn: [keval-dev](https://www.linkedin.com/in/keval-dev)
 - GitHub: [KevalBH](https://github.com/KevalBH)

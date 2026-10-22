@@ -11,7 +11,7 @@ import {
 describe("stage plates", () => {
   it("keeps the portfolio to short labels", () => {
     expect(getStagePlates(getSiteContent())).toEqual([
-      { kicker: "Name", title: "Keval Bhatt" },
+      { kicker: "Name", title: "Keval H." },
       { kicker: "Role", title: "Lead Frontend" },
       { kicker: "Years", title: "5+" },
       { kicker: "Shipped", title: "25+" },

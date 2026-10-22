@@ -268,7 +268,7 @@ describe("stage scene", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "About" }));
     expect(screen.getByText(/MERN Stack Developer/)).toBeInTheDocument();
-    expect(screen.getAllByText("Keval Bhatt").length).toBeGreaterThan(1);
+    expect(screen.getAllByText("Keval H.").length).toBeGreaterThan(1);
     fireEvent.click(door("card-GitHub"));
     fireEvent.keyDown(window, { key: "Backspace" });
 

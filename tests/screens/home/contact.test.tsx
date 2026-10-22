@@ -5,10 +5,10 @@ import type { Profile } from "@/lib/content";
 import { ContactSection } from "@/screens/home/contact";
 
 const profile = {
-  name: "Keval Bhatt",
+  name: "Keval H.",
   title: "Lead Frontend Developer",
   location: "Bhavnagar, India",
-  email: "keval.bhatt.777@gmail.com",
+  email: "keval696@gmail.com",
   phone: "+91 97766-91766",
   phoneHref: "tel:+919776691766",
   linkedin: "https://www.linkedin.com/in/keval-dev/",

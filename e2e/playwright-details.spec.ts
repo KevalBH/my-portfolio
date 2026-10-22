@@ -20,9 +20,9 @@ test("shows Playwright runtime details", async ({ browserName, page }, testInfo)
   });
 
   expect(details.browser).toBe("chromium");
-  expect(details.title).toContain("Keval Bhatt");
-  expect(details.url).toBe("https://keval-bhatt-my-portfolio.vercel.app/");
+  expect(details.title).toContain("Keval H. — Lead Frontend Developer");
+  expect(details.url).toBe("https://keval-h-my-portfolio.vercel.app/");
   expect(details.version).toMatch(/^\d+/);
   expect(details.viewport).toBe("1280x720");
-  await expect(page.getByText("Keval Bhatt").first()).toBeVisible();
+  await expect(page.getByText("Keval H.").first()).toBeVisible();
 });

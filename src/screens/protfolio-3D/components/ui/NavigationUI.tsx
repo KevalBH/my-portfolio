@@ -12,6 +12,8 @@ import { useAudio } from "../../context/AudioManager";
 import { useScene } from "../../context/SceneContext";
 import { useAchievements } from "../../context/AchievementsContext";
 import { getMusicVolume, setMusicVolume } from "../../utils/audioManager";
+import { isTouchDevice } from "../../utils/deviceDetect";
+import { armTouchPaint, postponeTouchHide } from "../../utils/touchPaint";
 
 import AchievementPopup from "./AchievementPopup";
 import AchievementsPanel from "./AchievementsPanel";
@@ -31,7 +33,9 @@ const NavigationUI = () => {
   const { isMuted, globalVolume, setGlobalVolume } = useAudio();
   const { showTutorial } = useAchievements();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [hoveredRoom, setHoveredRoom] = useState<unknown>(null);
+  const [hoveredRoom, setHoveredRoom] = useState<string | null>(null);
+  const paintLockUntil = useRef(0);
+  const touchHoldRef = useRef<gsap.core.Tween | null>(null);
   const [isExiting, setIsExiting] = useState(false);
 
   const [isAudioMenuOpen, setIsAudioMenuOpen] = useState(false);
@@ -191,13 +195,31 @@ const NavigationUI = () => {
     }
   };
 
+  const highlightRoom = (roomId: string) => {
+    if (touchHoldRef.current) touchHoldRef.current.kill();
+    armTouchPaint(paintLockUntil);
+    setHoveredRoom(roomId);
+  };
+
+  const clearHighlight = () => {
+    if (postponeTouchHide(paintLockUntil, touchHoldRef, clearHighlight)) return;
+    setHoveredRoom(null);
+  };
+
   const handleRoomClick = (roomId: string) => {
     if (roomId === currentRoom || isTeleporting) return;
 
-    setIsMenuOpen(false);
-    setIsAudioMenuOpen(false);
-    setIsAchievementsOpen(false);
-    teleportTo(roomId);
+    highlightRoom(roomId);
+
+    const go = () => {
+      setIsMenuOpen(false);
+      setIsAudioMenuOpen(false);
+      setIsAchievementsOpen(false);
+      teleportTo(roomId);
+    };
+
+    if (isTouchDevice()) window.setTimeout(go, 420);
+    else go();
   };
 
   const handleBackClick = () => {
@@ -376,40 +398,44 @@ const NavigationUI = () => {
               <button
                 type="button"
                 className="map-hover-zone zone-about"
-                onMouseEnter={() => setHoveredRoom("about")}
-                onMouseLeave={() => setHoveredRoom(null)}
-                onFocus={() => setHoveredRoom("about")}
-                onBlur={() => setHoveredRoom(null)}
+                onMouseEnter={() => highlightRoom("about")}
+                onMouseLeave={clearHighlight}
+                onPointerDown={() => highlightRoom("about")}
+                onFocus={() => highlightRoom("about")}
+                onBlur={clearHighlight}
                 onClick={() => handleRoomClick("about")}
                 aria-label="Teleport to About room"
               />
               <button
                 type="button"
                 className="map-hover-zone zone-gallery"
-                onMouseEnter={() => setHoveredRoom("gallery")}
-                onMouseLeave={() => setHoveredRoom(null)}
-                onFocus={() => setHoveredRoom("gallery")}
-                onBlur={() => setHoveredRoom(null)}
+                onMouseEnter={() => highlightRoom("gallery")}
+                onMouseLeave={clearHighlight}
+                onPointerDown={() => highlightRoom("gallery")}
+                onFocus={() => highlightRoom("gallery")}
+                onBlur={clearHighlight}
                 onClick={() => handleRoomClick("gallery")}
                 aria-label="Teleport to Gallery room"
               />
               <button
                 type="button"
                 className="map-hover-zone zone-contact"
-                onMouseEnter={() => setHoveredRoom("contact")}
-                onMouseLeave={() => setHoveredRoom(null)}
-                onFocus={() => setHoveredRoom("contact")}
-                onBlur={() => setHoveredRoom(null)}
+                onMouseEnter={() => highlightRoom("contact")}
+                onMouseLeave={clearHighlight}
+                onPointerDown={() => highlightRoom("contact")}
+                onFocus={() => highlightRoom("contact")}
+                onBlur={clearHighlight}
                 onClick={() => handleRoomClick("contact")}
                 aria-label="Teleport to Contact room"
               />
               <button
                 type="button"
                 className="map-hover-zone zone-studio"
-                onMouseEnter={() => setHoveredRoom("studio")}
-                onMouseLeave={() => setHoveredRoom(null)}
-                onFocus={() => setHoveredRoom("studio")}
-                onBlur={() => setHoveredRoom(null)}
+                onMouseEnter={() => highlightRoom("studio")}
+                onMouseLeave={clearHighlight}
+                onPointerDown={() => highlightRoom("studio")}
+                onFocus={() => highlightRoom("studio")}
+                onBlur={clearHighlight}
                 onClick={() => handleRoomClick("studio")}
                 aria-label="Teleport to Studio room"
               />
@@ -433,8 +459,9 @@ const NavigationUI = () => {
                   className={`pin-slot ${currentRoom === room.id ? "active" : ""} ${hoveredRoom === room.id ? "hovered" : ""}`}
                   style={{ left: `${room.x}%`, top: `${room.y}%` }}
                   onClick={() => handleRoomClick(room.id)}
-                  onMouseEnter={() => setHoveredRoom(room.id)}
-                  onMouseLeave={() => setHoveredRoom(null)}
+                  onMouseEnter={() => highlightRoom(room.id)}
+                  onMouseLeave={clearHighlight}
+                  onPointerDown={() => highlightRoom(room.id)}
                   title={room.label}
                 >
                   <img src="/images/pin-slot.webp" alt="" className="slot-image" />
