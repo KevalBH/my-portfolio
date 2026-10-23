@@ -62,7 +62,7 @@ export const FALLBACK_PROJECTS = [
     title: "Come Closer",
     front: "/textures/gallery/comecloser.webp",
     painted: "/textures/gallery/comecloser_painted.webp",
-    url: "https://matchnmeet.io",
+    url: "https://cv-chat-app-five.vercel.app",
     description:
       "An ephemeral, browser-based video or chat room application where users can instantly create temporary meeting rooms with custom names and invite others via a shared link, which automatically closes once everyone leaves.",
     techStack: [
